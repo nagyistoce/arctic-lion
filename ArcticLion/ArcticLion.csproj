@@ -66,16 +66,20 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="MonoMac">
-      <HintPath>bin\Debug\MonoMac.dll</HintPath>
+      <HintPath>..\MonoGame\MonoGame.Framework\bin\MacOS\Debug\MonoMac.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework">
-      <HintPath>..\..\..\..\Library\Application Support\XamarinStudio-4.0\LocalInstall\Addins\MonoDevelop.MonoGame.3.0.1\assemblies\MacOS\MonoGame.Framework.dll</HintPath>
+      <HintPath>..\MonoGame\MonoGame.Framework\bin\MacOS\Debug\MonoGame.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Director.cs" />
+    <Compile Include="Scene.cs" />
+    <Compile Include="Node.cs" />
+    <Compile Include="Layer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

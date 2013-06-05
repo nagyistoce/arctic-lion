@@ -29,6 +29,8 @@ namespace ArcticLion
 	#region Fields
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
+		Director director;
+		Texture2D logo;
 	#endregion
 
 	#region Initialization
@@ -42,6 +44,7 @@ namespace ArcticLion
 
 			graphics.IsFullScreen = false;
 		}
+
 		/// <summary>
 		/// Overridden from the base Game.Initialize. Once the GraphicsDevice is setup,
 		/// we'll use the viewport to initialize some values.
@@ -49,7 +52,10 @@ namespace ArcticLion
 		protected override void Initialize ()
 		{
 			base.Initialize ();
+
+			director = new Director ();
 		}
+
 		/// <summary>
 		/// Load your graphics content.
 		/// </summary>
@@ -57,6 +63,7 @@ namespace ArcticLion
 		{
 			// Create a new SpriteBatch, which can be use to draw textures.
 			spriteBatch = new SpriteBatch (graphics.GraphicsDevice);
+			logo = Content.Load<Texture2D> ("logo");
 		}
 	#endregion
 
@@ -70,9 +77,11 @@ namespace ArcticLion
 		protected override void Update (GameTime gameTime)
 		{
 			// TODO: Add your update logic here			
-            		
+			director.CurrentScene.Update (gameTime);		
+
 			base.Update (gameTime);
 		}
+
 		/// <summary>
 		/// This is called when the game should draw itself. 
 		/// </summary>
@@ -85,6 +94,8 @@ namespace ArcticLion
 			spriteBatch.Begin ();
 
 			//Draw stuff
+			spriteBatch.Draw (logo, new Vector2 (100, 100), Color.White);
+			director.CurrentScene.Draw (gameTime, spriteBatch);
 
 			spriteBatch.End ();
 

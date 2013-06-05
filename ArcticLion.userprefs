@@ -1,9 +1,21 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="04/06/2013 3:49:43 PM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="05/06/2013 4:45:03 AM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/Game1.cs">
     <Files>
-      <File FileName="ArcticLion/Game1.cs" Line="15" Column="15" />
+      <File FileName="ArcticLion/Game1.cs" Line="45" Column="16" />
+      <File FileName="ArcticLion/Main.cs" Line="19" Column="29" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="ArcticLion" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="Content" expanded="True" selected="True" />
+            <Node name="Properties" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
