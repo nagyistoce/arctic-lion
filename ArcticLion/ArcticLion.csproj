@@ -80,6 +80,8 @@
     <Compile Include="Scene.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Layer.cs" />
+    <Compile Include="Ship.cs" />
+    <Compile Include="TestGameScene.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -88,6 +90,9 @@
   <Import Project="$(MSBuildExtensionsPath)\Mono\MonoMac\v0.0\Mono.MonoMac.targets" />
   <ItemGroup>
     <BundleResource Include="Content\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Content\ship.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
   </ItemGroup>

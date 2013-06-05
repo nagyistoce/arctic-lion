@@ -9,7 +9,7 @@ namespace ArcticLion
 		public Director ()
 		{
 			//TODO: Temp
-			CurrentScene = new Scene ();
+			CurrentScene = new TestGameScene ();
 		}
 	}
 }

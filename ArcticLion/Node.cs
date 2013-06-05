@@ -2,22 +2,31 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace ArcticLion
 {
 	public abstract class Node
 	{
 		#region Fields
-			List<Node> children;
+		List<Node> children;
 		#endregion
 
 		#region Properties
-			public Node Parent;
+		public Node Parent { get; set; }
+		public Vector2 Position { get; set; }
 		#endregion
 
 		public Node ()
 		{
 			children = new List<Node> ();
+		}
+
+		public virtual void LoadContent (ContentManager content)
+		{
+			foreach (Node n in children) {
+				n.LoadContent (content);
+			}
 		}
 
 		public virtual void Update (GameTime gameTime)

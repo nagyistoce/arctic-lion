@@ -43,6 +43,11 @@ namespace ArcticLion
 			Content.RootDirectory = "Content";
 
 			graphics.IsFullScreen = false;
+
+			graphics.PreferredBackBufferHeight = 640;
+			graphics.PreferredBackBufferWidth = 960;
+
+			director = new Director ();
 		}
 
 		/// <summary>
@@ -52,8 +57,6 @@ namespace ArcticLion
 		protected override void Initialize ()
 		{
 			base.Initialize ();
-
-			director = new Director ();
 		}
 
 		/// <summary>
@@ -64,6 +67,8 @@ namespace ArcticLion
 			// Create a new SpriteBatch, which can be use to draw textures.
 			spriteBatch = new SpriteBatch (graphics.GraphicsDevice);
 			logo = Content.Load<Texture2D> ("logo");
+
+			director.CurrentScene.LoadContent(Content);
 		}
 	#endregion
 
@@ -94,7 +99,7 @@ namespace ArcticLion
 			spriteBatch.Begin ();
 
 			//Draw stuff
-			spriteBatch.Draw (logo, new Vector2 (100, 100), Color.White);
+			spriteBatch.Draw (logo, new Vector2 (25, 25), Color.White);
 			director.CurrentScene.Draw (gameTime, spriteBatch);
 
 			spriteBatch.End ();
