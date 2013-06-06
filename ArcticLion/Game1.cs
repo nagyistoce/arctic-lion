@@ -30,7 +30,6 @@ namespace ArcticLion
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
 		Director director;
-		Texture2D logo;
 	#endregion
 
 	#region Initialization
@@ -47,7 +46,10 @@ namespace ArcticLion
 			graphics.PreferredBackBufferHeight = 640;
 			graphics.PreferredBackBufferWidth = 960;
 
-			director = new Director ();
+			director = new Director (this);
+
+			//TODO: draw a cursor
+			this.IsMouseVisible = true;
 		}
 
 		/// <summary>
@@ -66,7 +68,6 @@ namespace ArcticLion
 		{
 			// Create a new SpriteBatch, which can be use to draw textures.
 			spriteBatch = new SpriteBatch (graphics.GraphicsDevice);
-			logo = Content.Load<Texture2D> ("logo");
 
 			director.CurrentScene.LoadContent(Content);
 		}
@@ -96,13 +97,20 @@ namespace ArcticLion
 			// Clear the backbuffer
 			graphics.GraphicsDevice.Clear (Color.CornflowerBlue);
 
-			spriteBatch.Begin ();
+//			spriteBatch.Begin (
+//				SpriteSortMode.FrontToBack,
+//				BlendState.AlphaBlend,
+//				SamplerState.LinearClamp,
+//				DepthStencilState.Default,
+//				null,
+//				null,
+//				camera.Transform);
 
-			//Draw stuff
-			spriteBatch.Draw (logo, new Vector2 (25, 25), Color.White);
-			director.CurrentScene.Draw (gameTime, spriteBatch);
-
-			spriteBatch.End ();
+//			spriteBatch.Begin ();
+//
+			director.CurrentScene.Draw (gameTime, null);
+//
+//			spriteBatch.End ();
 
 			//TODO: Add your drawing code here
 			base.Draw (gameTime);

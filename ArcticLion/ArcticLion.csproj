@@ -82,6 +82,7 @@
     <Compile Include="Layer.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="TestGameScene.cs" />
+    <Compile Include="Camera2D.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

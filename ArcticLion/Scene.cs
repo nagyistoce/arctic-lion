@@ -15,8 +15,11 @@ namespace ArcticLion
 			Layers = new SortedList<int, Layer> (2);
 
 			//TODO: Temp
-			Layers.Add (0, new Layer (0)); //Background
-			Layers.Add (1, new Layer (1)); //Main
+			Layer background = new Layer (0);
+			Layer main = new Layer (1);
+
+			Layers.Add (background.Z, background);
+			Layers.Add (main.Z, main);
 		}
 
 		public override void LoadContent (ContentManager content)

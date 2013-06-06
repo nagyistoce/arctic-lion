@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Xna.Framework;
 
 namespace ArcticLion
 {
@@ -6,10 +7,10 @@ namespace ArcticLion
 	{
 		public Scene CurrentScene{ get; set; }
 
-		public Director ()
+		public Director (Game game)
 		{
 			//TODO: Temp
-			CurrentScene = new TestGameScene ();
+			CurrentScene = new TestGameScene (game);
 		}
 	}
 }
