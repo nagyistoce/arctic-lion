@@ -1,3 +1,4 @@
 MonoGame
 .DS_Store
-ArcticLion/bin/
+ArcticLion/bin/*
+ArcticLion.userprefs

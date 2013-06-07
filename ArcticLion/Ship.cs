@@ -9,12 +9,11 @@ namespace ArcticLion
 	public class Ship : Node, IFocusable
 	{
 		Texture2D shipTexture;
-		Vector2 acceleration;
+		public Vector2 Velocity { get; set;}
 		public double RotationAngle;
 
 		public Ship ()
  		{
-			acceleration = new Vector2 ();
 		}
 
 		public override void LoadContent(ContentManager content)
@@ -29,21 +28,21 @@ namespace ArcticLion
 			float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 			if(Keyboard.GetState().IsKeyDown(Keys.W)){
-				acceleration += new Vector2(0, -20f*elapsedTime);
+				Velocity += new Vector2(0, -20f*elapsedTime);
 			}
 			if(Keyboard.GetState().IsKeyDown(Keys.S)){
-				acceleration += new Vector2(0, 20f*elapsedTime);
+				Velocity += new Vector2(0, 20f*elapsedTime);
 			}
 			if(Keyboard.GetState().IsKeyDown(Keys.A)){
-				acceleration += new Vector2(-20f*elapsedTime, 0);
+				Velocity += new Vector2(-20f*elapsedTime, 0);
 			}
 			if(Keyboard.GetState().IsKeyDown(Keys.D)){
-				acceleration += new Vector2(20f*elapsedTime, 0);
+				Velocity += new Vector2(20f*elapsedTime, 0);
 			}
 
-			acceleration *= 0.95f;
+			Velocity *= 0.95f;
 
-			Position += acceleration;
+			Position += Velocity;
 		}
 
 		public override void Draw (GameTime gameTime, SpriteBatch spriteBatch)

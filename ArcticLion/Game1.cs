@@ -28,7 +28,6 @@ namespace ArcticLion
 
 	#region Fields
 		GraphicsDeviceManager graphics;
-		SpriteBatch spriteBatch;
 		Director director;
 	#endregion
 
@@ -66,9 +65,6 @@ namespace ArcticLion
 		/// </summary>
 		protected override void LoadContent ()
 		{
-			// Create a new SpriteBatch, which can be use to draw textures.
-			spriteBatch = new SpriteBatch (graphics.GraphicsDevice);
-
 			director.CurrentScene.LoadContent(Content);
 		}
 	#endregion
@@ -97,20 +93,7 @@ namespace ArcticLion
 			// Clear the backbuffer
 			graphics.GraphicsDevice.Clear (Color.CornflowerBlue);
 
-//			spriteBatch.Begin (
-//				SpriteSortMode.FrontToBack,
-//				BlendState.AlphaBlend,
-//				SamplerState.LinearClamp,
-//				DepthStencilState.Default,
-//				null,
-//				null,
-//				camera.Transform);
-
-//			spriteBatch.Begin ();
-//
 			director.CurrentScene.Draw (gameTime, null);
-//
-//			spriteBatch.End ();
 
 			//TODO: Add your drawing code here
 			base.Draw (gameTime);

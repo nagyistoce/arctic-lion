@@ -13,13 +13,6 @@ namespace ArcticLion
 		public Scene ()
 		{
 			Layers = new SortedList<int, Layer> (2);
-
-			//TODO: Temp
-			Layer background = new Layer (0);
-			Layer main = new Layer (1);
-
-			Layers.Add (background.Z, background);
-			Layers.Add (main.Z, main);
 		}
 
 		public override void LoadContent (ContentManager content)

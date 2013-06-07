@@ -66,11 +66,11 @@ public interface ICamera2D
 	/// directly in the viewport
 	/// </summary>
 	/// <param name="position">The position.</param>
-	/// <param name="texture">The texture.</param>
+	/// <param name="bounds">The bounds of the target.</param>
 	/// <returns>
 	///     <c>true</c> if the target is in view at the specified position; otherwise, <c>false</c>.
 	/// </returns>
-	bool IsInView(Vector2 position, Texture2D texture);
+	bool IsInView(Vector2 position, Rectangle bounds);
 }
 
 public class Camera2D : GameComponent, ICamera2D
@@ -147,15 +147,15 @@ public class Camera2D : GameComponent, ICamera2D
 	/// <returns>
 	///     <c>true</c> if [is in view] [the specified position]; otherwise, <c>false</c>.
 	/// </returns>
-	public bool IsInView(Vector2 position, Texture2D texture)
+	public bool IsInView(Vector2 position, Rectangle bounds)
 	{
 		// If the object is not within the horizontal bounds of the screen
 
-		if ( (position.X + texture.Width) < (Position.X - Origin.X) || (position.X) > (Position.X + Origin.X) )
+		if ( (position.X + bounds.Width) < (Position.X - Origin.X) || (position.X) > (Position.X + Origin.X) )
 			return false;
 
 		// If the object is not within the vertical bounds of the screen
-		if ((position.Y + texture.Height) < (Position.Y - Origin.Y) || (position.Y) > (Position.Y + Origin.Y))
+		if ((position.Y + bounds.Height) < (Position.Y - Origin.Y) || (position.Y) > (Position.Y + Origin.Y))
 			return false;
 
 		// In View
