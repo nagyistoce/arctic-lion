@@ -10,7 +10,6 @@ namespace ArcticLion
 	{
 		Texture2D shipTexture;
 		public Vector2 Velocity { get; set;}
-		public double RotationAngle;
 
 		public Ship ()
  		{
@@ -50,7 +49,7 @@ namespace ArcticLion
 			base.Draw (gameTime, spriteBatch);
 
 			spriteBatch.Draw(shipTexture, Position, null, Color.White, 
-			                 (float)RotationAngle,
+			                 (float)Rotation,
 			                 new Vector2(shipTexture.Bounds.Center.X, shipTexture.Bounds.Center.Y), 
 			                 1.0f, SpriteEffects.None, 0f);
 		}

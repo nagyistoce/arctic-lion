@@ -87,6 +87,8 @@
     <Compile Include="Projectile.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="TestGameMainLayer.cs" />
+    <Compile Include="EnemyShip.cs" />
+    <Compile Include="EnemyShipPart.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -101,6 +103,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
     <BundleResource Include="Content\bullet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Content\part.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
   </ItemGroup>

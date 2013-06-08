@@ -1,17 +1,22 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="05/06/2013 4:45:03 AM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="07/06/2013 4:52:10 PM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/Game1.cs">
     <Files>
-      <File FileName="ArcticLion/Game1.cs" Line="45" Column="16" />
-      <File FileName="ArcticLion/Main.cs" Line="19" Column="29" />
+      <File FileName="ArcticLion/Scene.cs" Line="19" Column="4" />
+      <File FileName="ArcticLion/Game1.cs" Line="93" Column="27" />
+      <File FileName="ArcticLion/Director.cs" Line="12" Column="16" />
+      <File FileName="ArcticLion/TestGameScene.cs" Line="26" Column="21" />
+      <File FileName="ArcticLion/Bullet.cs" Line="28" Column="35" />
+      <File FileName="ArcticLion/Layer.cs" Line="8" Column="16" />
+      <File FileName="ArcticLion/Ship.cs" Line="35" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="ArcticLion" expanded="True">
-            <Node name="References" expanded="True" />
-            <Node name="Content" expanded="True" selected="True" />
+            <Node name="Content" expanded="True" />
             <Node name="Properties" expanded="True" />
+            <Node name="Game1.cs" selected="True" />
           </Node>
         </State>
       </Pad>

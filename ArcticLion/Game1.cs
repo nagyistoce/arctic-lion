@@ -91,7 +91,7 @@ namespace ArcticLion
 		protected override void Draw (GameTime gameTime)
 		{
 			// Clear the backbuffer
-			graphics.GraphicsDevice.Clear (Color.CornflowerBlue);
+			graphics.GraphicsDevice.Clear (Color.Gainsboro);
 
 			director.CurrentScene.Draw (gameTime, null);
 

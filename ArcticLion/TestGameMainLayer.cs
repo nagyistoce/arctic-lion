@@ -10,6 +10,7 @@ namespace ArcticLion
 	public class TestGameMainLayer : Layer
 	{
 		Ship ship;
+		EnemyShip enemyShip;
 		Camera2D camera;
 		Queue<Bullet> bullets; //TODO: change to List?
 
@@ -25,11 +26,16 @@ namespace ArcticLion
 				bullets.Enqueue (b);
 				Add (b);
 			}
+
+			enemyShip = new EnemyShip ();
+			Add (enemyShip);
 		}
 
 		public override void Update (GameTime gameTime)
 		{
 			base.Update (gameTime);
+
+			DetectCollisions ();
 
 			Vector2 mousePositionWorld = GetMousePositionWorld ();
 
@@ -38,11 +44,11 @@ namespace ArcticLion
 
 //			rotationAngle += Math.PI / 2;
 
-			ship.RotationAngle = rotationAngle;
+			ship.Rotation = rotationAngle;
 
 			foreach(Bullet b in bullets){
 				//TODO: get the bounds?
-				if(b.IsAlive & !camera.IsInView(b.Position, new Rectangle(0,0,8,8))){
+				if(b.IsAlive && !camera.IsInView(b.Position, new Rectangle(0,0,8,8))){
 					b.IsAlive = false;
 				}
 			}
@@ -54,10 +60,19 @@ namespace ArcticLion
 					Vector2 newBulletVelocity = Vector2.Normalize(mousePositionWorld - ship.Position);
 					newBulletVelocity *= 1500f;
 					newBulletVelocity += ship.Velocity;
-					Vector2 shipYaw = new Vector2 ((float)Math.Cos (ship.RotationAngle), 
-					                               (float)Math.Sin (ship.RotationAngle));
+					Vector2 shipYaw = new Vector2 ((float)Math.Cos (ship.Rotation), 
+					                               (float)Math.Sin (ship.Rotation));
 					newBullet.Shoot (ship.Position + 45 * shipYaw, newBulletVelocity);
 					bullets.Enqueue (newBullet);
+				}
+			}
+		}
+
+		public void DetectCollisions(){
+			foreach(Bullet b in bullets){
+				if (b.IsAlive &&
+				    (b.Position - enemyShip.Position).Length() < 40f){
+					b.IsAlive = false;
 				}
 			}
 		}

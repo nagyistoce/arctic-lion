@@ -15,6 +15,7 @@ namespace ArcticLion
 		#region Properties
 		public Node Parent { get; set; }
 		public Vector2 Position { get; set; }
+		public double Rotation { get; set;}
 		#endregion
 
 		public Node ()
