@@ -9,6 +9,8 @@ namespace ArcticLion
 	public abstract class Node
 	{
 		#region Fields
+		private static long static_id;
+		protected long id;
 		List<Node> children;
 		#endregion
 
@@ -20,6 +22,7 @@ namespace ArcticLion
 
 		public Node ()
 		{
+			id = ++static_id;
 			children = new List<Node> ();
 		}
 
@@ -63,6 +66,23 @@ namespace ArcticLion
 		public void Kill()
 		{
 			Parent.Remove (this);
+			this.Parent = null;
+		}
+
+		public override bool Equals (object obj)
+		{
+			if (obj != null) {
+				if (obj is Node) {
+					Node other = (Node)obj;
+					return other.id == this.id;
+				}
+			}
+			return false;
+		}
+
+		public override int GetHashCode ()
+		{
+			return (int)id;
 		}
 	}
 }

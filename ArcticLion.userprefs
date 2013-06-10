@@ -1,14 +1,19 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="07/06/2013 4:52:10 PM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="10/06/2013 5:22:17 AM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/Game1.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/Camera2D.cs">
     <Files>
-      <File FileName="ArcticLion/Scene.cs" Line="19" Column="4" />
-      <File FileName="ArcticLion/Game1.cs" Line="93" Column="27" />
-      <File FileName="ArcticLion/Director.cs" Line="12" Column="16" />
-      <File FileName="ArcticLion/TestGameScene.cs" Line="26" Column="21" />
-      <File FileName="ArcticLion/Bullet.cs" Line="28" Column="35" />
-      <File FileName="ArcticLion/Layer.cs" Line="8" Column="16" />
-      <File FileName="ArcticLion/Ship.cs" Line="35" Column="4" />
+      <File FileName="ArcticLion/Scene.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Game1.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Director.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/TestGameScene.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Bullet.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Layer.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/EnemyShip.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/EnemyShipPart.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Camera2D.cs" Line="19" Column="11" />
+      <File FileName="ArcticLion/Main.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Node.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Projectile.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,7 +21,7 @@
           <Node name="ArcticLion" expanded="True">
             <Node name="Content" expanded="True" />
             <Node name="Properties" expanded="True" />
-            <Node name="Game1.cs" selected="True" />
+            <Node name="EnemyShip.cs" selected="True" />
           </Node>
         </State>
       </Pad>

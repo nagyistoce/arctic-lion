@@ -89,6 +89,7 @@
     <Compile Include="TestGameMainLayer.cs" />
     <Compile Include="EnemyShip.cs" />
     <Compile Include="EnemyShipPart.cs" />
+    <Compile Include="TestGameEnemyShip.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

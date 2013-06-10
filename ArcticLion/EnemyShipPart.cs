@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,12 +10,16 @@ namespace ArcticLion
 	{
 		String assetName;
 		Texture2D enemyShipPartTexture;
+		public List<EnemyShipPart> ConnectedParts{ get; private set;}
+
+		public bool isVisited;
 
 		public Vector2 Velocity{ get; set;}
 
 		public EnemyShipPart (String assetName)
 		{
 			this.assetName = assetName;
+			ConnectedParts = new List<EnemyShipPart> (1);
 		}
 
 		public override void LoadContent (ContentManager content)

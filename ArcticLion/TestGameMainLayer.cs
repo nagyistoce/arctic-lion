@@ -27,7 +27,7 @@ namespace ArcticLion
 				Add (b);
 			}
 
-			enemyShip = new EnemyShip ();
+			enemyShip = new TestGameEnemyShip ();
 			Add (enemyShip);
 		}
 
@@ -70,9 +70,23 @@ namespace ArcticLion
 
 		public void DetectCollisions(){
 			foreach(Bullet b in bullets){
-				if (b.IsAlive &&
+				if (b.IsAlive && /*TODO: Loop thru enemies*/ enemyShip.Parent != null &&
 				    (b.Position - enemyShip.Position).Length() < 40f){
 					b.IsAlive = false;
+
+					//TODO: REMOVE!! FOR TESTING PURPOSES
+					List<EnemyShip> newEnemies = enemyShip.DestroyPart (enemyShip.Parts[1]);
+					if(newEnemies != null){
+						foreach (EnemyShip newEnemyShip in newEnemies) {
+							Add (newEnemyShip);
+						}
+
+						newEnemies [0].direction = -1;
+						newEnemies [1].direction = 1;
+
+						//TODO: Don't kill me bro!
+						enemyShip.Kill ();
+					}
 				}
 			}
 		}
