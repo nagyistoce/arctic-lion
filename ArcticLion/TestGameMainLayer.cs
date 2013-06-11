@@ -12,7 +12,7 @@ namespace ArcticLion
 		TestGameScene scene;
 
 		List<EnemyShip> enemyShips;
-		private double enemyShipFireDelay = 1d;
+		private double enemyShipFireDelay = 0.25d; //TODO: move logic to enemy ship?
 		Queue<Bullet> bullets;
 //TODO: change to List?
 		Queue<Bullet> enemyBullets;
@@ -91,11 +91,11 @@ namespace ArcticLion
 					if (!enemyBullets.Peek ().IsAlive) {
 						Bullet newEnemyBullet = enemyBullets.Dequeue ();
 						Vector2 newBulletVelocity = Vector2.Normalize (scene.Ship.Position - es.Position);
-						newBulletVelocity *= 500f;
+						newBulletVelocity *= 300f;
 						newBulletVelocity += es.Velocity;
 						newEnemyBullet.Shoot (es.Position, newBulletVelocity);
 						enemyBullets.Enqueue (newEnemyBullet);
-						enemyShipFireDelay = 1d;
+						enemyShipFireDelay = 0.25d;
 					}
 				}
 			}
@@ -107,7 +107,7 @@ namespace ArcticLion
 				List<EnemyShip> enemyShipsCopy = new List<EnemyShip> ();
 				enemyShipsCopy.AddRange (enemyShips);
 				foreach (EnemyShip es in enemyShipsCopy) {
-					if (b.IsAlive && /*TODO: Loop thru enemies*/ es.Parent != null &&
+					if (b.IsAlive &&
 						(b.Position - es.Position).Length () < 30f) {
 						b.IsAlive = false;
 
@@ -129,7 +129,6 @@ namespace ArcticLion
 						}
 					}
 				}
-				enemyShips.RemoveAll ((EnemyShip s)=> {return s.Parent == null;});
 			}
 		}
 

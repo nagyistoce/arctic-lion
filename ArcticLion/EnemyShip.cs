@@ -27,9 +27,9 @@ namespace ArcticLion
 			//TODO: remove this shit
 			Velocity = new Vector2 ((float)Math.Cos(totalTime), 
 			                        (float)Math.Sin (totalTime));
-			Velocity *= Math.Abs(3f * (float)Math.Sin(totalTime));
+			Velocity *= 100f * Math.Abs((float)Math.Sin(totalTime));
 
-			Position += direction*Velocity;
+			Position += direction*Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 		}
 
 		public List<EnemyShip> DestroyPart(EnemyShipPart destroyedPart){

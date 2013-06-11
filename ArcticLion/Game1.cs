@@ -78,7 +78,6 @@ namespace ArcticLion
         	/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Update (GameTime gameTime)
 		{
-			// TODO: Add your update logic here			
 			director.CurrentScene.Update (gameTime);		
 
 			base.Update (gameTime);
@@ -95,7 +94,6 @@ namespace ArcticLion
 
 			director.CurrentScene.Draw (gameTime, null);
 
-			//TODO: Add your drawing code here
 			base.Draw (gameTime);
 		}
 	#endregion
