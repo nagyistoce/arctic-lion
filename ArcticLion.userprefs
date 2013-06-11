@@ -1,19 +1,13 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="10/06/2013 5:22:17 AM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="11/06/2013 5:13:52 AM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/Camera2D.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/TestGameMainLayer.cs">
     <Files>
-      <File FileName="ArcticLion/Scene.cs" Line="1" Column="1" />
-      <File FileName="ArcticLion/Game1.cs" Line="1" Column="1" />
-      <File FileName="ArcticLion/Director.cs" Line="1" Column="1" />
       <File FileName="ArcticLion/TestGameScene.cs" Line="1" Column="1" />
-      <File FileName="ArcticLion/Bullet.cs" Line="1" Column="1" />
-      <File FileName="ArcticLion/Layer.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/TestGameEnemyShip.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/TestGameMainLayer.cs" Line="130" Column="26" />
       <File FileName="ArcticLion/EnemyShip.cs" Line="1" Column="1" />
-      <File FileName="ArcticLion/EnemyShipPart.cs" Line="1" Column="1" />
-      <File FileName="ArcticLion/Camera2D.cs" Line="19" Column="11" />
       <File FileName="ArcticLion/Main.cs" Line="1" Column="1" />
-      <File FileName="ArcticLion/Node.cs" Line="1" Column="1" />
-      <File FileName="ArcticLion/Projectile.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/EnemyShipPart.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -21,7 +15,7 @@
           <Node name="ArcticLion" expanded="True">
             <Node name="Content" expanded="True" />
             <Node name="Properties" expanded="True" />
-            <Node name="EnemyShip.cs" selected="True" />
+            <Node name="TestGameMainLayer.cs" selected="True" />
           </Node>
         </State>
       </Pad>
@@ -30,5 +24,8 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="ArcticLion/EnemyShip.cs" line="36" offsetX="396" offsetY="525" expression="Parts" liveUpdate="False" />
+    <Watch file="ArcticLion/EnemyShip.cs" line="36" offsetX="396" offsetY="525" expression="Parts" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
 </Properties>

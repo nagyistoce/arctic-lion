@@ -9,20 +9,17 @@ namespace ArcticLion
 {
 	public class TestGameMainLayer : Layer
 	{
-		Ship ship;
+		TestGameScene scene;
+
 		List<EnemyShip> enemyShips;
 		private double enemyShipFireDelay = 1d;
-//TODO: Remove
-		Camera2D camera;
 		Queue<Bullet> bullets;
 //TODO: change to List?
 		Queue<Bullet> enemyBullets;
 
-		public TestGameMainLayer (int z, Ship ship, Camera2D camera) : base(z)
+		public TestGameMainLayer (TestGameScene scene) : base(scene)
 		{
-			this.ship = ship;
-			this.camera = camera;
-			this.Add (ship);
+			this.scene = scene;
 
 			enemyShips = new List<EnemyShip> ();
 
@@ -54,21 +51,21 @@ namespace ArcticLion
 
 			Vector2 mousePositionWorld = GetMousePositionWorld ();
 
-			double rotationAngle = Math.Atan2 ((mousePositionWorld.Y - ship.Position.Y),
-			                                   (mousePositionWorld.X - ship.Position.X));
+			double rotationAngle = Math.Atan2 ((mousePositionWorld.Y - scene.Ship.Position.Y),
+			                                   (mousePositionWorld.X - scene.Ship.Position.X));
 
-			ship.Rotation = rotationAngle;
+			scene.Ship.Rotation = rotationAngle;
 
 			foreach (Bullet b in bullets) {
 				//TODO: get the bounds?
-				if (b.IsAlive && !camera.IsInView (b.Position, new Rectangle (0, 0, 8, 8))) {
+				if (b.IsAlive && !scene.Camera.IsInView (b.Position, new Rectangle (0, 0, 8, 8))) {
 					b.IsAlive = false;
 				}
 			}
 
 			foreach (Bullet b in enemyBullets) {
 				//TODO: get the bounds?
-				if (b.IsAlive && !camera.IsInView (b.Position, new Rectangle (0, 0, 8, 8))) {
+				if (b.IsAlive && !scene.Camera.IsInView (b.Position, new Rectangle (0, 0, 8, 8))) {
 					b.IsAlive = false;
 				}
 			}
@@ -77,12 +74,12 @@ namespace ArcticLion
 			if (ms.LeftButton == ButtonState.Pressed) {
 				if (!bullets.Peek ().IsAlive) {
 					Bullet newBullet = bullets.Dequeue ();
-					Vector2 newBulletVelocity = Vector2.Normalize (mousePositionWorld - ship.Position);
+					Vector2 newBulletVelocity = Vector2.Normalize (mousePositionWorld - scene.Ship.Position);
 					newBulletVelocity *= 1500f;
-					newBulletVelocity += ship.Velocity;
-					Vector2 shipYaw = new Vector2 ((float)Math.Cos (ship.Rotation), 
-					                               (float)Math.Sin (ship.Rotation));
-					newBullet.Shoot (ship.Position + 45 * shipYaw, newBulletVelocity);
+					newBulletVelocity += scene.Ship.Velocity;
+					Vector2 shipYaw = new Vector2 ((float)Math.Cos (scene.Ship.Rotation), 
+					                               (float)Math.Sin (scene.Ship.Rotation));
+					newBullet.Shoot (scene.Ship.Position + 45 * shipYaw, newBulletVelocity);
 					bullets.Enqueue (newBullet);
 				}
 			}
@@ -93,7 +90,7 @@ namespace ArcticLion
 				foreach (EnemyShip es in enemyShips) {
 					if (!enemyBullets.Peek ().IsAlive) {
 						Bullet newEnemyBullet = enemyBullets.Dequeue ();
-						Vector2 newBulletVelocity = Vector2.Normalize (ship.Position - es.Position);
+						Vector2 newBulletVelocity = Vector2.Normalize (scene.Ship.Position - es.Position);
 						newBulletVelocity *= 500f;
 						newBulletVelocity += es.Velocity;
 						newEnemyBullet.Shoot (es.Position, newBulletVelocity);
@@ -140,7 +137,7 @@ namespace ArcticLion
 		{
 			Vector2 mousePosition = new Vector2 (Mouse.GetState().X, Mouse.GetState ().Y);
 
-			return camera.GetUpperLeftPosition () + mousePosition; 
+			return scene.Camera.GetUpperLeftPosition () + mousePosition; 
 		}
 	}
 }

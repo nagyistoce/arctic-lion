@@ -9,25 +9,26 @@ namespace ArcticLion
 	public class TestGameScene : Scene
 	{
 		private Game game;
-		private Camera2D camera;
+		public Camera2D Camera { get; private set;}
 		private SpriteBatch testGameSceneSpriteBatch;
-		Ship ship;
+		public Ship Ship { get; private set;}
 		Texture2D logo;
 
 		public TestGameScene (Game game)
 		{
 			this.game = game;
 		
-			ship = new Ship ();
-			ship.Position = new Vector2 (0, 0);
+			Ship = new Ship ();
+			Ship.Position = new Vector2 (0, 0);
 
-			camera = new Camera2D (game);
-			camera.Focus = ship;
-			camera.MoveSpeed = 20f;
-			game.Components.Add (camera);
+			Camera = new Camera2D (game);
+			Camera.Focus = Ship;
+			Camera.MoveSpeed = 20f;
+			game.Components.Add (Camera);
 
-			TestGameMainLayer mainLayer = new TestGameMainLayer(1,ship, camera);
-			Layers.Add (mainLayer.Z, mainLayer);
+			TestGameMainLayer mainLayer = new TestGameMainLayer(this);
+			mainLayer.Add (Ship);
+			Layers.Add (1, mainLayer);
 		}
 
 		public override void LoadContent (ContentManager content)
@@ -52,7 +53,7 @@ namespace ArcticLion
 				DepthStencilState.Default,
 				null,
 				null,
-				camera.Transform);
+				Camera.Transform);
 
 			base.Draw (gameTime, testGameSceneSpriteBatch);
 
