@@ -15,7 +15,6 @@ namespace ArcticLion
 			part1.Position = new Vector2 (-32,0);
 			part3.Position = new Vector2 (32,0);
 
-			//TODO: connect that shit
 			part1.ConnectedParts.Add (part2);
 			part2.ConnectedParts.Add (part1);
 			part2.ConnectedParts.Add (part3);
@@ -27,6 +26,19 @@ namespace ArcticLion
 			Parts.Add (part2);
 			Add (part3);
 			Parts.Add (part3);
+		}
+
+		public override void Update (GameTime gameTime)
+		{
+			base.Update (gameTime);
+
+			double totalTime = gameTime.TotalGameTime.TotalSeconds;
+
+			Velocity = new Vector2 ((float)Math.Cos(totalTime), 
+			                        (float)Math.Sin (totalTime));
+			Velocity *= 200f * Math.Abs((float)Math.Sin(totalTime));
+
+			Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 		}
 	}
 }

@@ -6,34 +6,16 @@ namespace ArcticLion
 {
 	public class EnemyShip : Node
 	{
-		//TODO:Remove this shit!
-		public int direction = 1;
-
 		public List<EnemyShipPart> Parts { get; protected set; }
 		public Vector2 Velocity { get; set;}
 
 		public EnemyShip ()
 		{
-			Parts = new List<EnemyShipPart> (3);
+			Parts = new List<EnemyShipPart>();
 		}
 
-		//TODO: Move to TestGameEnemyShip
-		public override void Update (GameTime gameTime)
+		public List<EnemyShip> DestroyPart(EnemyShipPart destroyedPart)
 		{
-			base.Update (gameTime);
-
-			double totalTime = gameTime.TotalGameTime.TotalSeconds;
-
-			//TODO: remove this shit
-			Velocity = new Vector2 ((float)Math.Cos(totalTime), 
-			                        (float)Math.Sin (totalTime));
-			Velocity *= 100f * Math.Abs((float)Math.Sin(totalTime));
-
-			Position += direction*Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-		}
-
-		public List<EnemyShip> DestroyPart(EnemyShipPart destroyedPart){
-
 			List<EnemyShip> newEnemies = new List<EnemyShip> ();
 
 			foreach (EnemyShipPart p in Parts) {
@@ -47,10 +29,19 @@ namespace ArcticLion
 			foreach (EnemyShipPart p in Parts) {
 				if (!p.isVisited) {
 					//TODO: Create a ship type depending on the parts
-					EnemyShip newEnemyShip = new EnemyShip ();
-					newEnemyShip.Position = this.Position;
-
+					EnemyShip newEnemyShip = new TestGameEnemyShip2 ();
+	
 					VisitPartRecursive(newEnemyShip, p);
+
+					//TODO: test check this crap, supposed to reorganize part positions
+					foreach (EnemyShipPart newEnemyShipPart in newEnemyShip.Parts) {
+						if (newEnemyShipPart != p) {
+							newEnemyShipPart.Position = newEnemyShipPart.Position - p.Position; 
+						}
+					}
+					newEnemyShip.Position = this.Position + p.Position;
+					p.Position = Vector2.Zero;
+
 					newEnemies.Add (newEnemyShip);
 				}
 			}
@@ -62,7 +53,8 @@ namespace ArcticLion
 			}
 		}
 
-		private void VisitPartRecursive(EnemyShip ship, EnemyShipPart part){
+		private void VisitPartRecursive(EnemyShip ship, EnemyShipPart part)
+		{
 			if (!part.isVisited) {
 				ship.Add (part);
 				ship.Parts.Add (part);

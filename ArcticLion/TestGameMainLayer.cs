@@ -116,12 +116,10 @@ namespace ArcticLion
 							List<EnemyShip> newEnemies = es.DestroyPart (es.Parts[1]);
 							if (newEnemies != null) {
 								foreach (EnemyShip newEnemyShip in newEnemies) {
+									((TestGameEnemyShip2)newEnemyShip).Target = scene.Ship;
 									enemyShips.Add (newEnemyShip);
 									Add (newEnemyShip);
-								}
-
-								newEnemies [0].direction = -1;
-								newEnemies [1].direction = 1;
+								}						
 
 								enemyShips.Remove (es);
 								es.Kill ();						

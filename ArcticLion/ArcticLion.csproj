@@ -90,6 +90,7 @@
     <Compile Include="EnemyShip.cs" />
     <Compile Include="EnemyShipPart.cs" />
     <Compile Include="TestGameEnemyShip.cs" />
+    <Compile Include="TestGameEnemyShip2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
