@@ -15,7 +15,7 @@ namespace ArcticLion
 		private double enemyShipFireDelay = 0.25d; //TODO: move logic to enemy ship?
 		Queue<Bullet> bullets;
 //TODO: change to List?
-		Queue<Bullet> enemyBullets;
+		Queue<EnemyBullet> enemyBullets;
 
 		public TestGameMainLayer (TestGameScene scene) : base(scene)
 		{
@@ -30,9 +30,9 @@ namespace ArcticLion
 				Add (b);
 			}
 
-			enemyBullets = new Queue<Bullet> ();
+			enemyBullets = new Queue<EnemyBullet> ();
 			for (int i=0; i<20; i++) {
-				Bullet b = new Bullet ();
+				EnemyBullet b = new EnemyBullet ();
 				enemyBullets.Enqueue (b);
 				Add (b);
 			}
@@ -89,7 +89,7 @@ namespace ArcticLion
 			if (enemyShipFireDelay <= 0) {
 				foreach (EnemyShip es in enemyShips) {
 					if (!enemyBullets.Peek ().IsAlive) {
-						Bullet newEnemyBullet = enemyBullets.Dequeue ();
+						EnemyBullet newEnemyBullet = enemyBullets.Dequeue ();
 						Vector2 newBulletVelocity = Vector2.Normalize (scene.Ship.Position - es.Position);
 						newBulletVelocity *= 300f;
 						newBulletVelocity += es.Velocity;

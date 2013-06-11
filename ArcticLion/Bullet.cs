@@ -7,7 +7,7 @@ namespace ArcticLion
 {
 	public class Bullet : Projectile
 	{
-		private Texture2D bulletTexture;
+		protected Texture2D bulletTexture;
 
 		public Bullet ()
 		{
@@ -43,6 +43,13 @@ namespace ArcticLion
 			Position = initPos;
 			Velocity = initVel;
 			IsAlive = true;
+		}
+	}
+
+	public class EnemyBullet : Bullet{
+		public override void LoadContent (ContentManager content)
+		{
+			bulletTexture = content.Load<Texture2D> ("bullet_e");
 		}
 	}
 }
