@@ -8,9 +8,11 @@ namespace ArcticLion
 	public class Bullet : Projectile
 	{
 		protected Texture2D bulletTexture;
+		public float Radius { get; set;}
 
 		public Bullet ()
 		{
+			Radius = 1f;
 		}
 
 		public override void LoadContent (ContentManager content)
@@ -47,6 +49,12 @@ namespace ArcticLion
 	}
 
 	public class EnemyBullet : Bullet{
+
+		public EnemyBullet()
+		{
+			Radius = 1f;
+		}
+
 		public override void LoadContent (ContentManager content)
 		{
 			bulletTexture = content.Load<Texture2D> ("bullet_e");

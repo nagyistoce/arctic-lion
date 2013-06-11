@@ -11,6 +11,11 @@ namespace ArcticLion
 			EnemyShipPart part2 = new EnemyShipPart ("part");
 			EnemyShipPart part3 = new EnemyShipPart ("part");
 
+			//TODO: revert to more lower values
+			part1.Health = 100;
+			part2.Health = 10;
+			part3.Health = 100;
+
 			part2.Rotation = Math.PI / 2;
 			part1.Position = new Vector2 (-32,0);
 			part3.Position = new Vector2 (32,0);

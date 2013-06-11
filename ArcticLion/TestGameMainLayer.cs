@@ -101,30 +101,36 @@ namespace ArcticLion
 			}
 		}
 
-		public void DetectCollisions ()
+		private void DetectCollisions ()
 		{
 			foreach (Bullet b in bullets) {
 				List<EnemyShip> enemyShipsCopy = new List<EnemyShip> ();
 				enemyShipsCopy.AddRange (enemyShips);
 				foreach (EnemyShip es in enemyShipsCopy) {
-					if (b.IsAlive &&
-						(b.Position - es.Position).Length () < 30f) {
-						b.IsAlive = false;
+					if (b.IsAlive) {
+						foreach(EnemyShipPart p in es.Parts){
+							if(p.IsCollidingWith(b)){
+								b.IsAlive = false;
+								p.Health -= 1; //TODO: remove damage 
+								if(p.Health <= 0){
+									List<EnemyShip> newEnemies = es.DestroyPart (p);
+									if (newEnemies != null) {
+										foreach (EnemyShip newEnemyShip in newEnemies) {
+											((TestGameEnemyShip2)newEnemyShip).Target = scene.Ship;
+											enemyShips.Add (newEnemyShip);
+											Add (newEnemyShip);
+										}						
 
-						//TODO: REMOVE!! FOR TESTING PURPOSES
-						if (es.Parts.Count > 1) {
-							List<EnemyShip> newEnemies = es.DestroyPart (es.Parts[1]);
-							if (newEnemies != null) {
-								foreach (EnemyShip newEnemyShip in newEnemies) {
-									((TestGameEnemyShip2)newEnemyShip).Target = scene.Ship;
-									enemyShips.Add (newEnemyShip);
-									Add (newEnemyShip);
-								}						
-
-								enemyShips.Remove (es);
-								es.Kill ();						
+										enemyShips.Remove (es);
+										es.Kill ();						
+									}
+								}
+								break;
 							}
 						}
+
+						if (!b.IsAlive)
+							break;
 					}
 				}
 			}
