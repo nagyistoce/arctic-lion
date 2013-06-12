@@ -1,13 +1,15 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="11/06/2013 5:13:52 AM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="12/06/2013 7:38:08 AM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/TestGameMainLayer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/EnemyShip.cs">
     <Files>
-      <File FileName="ArcticLion/TestGameScene.cs" Line="1" Column="1" />
-      <File FileName="ArcticLion/TestGameEnemyShip.cs" Line="1" Column="1" />
-      <File FileName="ArcticLion/TestGameMainLayer.cs" Line="130" Column="26" />
-      <File FileName="ArcticLion/EnemyShip.cs" Line="1" Column="1" />
-      <File FileName="ArcticLion/Main.cs" Line="1" Column="1" />
-      <File FileName="ArcticLion/EnemyShipPart.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/TestGameEnemyShip.cs" Line="17" Column="22" />
+      <File FileName="ArcticLion/EnemyShipPart.cs" Line="57" Column="26" />
+      <File FileName="ArcticLion/Layer.cs" Line="9" Column="4" />
+      <File FileName="ArcticLion/TestGameScene.cs" Line="30" Column="23" />
+      <File FileName="ArcticLion/EnemyShip.cs" Line="37" Column="70" />
+      <File FileName="ArcticLion/TestGameMainLayer.cs" Line="117" Column="35" />
+      <File FileName="ArcticLion/TestGameEnemyShip2.cs" Line="26" Column="35" />
+      <File FileName="ArcticLion/Bullet.cs" Line="55" Column="16" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,7 +17,7 @@
           <Node name="ArcticLion" expanded="True">
             <Node name="Content" expanded="True" />
             <Node name="Properties" expanded="True" />
-            <Node name="TestGameMainLayer.cs" selected="True" />
+            <Node name="EnemyShip.cs" selected="True" />
           </Node>
         </State>
       </Pad>

@@ -46,11 +46,7 @@ namespace ArcticLion
 				}
 			}
 
-			if(newEnemies.Count > 0){
-				return newEnemies;
-			}else{
-				return null;
-			}
+			return newEnemies;
 		}
 
 		private void VisitPartRecursive(EnemyShip ship, EnemyShipPart part)

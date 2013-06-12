@@ -114,16 +114,15 @@ namespace ArcticLion
 								p.Health -= 1; //TODO: remove damage 
 								if(p.Health <= 0){
 									List<EnemyShip> newEnemies = es.DestroyPart (p);
-									if (newEnemies != null) {
-										foreach (EnemyShip newEnemyShip in newEnemies) {
-											((TestGameEnemyShip2)newEnemyShip).Target = scene.Ship;
-											enemyShips.Add (newEnemyShip);
-											Add (newEnemyShip);
-										}						
+								
+									foreach (EnemyShip newEnemyShip in newEnemies) {
+										((TestGameEnemyShip2)newEnemyShip).Target = scene.Ship;
+										enemyShips.Add (newEnemyShip);
+										Add (newEnemyShip);
+									}						
 
-										enemyShips.Remove (es);
-										es.Kill ();						
-									}
+									enemyShips.Remove (es);
+									es.Kill ();
 								}
 								break;
 							}
