@@ -46,7 +46,8 @@ namespace ArcticLion
 			                 SpriteEffects.None, 0f);
 		}
 
-		public bool IsCollidingWith(Bullet bullet){
+		//TODO: Move to a collision detector?
+		public bool IsCollidingWith(Bullet bullet, GameTime gameTime){
 			Rectangle bounds = enemyShipPartTexture.Bounds;
 			List<Vector2> vertices = new List<Vector2> (4);
 			float halfWidth = bounds.Width / 2;
@@ -87,8 +88,20 @@ namespace ArcticLion
 				if (v.Y < minY) {minY = v.Y;}
 			}
 
-			if (bullet.Position.X < maxX && bullet.Position.X > minX) {
-				if (bullet.Position.Y < maxY && bullet.Position.Y > minY) {
+			//Current bullet's current
+			if (bullet.Position.X - bullet.Radius < maxX && bullet.Position.X + bullet.Radius > minX) {
+				if (bullet.Position.Y - bullet.Radius < maxY && bullet.Position.Y + bullet.Radius > minY) {
+					return true;
+				}
+			}
+
+			// Between bullet's last and current position
+			//TODO: NOT WORKING!!
+			Vector2 bulletLastPosition = bullet.Position - bullet.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+			Vector2 bulletInterpolatedPosition = bullet.Position - 0.5f * (bulletLastPosition - bullet.Position);
+
+			if (bulletInterpolatedPosition.X - bullet.Radius < maxX && bulletInterpolatedPosition.X + bullet.Radius > minX) {
+				if (bulletInterpolatedPosition.Y - bullet.Radius < maxY && bulletInterpolatedPosition.Y + bullet.Radius> minY) {
 					return true;
 				}
 			}

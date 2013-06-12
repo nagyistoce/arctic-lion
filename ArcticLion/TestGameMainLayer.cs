@@ -47,7 +47,7 @@ namespace ArcticLion
 		{
 			base.Update (gameTime);
 
-			DetectCollisions ();
+			DetectCollisions (gameTime);
 
 			Vector2 mousePositionWorld = GetMousePositionWorld ();
 
@@ -75,7 +75,7 @@ namespace ArcticLion
 				if (!bullets.Peek ().IsAlive) {
 					Bullet newBullet = bullets.Dequeue ();
 					Vector2 newBulletVelocity = Vector2.Normalize (mousePositionWorld - scene.Ship.Position);
-					newBulletVelocity *= 1500f;
+					newBulletVelocity *= 1000f;
 					newBulletVelocity += scene.Ship.Velocity;
 					Vector2 shipYaw = new Vector2 ((float)Math.Cos (scene.Ship.Rotation), 
 					                               (float)Math.Sin (scene.Ship.Rotation));
@@ -101,7 +101,7 @@ namespace ArcticLion
 			}
 		}
 
-		private void DetectCollisions ()
+		private void DetectCollisions (GameTime gameTime)
 		{
 			foreach (Bullet b in bullets) {
 				List<EnemyShip> enemyShipsCopy = new List<EnemyShip> ();
@@ -109,7 +109,7 @@ namespace ArcticLion
 				foreach (EnemyShip es in enemyShipsCopy) {
 					if (b.IsAlive) {
 						foreach(EnemyShipPart p in es.Parts){
-							if(p.IsCollidingWith(b)){
+							if(p.IsCollidingWith(b, gameTime)){
 								b.IsAlive = false;
 								p.Health -= 1; //TODO: remove damage 
 								if(p.Health <= 0){

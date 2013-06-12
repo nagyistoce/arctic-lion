@@ -12,7 +12,7 @@ namespace ArcticLion
 
 		public Bullet ()
 		{
-			Radius = 1f;
+			Radius = 2f;
 		}
 
 		public override void LoadContent (ContentManager content)
@@ -36,7 +36,10 @@ namespace ArcticLion
 			base.Draw (gameTime, spriteBatch);
 
 			if (IsAlive) {
-				spriteBatch.Draw (bulletTexture, Position, Color.White);
+				//TODO: Clean this!
+				spriteBatch.Draw (bulletTexture, 
+				                  new Vector2(Position.X - bulletTexture.Width/2, Position.Y - bulletTexture.Height/2), 
+				                  Color.White);
 			}
 		}
 
@@ -52,7 +55,7 @@ namespace ArcticLion
 
 		public EnemyBullet()
 		{
-			Radius = 1f;
+			Radius = 4f;
 		}
 
 		public override void LoadContent (ContentManager content)
