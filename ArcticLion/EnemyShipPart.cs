@@ -58,10 +58,6 @@ namespace ArcticLion
 			vertices.Add (Position + new Vector2(-halfWidth, -halfHeight)); //Upper Left
 			vertices.Add (Position + new Vector2(halfWidth, -halfHeight)); //Upper Right
 
-			for (int k =0; k < 4; k++) {
-				vertices[k] += this.Parent.Position;
-			}
-
 			Matrix rotationMatrix = new Matrix ();
 			double rot = this.Rotation;
 			rotationMatrix.Right = new Vector3 ((float)Math.Cos(rot), (float)-Math.Sin(rot), 0);
@@ -77,36 +73,27 @@ namespace ArcticLion
 				rotatedVertices.Add(new Vector2(rotatedVertexMatrix.M11, rotatedVertexMatrix.M21));
 			}
 
+			for (int k =0; k < 4; k++) {
+				rotatedVertices[k] += this.Parent.Position;
+			}
+
 			for (int k=0; k<rotatedVertices.Count-1; k++) {
 				bool isInProjection = IsBulletProjectionInsideEdgeProjection (bullet,
 				                                                              rotatedVertices [k],
-				                                                              rotatedVertices [k+1]);
+				                                                              rotatedVertices [k+1],
+				                                                              gameTime);
 				if (!isInProjection)
 					return false;
 			}
 
-			//TODO: Find out why it never reaches here
 			//Testing last pair of vertices
 			return IsBulletProjectionInsideEdgeProjection (bullet,
 			                                               rotatedVertices [0],
-			                                               rotatedVertices [rotatedVertices.Count-1]);
-
-			//TODO: last and first vertices
-
-			// Between bullet's last and current position
-			//TODO: NOT WORKING!!
-//			Vector2 bulletLastPosition = bullet.Position - bullet.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-//			Vector2 bulletInterpolatedPosition = bullet.Position - 0.5f * (bulletLastPosition - bullet.Position);
-//
-//			if (bulletInterpolatedPosition.X - bullet.Radius < maxX && bulletInterpolatedPosition.X + bullet.Radius > minX) {
-//				if (bulletInterpolatedPosition.Y - bullet.Radius < maxY && bulletInterpolatedPosition.Y + bullet.Radius> minY) {
-//					return true;
-//				}
-//			}
-
+			                                               rotatedVertices [rotatedVertices.Count-1],
+			                                               gameTime);
 		}
 
-		private bool IsBulletProjectionInsideEdgeProjection(Bullet bullet, Vector2 v1, Vector2 v2){
+		private bool IsBulletProjectionInsideEdgeProjection(Bullet bullet, Vector2 v1, Vector2 v2, GameTime gameTime){
 			Vector2 axis = Vector2.Normalize(v1 - v2);
 
 			float vp1 = Vector2.Dot (v1, axis);
@@ -123,7 +110,12 @@ namespace ArcticLion
 				max = vp1;
 			}
 
-			return (bp + radius > min && bp - radius < max);
+			return bp + radius > min && bp - radius < max;
+
+//			Vector2 bulletLastPosition = bullet.Position - bullet.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+//			Vector2 bulletInterpolatedPosition = bullet.Position - 0.5f * (bulletLastPosition - bullet.Position);
+//			float bip = Vector2.Dot (bulletInterpolatedPosition, axis);
+//			return (bip + radius > min && bip - radius < max);
 		}
 	}
 }
