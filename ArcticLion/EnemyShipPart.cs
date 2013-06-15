@@ -76,7 +76,7 @@ namespace ArcticLion
 				Matrix rotatedVertexMatrix = rotationMatrix * vertexMatrix;
 				rotatedVertices.Add(new Vector2(rotatedVertexMatrix.M11, rotatedVertexMatrix.M21));
 			}
-	
+
 			for (int k=0; k<rotatedVertices.Count-1; k++) {
 				bool isInProjection = IsBulletProjectionInsideEdgeProjection (bullet,
 				                                                              rotatedVertices [k],
@@ -106,7 +106,7 @@ namespace ArcticLion
 		}
 
 		private bool IsBulletProjectionInsideEdgeProjection(Bullet bullet, Vector2 v1, Vector2 v2){
-			Vector2 axis = v1 - v2;
+			Vector2 axis = Vector2.Normalize(v1 - v2);
 
 			float vp1 = Vector2.Dot (v1, axis);
 			float vp2 = Vector2.Dot (v2, axis);
@@ -115,14 +115,14 @@ namespace ArcticLion
 
 			float max =0, min =0;
 			if (vp1 > vp2) {
-				min = vp1;
-				max = vp2;
+				max = vp1;
+				min = vp2;
 			} else {
 				min = vp2;
 				max = vp1;
 			}
 
-			return (bp - radius > min && bp + radius < max);
+			return (bp + radius > min && bp - radius < max);
 		}
 	}
 }
