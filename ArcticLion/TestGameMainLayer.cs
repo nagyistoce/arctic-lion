@@ -24,14 +24,14 @@ namespace ArcticLion
 			enemyShips = new List<EnemyShip> ();
 
 			bullets = new Queue<Bullet> ();
-			for (int i=0; i<20; i++) {
+			for (int i=0; i<40; i++) {
 				Bullet b = new Bullet ();
 				bullets.Enqueue (b);
 				Add (b);
 			}
 
 			enemyBullets = new Queue<EnemyBullet> ();
-			for (int i=0; i<20; i++) {
+			for (int i=0; i<40; i++) {
 				EnemyBullet b = new EnemyBullet ();
 				enemyBullets.Enqueue (b);
 				Add (b);
@@ -41,7 +41,7 @@ namespace ArcticLion
 //			enemyShips.Add (testEnemy);
 //			Add (testEnemy);
 
-			EnemyShip testEnemy3 = new TestGameEnemyShip3 ();
+			EnemyShip testEnemy3 = new TestGameEnemyShip3 (scene.Ship);
 			enemyShips.Add (testEnemy3);
 			Add (testEnemy3);
 		}
@@ -78,7 +78,7 @@ namespace ArcticLion
 				if (!bullets.Peek ().IsAlive) {
 					Bullet newBullet = bullets.Dequeue ();
 					Vector2 newBulletVelocity = Vector2.Normalize (mousePositionWorld - scene.Ship.Position);
-					newBulletVelocity *= 1000f;
+					newBulletVelocity *= 600f;
 					newBulletVelocity += scene.Ship.Velocity;
 					Vector2 shipYaw = new Vector2 ((float)Math.Cos (scene.Ship.Rotation), 
 					                               (float)Math.Sin (scene.Ship.Rotation));

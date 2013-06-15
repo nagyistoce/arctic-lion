@@ -37,10 +37,19 @@ namespace ArcticLion
 		{
 			base.Draw (gameTime, spriteBatch);
 
+			float cos = (float)Math.Cos (Parent.Rotation);
+			float sin = (float)Math.Sin (Parent.Rotation);
+
+			Vector2 worldPosition = new Vector2 (Position.X * cos - Position.Y * sin,
+			                                     Position.X * sin + Position.Y * cos);
+
+			worldPosition += Parent.Position;
+
 			spriteBatch.Draw(enemyShipPartTexture, 
-			                 Position + Parent.Position, 
-			                 null, Color.White, 
-			                 (float)Rotation,
+			                 worldPosition, 
+			                 null, 
+			                 Color.White,
+			                 (float)Parent.Rotation,
 			                 new Vector2(enemyShipPartTexture.Bounds.Center.X, enemyShipPartTexture.Bounds.Center.Y), 
 			                 1.0f,
 			                 SpriteEffects.None, 0f);
@@ -48,29 +57,23 @@ namespace ArcticLion
 
 		//TODO: Move to a collision detector?
 		//TODO: Optimize by comparing with all the bullets instead of just one
+		//TODO: Replace rotation matrices by simple Sin and Cos
 		public bool IsCollidingWith(Bullet bullet){
-			Rectangle bounds = enemyShipPartTexture.Bounds;
 			List<Vector2> vertices = new List<Vector2> (4);
-			float halfWidth = bounds.Width / 2;
-			float halfHeight = bounds.Height / 2;
+			float halfWidth = enemyShipPartTexture.Bounds.Width / 2;
+			float halfHeight = enemyShipPartTexture.Bounds.Height / 2;
 			vertices.Add (Position + new Vector2(-halfWidth, halfHeight)); //Lower Left
 			vertices.Add (Position + new Vector2(halfWidth, halfHeight)); //Lower Right
-			vertices.Add (Position + new Vector2(-halfWidth, -halfHeight)); //Upper Left
 			vertices.Add (Position + new Vector2(halfWidth, -halfHeight)); //Upper Right
-
-			Matrix rotationMatrix = new Matrix ();
-			double rot = this.Rotation;
-			rotationMatrix.Right = new Vector3 ((float)Math.Cos(rot), (float)-Math.Sin(rot), 0);
-			rotationMatrix.Up = new Vector3 ((float)Math.Sin(rot), (float)Math.Cos (rot), 0);
+			vertices.Add (Position + new Vector2(-halfWidth, -halfHeight)); //Upper Left
 	
-			Matrix vertexMatrix;
+			float cos = (float)Math.Cos (Parent.Rotation);
+			float sin = (float)Math.Sin (Parent.Rotation);
+		
 			List<Vector2> rotatedVertices = new List<Vector2> (4);
-			foreach (Vector2 v in vertices) {
-				vertexMatrix = new Matrix ();
-				vertexMatrix.M11 = v.X;
-				vertexMatrix.M21 = v.Y;
-				Matrix rotatedVertexMatrix = rotationMatrix * vertexMatrix;
-				rotatedVertices.Add(new Vector2(rotatedVertexMatrix.M11, rotatedVertexMatrix.M21));
+			for(int k=0; k<vertices.Count;k++){
+				rotatedVertices.Add(new Vector2 (vertices[k].X * cos - vertices[k].Y * sin,
+				                                 vertices[k].X * sin + vertices[k].Y * cos));
 			}
 
 			for (int k =0; k < 4; k++) {
@@ -87,8 +90,8 @@ namespace ArcticLion
 
 			//Testing last pair of vertices
 			return IsBulletProjectionInsideEdgeProjection (bullet,
-			                                               rotatedVertices [0],
-			                                               rotatedVertices [rotatedVertices.Count-1]);
+			                                               rotatedVertices [rotatedVertices.Count-1],
+			                                               rotatedVertices [0]);
 		}
 
 		private bool IsBulletProjectionInsideEdgeProjection(Bullet bullet, Vector2 v1, Vector2 v2){
@@ -107,7 +110,7 @@ namespace ArcticLion
 				min = vp2;
 				max = vp1;
 			}
-
+		
 			return bp + radius > min && bp - radius < max;
 		}
 	}

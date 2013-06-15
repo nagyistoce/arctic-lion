@@ -30,6 +30,7 @@ namespace ArcticLion
 				if (!p.isVisited) {
 					//TODO: Create a ship type depending on the parts
 					EnemyShip newEnemyShip = new TestGameEnemyShip2 ();
+					newEnemyShip.Rotation = Rotation;
 	
 					VisitPartRecursive(newEnemyShip, p);
 
