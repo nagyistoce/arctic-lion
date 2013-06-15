@@ -53,10 +53,10 @@ namespace ArcticLion
 			List<Vector2> vertices = new List<Vector2> (4);
 			float halfWidth = bounds.Width / 2;
 			float halfHeight = bounds.Height / 2;
-			vertices.Add (Position + new Vector2(-halfWidth, halfHeight)); //Upper Left
-			vertices.Add (Position + new Vector2(halfWidth, halfHeight)); //Upper Right
-			vertices.Add (Position + new Vector2(-halfWidth, -halfHeight)); //Lower Left
-			vertices.Add (Position + new Vector2(-halfWidth, -halfHeight)); //Lower Right
+			vertices.Add (Position + new Vector2(-halfWidth, halfHeight)); //Lower Left
+			vertices.Add (Position + new Vector2(halfWidth, halfHeight)); //Lower Right
+			vertices.Add (Position + new Vector2(-halfWidth, -halfHeight)); //Upper Left
+			vertices.Add (Position + new Vector2(halfWidth, -halfHeight)); //Upper Right
 
 			for (int k =0; k < 4; k++) {
 				vertices[k] += this.Parent.Position;
@@ -85,6 +85,7 @@ namespace ArcticLion
 					return false;
 			}
 
+			//TODO: Find out why it never reaches here
 			//Testing last pair of vertices
 			return IsBulletProjectionInsideEdgeProjection (bullet,
 			                                               rotatedVertices [0],
