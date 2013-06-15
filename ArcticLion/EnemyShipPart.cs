@@ -48,7 +48,7 @@ namespace ArcticLion
 
 		//TODO: Move to a collision detector?
 		//TODO: Optimize by comparing with all the bullets instead of just one
-		public bool IsCollidingWith(Bullet bullet, GameTime gameTime){
+		public bool IsCollidingWith(Bullet bullet){
 			Rectangle bounds = enemyShipPartTexture.Bounds;
 			List<Vector2> vertices = new List<Vector2> (4);
 			float halfWidth = bounds.Width / 2;
@@ -80,8 +80,7 @@ namespace ArcticLion
 			for (int k=0; k<rotatedVertices.Count-1; k++) {
 				bool isInProjection = IsBulletProjectionInsideEdgeProjection (bullet,
 				                                                              rotatedVertices [k],
-				                                                              rotatedVertices [k+1],
-				                                                              gameTime);
+				                                                              rotatedVertices [k+1]);
 				if (!isInProjection)
 					return false;
 			}
@@ -89,11 +88,10 @@ namespace ArcticLion
 			//Testing last pair of vertices
 			return IsBulletProjectionInsideEdgeProjection (bullet,
 			                                               rotatedVertices [0],
-			                                               rotatedVertices [rotatedVertices.Count-1],
-			                                               gameTime);
+			                                               rotatedVertices [rotatedVertices.Count-1]);
 		}
 
-		private bool IsBulletProjectionInsideEdgeProjection(Bullet bullet, Vector2 v1, Vector2 v2, GameTime gameTime){
+		private bool IsBulletProjectionInsideEdgeProjection(Bullet bullet, Vector2 v1, Vector2 v2){
 			Vector2 axis = Vector2.Normalize(v1 - v2);
 
 			float vp1 = Vector2.Dot (v1, axis);
@@ -111,11 +109,6 @@ namespace ArcticLion
 			}
 
 			return bp + radius > min && bp - radius < max;
-
-//			Vector2 bulletLastPosition = bullet.Position - bullet.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-//			Vector2 bulletInterpolatedPosition = bullet.Position - 0.5f * (bulletLastPosition - bullet.Position);
-//			float bip = Vector2.Dot (bulletInterpolatedPosition, axis);
-//			return (bip + radius > min && bip - radius < max);
 		}
 	}
 }

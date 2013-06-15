@@ -37,10 +37,13 @@ namespace ArcticLion
 				Add (b);
 			}
 
-			EnemyShip testEnemy = new TestGameEnemyShip ();
+//			EnemyShip testEnemy = new TestGameEnemyShip ();
+//			enemyShips.Add (testEnemy);
+//			Add (testEnemy);
 
-			enemyShips.Add (testEnemy);
-			Add (testEnemy);
+			EnemyShip testEnemy3 = new TestGameEnemyShip3 ();
+			enemyShips.Add (testEnemy3);
+			Add (testEnemy3);
 		}
 
 		public override void Update (GameTime gameTime)
@@ -109,7 +112,7 @@ namespace ArcticLion
 				foreach (EnemyShip es in enemyShipsCopy) {
 					if (b.IsAlive) {
 						foreach(EnemyShipPart p in es.Parts){
-							if(p.IsCollidingWith(b, gameTime)){
+							if(p.IsCollidingWith(b)){
 								b.IsAlive = false;
 								p.Health -= 1; //TODO: remove damage 
 								if(p.Health <= 0){
