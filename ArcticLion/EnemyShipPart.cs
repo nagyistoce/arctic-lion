@@ -94,6 +94,11 @@ namespace ArcticLion
 			                                               rotatedVertices [0]);
 		}
 
+		public static void Connect(EnemyShipPart part1, EnemyShipPart part2){
+			part1.ConnectedParts.Add (part2);
+			part2.ConnectedParts.Add (part1);
+		}
+
 		private bool IsBulletProjectionInsideEdgeProjection(Bullet bullet, Vector2 v1, Vector2 v2){
 			Vector2 axis = Vector2.Normalize(v1 - v2);
 

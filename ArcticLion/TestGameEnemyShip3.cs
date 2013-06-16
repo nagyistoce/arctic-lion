@@ -57,18 +57,12 @@ namespace ArcticLion
 			rightArm.Position = new Vector2 (32, 104);
 			tail.Position = new Vector2 (-64, 0);
 
-			body.ConnectedParts.Add (tail);
-			body.ConnectedParts.Add (leftJoint);
-			body.ConnectedParts.Add (rightJoint);
-			body.ConnectedParts.Add (core);
-			tail.ConnectedParts.Add (body);
-			core.ConnectedParts.Add (body);
-			leftJoint.ConnectedParts.Add (body);
-			leftJoint.ConnectedParts.Add (leftArm);
-			rightJoint.ConnectedParts.Add (body);
-			rightJoint.ConnectedParts.Add (rightArm);
-			leftArm.ConnectedParts.Add (leftJoint);
-			rightArm.ConnectedParts.Add (rightJoint);
+			EnemyShipPart.Connect (body, tail);
+			EnemyShipPart.Connect (body, leftJoint);
+			EnemyShipPart.Connect (body, rightJoint);
+			EnemyShipPart.Connect (body, core);
+			EnemyShipPart.Connect (leftJoint, leftArm);
+			EnemyShipPart.Connect (rightJoint, rightArm);
 
 			Add (body);
 			Add (core);
@@ -77,14 +71,6 @@ namespace ArcticLion
 			Add (rightJoint);
 			Add (leftArm);
 			Add (rightArm);
-
-			Parts.Add (body);
-			Parts.Add (core);
-			Parts.Add (tail);
-			Parts.Add (leftJoint);
-			Parts.Add (rightJoint);
-			Parts.Add (leftArm);
-			Parts.Add (rightArm);
 		}
 	}
 }

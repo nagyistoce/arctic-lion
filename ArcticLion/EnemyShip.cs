@@ -14,6 +14,14 @@ namespace ArcticLion
 			Parts = new List<EnemyShipPart>();
 		}
 
+		public override void Add (Node newNode)
+		{
+			base.Add (newNode);
+			if (newNode is EnemyShipPart) {
+				Parts.Add((EnemyShipPart) newNode);
+			}
+		}
+
 		public List<EnemyShip> DestroyPart(EnemyShipPart destroyedPart)
 		{
 			List<EnemyShip> newEnemies = new List<EnemyShip> ();

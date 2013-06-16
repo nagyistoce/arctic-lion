@@ -47,7 +47,7 @@ namespace ArcticLion
 			}
 		}
 
-		public void Add(Node newNode)
+		public virtual void Add(Node newNode)
 		{
 			newNode.Parent = this;
 			children.Add (newNode);
