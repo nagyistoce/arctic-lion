@@ -5,9 +5,7 @@ namespace ArcticLion
 {
 	public class TestGameEnemyShip2 : EnemyShip
 	{
-		public Node Target { get; set;}
-
-		public TestGameEnemyShip2 ()
+		public TestGameEnemyShip2 (Node target) : base(target)
 		{
 		}
 

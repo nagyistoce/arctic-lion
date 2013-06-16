@@ -5,12 +5,8 @@ namespace ArcticLion
 {
 	public class TestGameEnemyShip3 : EnemyShip
 	{
-		Node target;
-
-		public TestGameEnemyShip3 (Node target)
+		public TestGameEnemyShip3 (Node target) : base(target)
 		{
-			this.target = target;
-
 			Build ();
 		}
 
@@ -25,10 +21,10 @@ namespace ArcticLion
 			Velocity *= 200f;
 
 			Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-			Position += 100f*Vector2.Normalize(target.Position - Position)*(float)gameTime.ElapsedGameTime.TotalSeconds;
+			Position += 100f*Vector2.Normalize(Target.Position - Position)*(float)gameTime.ElapsedGameTime.TotalSeconds;
 
-			double rotationAngle = Math.Atan2 ((target.Position.Y - Position.Y),
-			                                   (target.Position.X - Position.X));
+			double rotationAngle = Math.Atan2 ((Target.Position.Y - Position.Y),
+			                                   (Target.Position.X - Position.X));
 
 			Rotation = rotationAngle;
 		}

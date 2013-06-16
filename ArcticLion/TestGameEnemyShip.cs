@@ -5,7 +5,7 @@ namespace ArcticLion
 {
 	public class TestGameEnemyShip : EnemyShip
 	{
-		public TestGameEnemyShip ()
+		public TestGameEnemyShip (Node target) : base(target)
 		{
 			EnemyShipPart part1 = new EnemyShipPart ("part");
 			EnemyShipPart part2 = new EnemyShipPart ("part");

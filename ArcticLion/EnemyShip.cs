@@ -6,11 +6,13 @@ namespace ArcticLion
 {
 	public class EnemyShip : Node
 	{
+		public Node Target { get; set;}
 		public List<EnemyShipPart> Parts { get; protected set; }
-		public Vector2 Velocity { get; set;}
+		public Vector2 Velocity {get; set;}
 
-		public EnemyShip ()
+		public EnemyShip (Node target)
 		{
+			this.Target = target;
 			Parts = new List<EnemyShipPart>();
 		}
 
@@ -37,7 +39,7 @@ namespace ArcticLion
 			foreach (EnemyShipPart p in Parts) {
 				if (!p.isVisited) {
 					//TODO: Create a ship type depending on the parts
-					EnemyShip newEnemyShip = new TestGameEnemyShip2 ();
+					EnemyShip newEnemyShip = new TestGameEnemyShip2 (Target);
 					newEnemyShip.Rotation = Rotation;
 	
 					VisitPartRecursive(newEnemyShip, p);

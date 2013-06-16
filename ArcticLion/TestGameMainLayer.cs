@@ -95,7 +95,6 @@ namespace ArcticLion
 						EnemyBullet newEnemyBullet = enemyBullets.Dequeue ();
 						Vector2 newBulletVelocity = Vector2.Normalize (scene.Ship.Position - es.Position);
 						newBulletVelocity *= 300f;
-						newBulletVelocity += es.Velocity;
 						newEnemyBullet.Shoot (es.Position, newBulletVelocity);
 						enemyBullets.Enqueue (newEnemyBullet);
 						enemyShipFireDelay = 0.25d;
@@ -119,7 +118,7 @@ namespace ArcticLion
 									List<EnemyShip> newEnemies = es.DestroyPart (p);
 								
 									foreach (EnemyShip newEnemyShip in newEnemies) {
-										((TestGameEnemyShip2)newEnemyShip).Target = scene.Ship;
+										newEnemyShip.Target = scene.Ship;
 										enemyShips.Add (newEnemyShip);
 										Add (newEnemyShip);
 									}						
