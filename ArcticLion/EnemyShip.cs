@@ -9,11 +9,30 @@ namespace ArcticLion
 		public Node Target { get; set;}
 		public List<EnemyShipPart> Parts { get; protected set; }
 		public Vector2 Velocity {get; set;}
+		public MovingBehavior MovingBehavior { get; set;}
+		public ShootingBehavior ShootingBehavior { get; set;}
+
+		public Queue<EnemyBullet> EnemyBullets;
+		private const int MaxNumberOfBullets = 40;
 
 		public EnemyShip (Node target)
 		{
 			this.Target = target;
 			Parts = new List<EnemyShipPart>();
+
+			EnemyBullets = new Queue<EnemyBullet> ();
+			for (int i=0; i<MaxNumberOfBullets; i++) {
+				EnemyBullet b = new EnemyBullet ();
+				EnemyBullets.Enqueue (b);
+				Add (b);
+			}
+		}
+
+		public override void Update (GameTime gameTime)
+		{
+			base.Update (gameTime);
+			if(ShootingBehavior != null) ShootingBehavior.Apply (this, EnemyBullets, gameTime);
+			if(MovingBehavior != null) MovingBehavior.Apply (this, gameTime);
 		}
 
 		public override void Add (Node newNode)

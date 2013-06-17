@@ -92,6 +92,11 @@
     <Compile Include="TestGameEnemyShip.cs" />
     <Compile Include="TestGameEnemyShip2.cs" />
     <Compile Include="TestGameEnemyShip3.cs" />
+    <Compile Include="EnemyShipFactory.cs" />
+    <Compile Include="CircularMovingBehavior.cs" />
+    <Compile Include="ContinuousShootingBehavior.cs" />
+    <Compile Include="MovingBehavior.cs" />
+    <Compile Include="ShootingBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

@@ -12,6 +12,8 @@ namespace ArcticLion
 		Texture2D enemyShipPartTexture;
 		public List<EnemyShipPart> ConnectedParts{ get; private set;}
 		public int Health { get; set; }
+		public int Weight { get; set;}
+
 		public bool isVisited;
 
 		public Vector2 Velocity{ get; set;}

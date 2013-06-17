@@ -12,10 +12,7 @@ namespace ArcticLion
 		TestGameScene scene;
 
 		List<EnemyShip> enemyShips;
-		private double enemyShipFireDelay = 0.25d; //TODO: move logic to enemy ship?
-		Queue<Bullet> bullets;
-//TODO: change to List?
-		Queue<EnemyBullet> enemyBullets;
+		Queue<Bullet> bullets; //TODO: change to List?
 
 		public TestGameMainLayer (TestGameScene scene) : base(scene)
 		{
@@ -27,13 +24,6 @@ namespace ArcticLion
 			for (int i=0; i<40; i++) {
 				Bullet b = new Bullet ();
 				bullets.Enqueue (b);
-				Add (b);
-			}
-
-			enemyBullets = new Queue<EnemyBullet> ();
-			for (int i=0; i<40; i++) {
-				EnemyBullet b = new EnemyBullet ();
-				enemyBullets.Enqueue (b);
 				Add (b);
 			}
 
@@ -66,10 +56,12 @@ namespace ArcticLion
 				}
 			}
 
-			foreach (Bullet b in enemyBullets) {
-				//TODO: get the bounds?
-				if (b.IsAlive && !scene.Camera.IsInView (b.Position, new Rectangle (0, 0, 8, 8))) {
-					b.IsAlive = false;
+			foreach(EnemyShip es in enemyShips){
+				foreach (Bullet b in es.EnemyBullets) {
+					//TODO: get the bounds?
+					if (b.IsAlive && !scene.Camera.IsInView (b.Position, new Rectangle (0, 0, 8, 8))) {
+						b.IsAlive = false;
+					}
 				}
 			}
 
@@ -88,19 +80,19 @@ namespace ArcticLion
 			}
 
 			//TODO: move shooting logic to enemy AI?
-			enemyShipFireDelay -= gameTime.ElapsedGameTime.TotalSeconds;
-			if (enemyShipFireDelay <= 0) {
-				foreach (EnemyShip es in enemyShips) {
-					if (!enemyBullets.Peek ().IsAlive) {
-						EnemyBullet newEnemyBullet = enemyBullets.Dequeue ();
-						Vector2 newBulletVelocity = Vector2.Normalize (scene.Ship.Position - es.Position);
-						newBulletVelocity *= 300f;
-						newEnemyBullet.Shoot (es.Position, newBulletVelocity);
-						enemyBullets.Enqueue (newEnemyBullet);
-						enemyShipFireDelay = 0.25d;
-					}
-				}
-			}
+//			enemyShipFireDelay -= gameTime.ElapsedGameTime.TotalSeconds;
+//			if (enemyShipFireDelay <= 0) {
+//				foreach (EnemyShip es in enemyShips) {
+//					if (!enemyBullets.Peek ().IsAlive) {
+//						EnemyBullet newEnemyBullet = enemyBullets.Dequeue ();
+//						Vector2 newBulletVelocity = Vector2.Normalize (scene.Ship.Position - es.Position);
+//						newBulletVelocity *= 300f;
+//						newEnemyBullet.Shoot (es.Position, newBulletVelocity);
+//						enemyBullets.Enqueue (newEnemyBullet);
+//						enemyShipFireDelay = 0.25d;
+//					}
+//				}
+//			}
 		}
 
 		private void DetectCollisions (GameTime gameTime)

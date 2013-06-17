@@ -8,25 +8,13 @@ namespace ArcticLion
 		public TestGameEnemyShip3 (Node target) : base(target)
 		{
 			Build ();
+			MovingBehavior = new CircularMovingBehavior ();
+			ShootingBehavior = new ContinuousShootingBehavior ();
 		}
 
 		public override void Update (GameTime gameTime)
 		{
 			base.Update (gameTime);
-
-			double totalTime = gameTime.TotalGameTime.TotalSeconds;
-
-			Velocity = new Vector2 (-(float)Math.Sin(totalTime), 
-			                        (float)Math.Cos (totalTime));
-			Velocity *= 200f;
-
-			Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-			Position += 100f*Vector2.Normalize(Target.Position - Position)*(float)gameTime.ElapsedGameTime.TotalSeconds;
-
-			double rotationAngle = Math.Atan2 ((Target.Position.Y - Position.Y),
-			                                   (Target.Position.X - Position.X));
-
-			Rotation = rotationAngle;
 		}
 
 		private void Build(){
