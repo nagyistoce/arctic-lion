@@ -10,7 +10,7 @@ namespace ArcticLion
 	{
 		#region Fields
 		private static long static_id;
-		protected long id;
+		public long ID { get; private set;}
 		List<Node> children;
 		#endregion
 
@@ -22,7 +22,7 @@ namespace ArcticLion
 
 		public Node ()
 		{
-			id = ++static_id;
+			ID = ++static_id;
 			children = new List<Node> ();
 		}
 
@@ -74,7 +74,7 @@ namespace ArcticLion
 			if (obj != null) {
 				if (obj is Node) {
 					Node other = (Node)obj;
-					return other.id == this.id;
+					return other.ID == this.ID;
 				}
 			}
 			return false;
@@ -82,7 +82,7 @@ namespace ArcticLion
 
 		public override int GetHashCode ()
 		{
-			return (int)id;
+			return (int)ID;
 		}
 	}
 }

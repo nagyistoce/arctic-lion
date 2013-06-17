@@ -58,7 +58,7 @@ namespace ArcticLion
 			foreach (EnemyShipPart p in Parts) {
 				if (!p.isVisited) {
 					//TODO: Create a ship type depending on the parts
-					EnemyShip newEnemyShip = new TestGameEnemyShip2 (Target);
+					EnemyShip newEnemyShip = EnemyShipFactory.CreateTestGameEnemyShip2 (Target);
 					newEnemyShip.Rotation = Rotation;
 	
 					VisitPartRecursive(newEnemyShip, p);

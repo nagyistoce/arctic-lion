@@ -90,13 +90,12 @@
     <Compile Include="EnemyShip.cs" />
     <Compile Include="EnemyShipPart.cs" />
     <Compile Include="TestGameEnemyShip.cs" />
-    <Compile Include="TestGameEnemyShip2.cs" />
-    <Compile Include="TestGameEnemyShip3.cs" />
     <Compile Include="EnemyShipFactory.cs" />
     <Compile Include="CircularMovingBehavior.cs" />
     <Compile Include="ContinuousShootingBehavior.cs" />
     <Compile Include="MovingBehavior.cs" />
     <Compile Include="ShootingBehavior.cs" />
+    <Compile Include="PendulumMovingBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

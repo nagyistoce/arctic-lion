@@ -27,11 +27,7 @@ namespace ArcticLion
 				Add (b);
 			}
 
-//			EnemyShip testEnemy = new TestGameEnemyShip ();
-//			enemyShips.Add (testEnemy);
-//			Add (testEnemy);
-
-			EnemyShip testEnemy3 = new TestGameEnemyShip3 (scene.Ship);
+			EnemyShip testEnemy3 = EnemyShipFactory.CreateTestGameEnemyShip3 (scene.Ship);
 			enemyShips.Add (testEnemy3);
 			Add (testEnemy3);
 		}
@@ -78,21 +74,6 @@ namespace ArcticLion
 					bullets.Enqueue (newBullet);
 				}
 			}
-
-			//TODO: move shooting logic to enemy AI?
-//			enemyShipFireDelay -= gameTime.ElapsedGameTime.TotalSeconds;
-//			if (enemyShipFireDelay <= 0) {
-//				foreach (EnemyShip es in enemyShips) {
-//					if (!enemyBullets.Peek ().IsAlive) {
-//						EnemyBullet newEnemyBullet = enemyBullets.Dequeue ();
-//						Vector2 newBulletVelocity = Vector2.Normalize (scene.Ship.Position - es.Position);
-//						newBulletVelocity *= 300f;
-//						newEnemyBullet.Shoot (es.Position, newBulletVelocity);
-//						enemyBullets.Enqueue (newEnemyBullet);
-//						enemyShipFireDelay = 0.25d;
-//					}
-//				}
-//			}
 		}
 
 		private void DetectCollisions (GameTime gameTime)
