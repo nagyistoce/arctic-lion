@@ -58,7 +58,8 @@ namespace ArcticLion
 			foreach (EnemyShipPart p in Parts) {
 				if (!p.isVisited) {
 					//TODO: Create a ship type depending on the parts
-					EnemyShip newEnemyShip = EnemyShipFactory.CreateTestGameEnemyShip2 (Target);
+					EnemyShip newEnemyShip = EnemyShipFactory.GetInstance().CreateTestGameEnemyShip2 (Target);
+					EnemyShipFactory.GetInstance ().LoadContentFor (newEnemyShip); //TODO: Super Bad Design LOL
 					newEnemyShip.Rotation = Rotation;
 	
 					VisitPartRecursive(newEnemyShip, p);
@@ -83,7 +84,6 @@ namespace ArcticLion
 		{
 			if (!part.isVisited) {
 				ship.Add (part);
-				ship.Parts.Add (part);
 				part.isVisited = true;
 				foreach (EnemyShipPart neighbor in part.ConnectedParts) {
 					if(!neighbor.isVisited){

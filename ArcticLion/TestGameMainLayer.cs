@@ -13,6 +13,8 @@ namespace ArcticLion
 
 		List<EnemyShip> enemyShips;
 		Queue<Bullet> bullets; //TODO: change to List?
+		const double FireDelay = 0.1d;
+		double fireDelayAccumulator = 0;
 
 		public TestGameMainLayer (TestGameScene scene) : base(scene)
 		{
@@ -27,7 +29,7 @@ namespace ArcticLion
 				Add (b);
 			}
 
-			EnemyShip testEnemy3 = EnemyShipFactory.CreateTestGameEnemyShip3 (scene.Ship);
+			EnemyShip testEnemy3 = EnemyShipFactory.GetInstance().CreateTestGameEnemyShip3 (scene.Ship);
 			enemyShips.Add (testEnemy3);
 			Add (testEnemy3);
 		}
@@ -61,9 +63,10 @@ namespace ArcticLion
 				}
 			}
 
+			fireDelayAccumulator += gameTime.ElapsedGameTime.TotalSeconds;
 			MouseState ms = Mouse.GetState ();
 			if (ms.LeftButton == ButtonState.Pressed) {
-				if (!bullets.Peek ().IsAlive) {
+				if (!bullets.Peek ().IsAlive && fireDelayAccumulator >= FireDelay) {
 					Bullet newBullet = bullets.Dequeue ();
 					Vector2 newBulletVelocity = Vector2.Normalize (mousePositionWorld - scene.Ship.Position);
 					newBulletVelocity *= 600f;
@@ -72,6 +75,7 @@ namespace ArcticLion
 					                               (float)Math.Sin (scene.Ship.Rotation));
 					newBullet.Shoot (scene.Ship.Position + 45 * shipYaw, newBulletVelocity);
 					bullets.Enqueue (newBullet);
+					fireDelayAccumulator = 0;
 				}
 			}
 		}
@@ -94,7 +98,7 @@ namespace ArcticLion
 										newEnemyShip.Target = scene.Ship;
 										enemyShips.Add (newEnemyShip);
 										Add (newEnemyShip);
-									}						
+									}			
 
 									enemyShips.Remove (es);
 									es.Kill ();

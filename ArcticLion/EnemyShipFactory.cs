@@ -1,11 +1,29 @@
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace ArcticLion
 {
 	public class EnemyShipFactory
 	{
-		public static EnemyShip CreateTestGameEnemyShip2(Node target){
+		private static EnemyShipFactory instance;
+		private ContentManager content;
+
+		private EnemyShipFactory (){
+		}
+
+		public void Initialize(ContentManager content){
+			this.content = content;
+		}
+
+		public static EnemyShipFactory GetInstance(){
+			if (instance == null) {
+				instance = new EnemyShipFactory ();
+			}
+			return instance;
+		}
+
+		public EnemyShip CreateTestGameEnemyShip2(Node target){
 			EnemyShip newEnemyShip = new EnemyShip(target);
 
 			newEnemyShip.MovingBehavior = new PendulumMovingBehavior ();
@@ -14,7 +32,7 @@ namespace ArcticLion
 			return newEnemyShip;
 		}
 
-		public static EnemyShip CreateTestGameEnemyShip3(Node target){
+		public EnemyShip CreateTestGameEnemyShip3(Node target){
 			EnemyShip newEnemyShip = new EnemyShip(target);
 
 			EnemyShipPart body = new EnemyShipPart ("test_part_body");
@@ -25,13 +43,13 @@ namespace ArcticLion
 			EnemyShipPart rightArm = new EnemyShipPart ("test_part_arm");
 			EnemyShipPart tail = new EnemyShipPart ("test_part_tail");
 
-			body.Health = 100;
-			core.Health = 150;
-			leftJoint.Health = 50;
-			rightJoint.Health = 50;
-			leftArm.Health = 100;
-			rightArm.Health = 100;
-			tail.Health = 100;
+			body.Health = 20;
+			core.Health = 15;
+			leftJoint.Health = 3;
+			rightJoint.Health = 3;
+			leftArm.Health = 10;
+			rightArm.Health = 10;
+			tail.Health = 5;
 
 			core.Position = new Vector2 (64, 0);
 			leftJoint.Position = new Vector2 (0, -64);
@@ -59,6 +77,10 @@ namespace ArcticLion
 			newEnemyShip.ShootingBehavior = new ContinuousShootingBehavior ();
 
 			return newEnemyShip;
+		}
+
+		public void LoadContentFor(EnemyShip enemyShip){
+			enemyShip.LoadContent (content);
 		}
 	}
 }

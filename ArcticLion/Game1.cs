@@ -35,7 +35,6 @@ namespace ArcticLion
 
 		public Game1 ()
 		{
-
 			graphics = new GraphicsDeviceManager (this);
 			
 			Content.RootDirectory = "Content";
@@ -45,10 +44,11 @@ namespace ArcticLion
 			graphics.PreferredBackBufferHeight = 640;
 			graphics.PreferredBackBufferWidth = 960;
 
-			director = new Director (this);
-
 			//TODO: draw a cursor
 			this.IsMouseVisible = true;
+
+			EnemyShipFactory.GetInstance ().Initialize (Content);
+			director = new Director (this);
 		}
 
 		/// <summary>

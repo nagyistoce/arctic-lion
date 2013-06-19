@@ -1,12 +1,15 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="17/06/2013 4:50:59 AM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="18/06/2013 11:37:21 PM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/Bullet.cs">
+    <Files>
+      <File FileName="ArcticLion/Bullet.cs" Line="40" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="ArcticLion" expanded="True">
             <Node name="Content" expanded="True" />
-            <Node name="TestGameEnemyShip.cs" selected="True" />
+            <Node name="Bullet.cs" selected="True" />
           </Node>
         </State>
       </Pad>
@@ -15,8 +18,5 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
-    <Watch file="ArcticLion/EnemyShip.cs" line="36" offsetX="396" offsetY="525" expression="Parts" liveUpdate="False" />
-    <Watch file="ArcticLion/EnemyShip.cs" line="36" offsetX="396" offsetY="525" expression="Parts" liveUpdate="False" />
-  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

@@ -19,8 +19,6 @@ namespace ArcticLion
 				NSApplication.SharedApplication.Delegate = new AppDelegate ();
 				NSApplication.Main (args);
 			}
-
-
 		}
 	}
 
