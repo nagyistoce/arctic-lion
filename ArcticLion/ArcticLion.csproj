@@ -77,25 +77,24 @@
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="Director.cs" />
-    <Compile Include="Scene.cs" />
-    <Compile Include="Node.cs" />
-    <Compile Include="Layer.cs" />
     <Compile Include="Ship.cs" />
-    <Compile Include="TestGameScene.cs" />
-    <Compile Include="Camera2D.cs" />
-    <Compile Include="Projectile.cs" />
-    <Compile Include="Bullet.cs" />
-    <Compile Include="TestGameMainLayer.cs" />
-    <Compile Include="EnemyShip.cs" />
-    <Compile Include="EnemyShipPart.cs" />
-    <Compile Include="TestGameEnemyShip.cs" />
-    <Compile Include="EnemyShipFactory.cs" />
-    <Compile Include="CircularMovingBehavior.cs" />
-    <Compile Include="ContinuousShootingBehavior.cs" />
-    <Compile Include="MovingBehavior.cs" />
-    <Compile Include="ShootingBehavior.cs" />
-    <Compile Include="PendulumMovingBehavior.cs" />
+    <Compile Include="Enemy\EnemyShip.cs" />
+    <Compile Include="Enemy\CircularMovingBehavior.cs" />
+    <Compile Include="Enemy\EnemyShipFactory.cs" />
+    <Compile Include="Enemy\EnemyShipPart.cs" />
+    <Compile Include="Enemy\ContinuousShootingBehavior.cs" />
+    <Compile Include="Enemy\MovingBehavior.cs" />
+    <Compile Include="Enemy\PendulumMovingBehavior.cs" />
+    <Compile Include="Enemy\ShootingBehavior.cs" />
+    <Compile Include="Scenes\TestGameScene.cs" />
+    <Compile Include="Scenes\TestGameMainLayer.cs" />
+    <Compile Include="Projectile\Projectile.cs" />
+    <Compile Include="Projectile\Bullet.cs" />
+    <Compile Include="Game Structure\Director.cs" />
+    <Compile Include="Game Structure\Layer.cs" />
+    <Compile Include="Game Structure\Scene.cs" />
+    <Compile Include="Game Structure\Node.cs" />
+    <Compile Include="Rendering\Camera2D.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -130,5 +129,12 @@
     <BundleResource Include="Content\test_part_tail.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Enemy\" />
+    <Folder Include="Scenes\" />
+    <Folder Include="Projectile\" />
+    <Folder Include="Game Structure\" />
+    <Folder Include="Rendering\" />
   </ItemGroup>
 </Project>
