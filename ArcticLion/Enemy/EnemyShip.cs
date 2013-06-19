@@ -58,13 +58,12 @@ namespace ArcticLion
 			foreach (EnemyShipPart p in Parts) {
 				if (!p.isVisited) {
 					//TODO: Create a ship type depending on the parts
-					EnemyShip newEnemyShip = EnemyShipFactory.GetInstance().CreateTestGameEnemyShip2 (Target);
+					EnemyShip newEnemyShip = EnemyShipFactory.GetInstance ().CreateEnemyShip (Target, Parts);
 					EnemyShipFactory.GetInstance ().LoadContentFor (newEnemyShip); //TODO: Super Bad Design LOL
-					newEnemyShip.Rotation = Rotation;
-	
+
 					VisitPartRecursive(newEnemyShip, p);
 
-					//TODO: test check this crap, supposed to reorganize part positions
+					//TODO: test check this crap, supposed to reorganize parts positions
 					foreach (EnemyShipPart newEnemyShipPart in newEnemyShip.Parts) {
 						if (newEnemyShipPart != p) {
 							newEnemyShipPart.Position = newEnemyShipPart.Position - p.Position; 
@@ -72,6 +71,8 @@ namespace ArcticLion
 					}
 					newEnemyShip.Position = this.Position + p.Position;
 					p.Position = Vector2.Zero;
+
+					newEnemyShip.Rotation = Rotation;
 
 					newEnemies.Add (newEnemyShip);
 				}

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
@@ -21,6 +22,22 @@ namespace ArcticLion
 				instance = new EnemyShipFactory ();
 			}
 			return instance;
+		}
+
+		public EnemyShip CreateEnemyShip(Node target, List<EnemyShipPart> parts){
+			EnemyShipPart dominantPart = parts[0];
+
+			foreach (EnemyShipPart p in parts) {
+				if (p.Weight > dominantPart.Weight) {
+					dominantPart = p;
+				}
+			}
+
+			EnemyShip newEnemyShip = new EnemyShip (target);
+			newEnemyShip.MovingBehavior = dominantPart.PreferredMovingBehavior;
+			newEnemyShip.ShootingBehavior = dominantPart.PreferredShootingBehavior;
+
+			return newEnemyShip;
 		}
 
 		public EnemyShip CreateTestGameEnemyShip1(Node target){
@@ -83,6 +100,19 @@ namespace ArcticLion
 			rightArm.Position = new Vector2 (32, 104);
 			tail.Position = new Vector2 (-64, 0);
 
+			body.Weight = 100;
+			core.Weight = 50;
+			leftJoint.Weight = 1;
+			rightJoint.Weight = 1;
+			leftArm.Weight = 5;
+			rightArm.Weight = 5;
+			tail.Weight = 3;
+
+			EnemyShipPart.AssignBehavior (new CircularMovingBehavior(), body, core, tail);
+			EnemyShipPart.AssignBehavior (new PendulumMovingBehavior(), tail, leftJoint, rightJoint, leftArm, rightArm);
+
+			EnemyShipPart.AssignBehavior (new ContinuousShootingBehavior(), body, core, leftArm, rightArm);
+
 			EnemyShipPart.Connect (body, tail);
 			EnemyShipPart.Connect (body, leftJoint);
 			EnemyShipPart.Connect (body, rightJoint);
@@ -109,4 +139,3 @@ namespace ArcticLion
 		}
 	}
 }
-

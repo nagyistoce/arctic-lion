@@ -11,8 +11,10 @@ namespace ArcticLion
 		String assetName;
 		Texture2D enemyShipPartTexture;
 		public List<EnemyShipPart> ConnectedParts{ get; private set;}
-		public int Health { get; set; }
+		public int Health { get; set;}
 		public int Weight { get; set;}
+		public MovingBehavior PreferredMovingBehavior { get; set;}
+		public ShootingBehavior PreferredShootingBehavior { get; set;}
 
 		public bool isVisited;
 
@@ -99,6 +101,18 @@ namespace ArcticLion
 		public static void Connect(EnemyShipPart part1, EnemyShipPart part2){
 			part1.ConnectedParts.Add (part2);
 			part2.ConnectedParts.Add (part1);
+		}
+
+		public static void AssignBehavior(MovingBehavior mb, params EnemyShipPart[] parts){
+			foreach (EnemyShipPart p in parts) {
+				p.PreferredMovingBehavior = mb;
+			}
+		}
+
+		public static void AssignBehavior(ShootingBehavior sb, params EnemyShipPart[] parts){
+			foreach (EnemyShipPart p in parts) {
+				p.PreferredShootingBehavior = sb;
+			}
 		}
 
 		private bool IsBulletProjectionInsideEdgeProjection(Bullet bullet, Vector2 v1, Vector2 v2){
