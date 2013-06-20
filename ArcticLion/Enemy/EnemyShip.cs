@@ -9,6 +9,7 @@ namespace ArcticLion
 		public Node Target { get; set;}
 		public List<EnemyShipPart> Parts { get; protected set; }
 		public Vector2 Velocity {get; set;}
+		public Vector2 Acceleration { get; set; }
 		public MovingBehavior MovingBehavior { get; set;}
 		public ShootingBehavior ShootingBehavior { get; set;}
 
@@ -57,11 +58,11 @@ namespace ArcticLion
 
 			foreach (EnemyShipPart p in Parts) {
 				if (!p.isVisited) {
-					//TODO: Create a ship type depending on the parts
-					EnemyShip newEnemyShip = EnemyShipFactory.GetInstance ().CreateEnemyShip (Target, Parts);
-					EnemyShipFactory.GetInstance ().LoadContentFor (newEnemyShip); //TODO: Super Bad Design LOL
+					EnemyShip newEnemyShip = new EnemyShip (Target);
 
-					VisitPartRecursive(newEnemyShip, p);
+					VisitPartRecursive(newEnemyShip, p); //This adds parts to the ship
+
+					EnemyShipFactory.GetInstance ().LoadContentFor (newEnemyShip); //TODO: Super Bad Design LOL
 
 					//TODO: test check this crap, supposed to reorganize parts positions
 					foreach (EnemyShipPart newEnemyShipPart in newEnemyShip.Parts) {
@@ -74,6 +75,8 @@ namespace ArcticLion
 
 					newEnemyShip.Rotation = Rotation;
 
+					newEnemyShip.ResetBehavior ();
+
 					newEnemies.Add (newEnemyShip);
 				}
 			}
@@ -81,6 +84,7 @@ namespace ArcticLion
 			return newEnemies;
 		}
 
+		//TODO: clean this shit
 		private void VisitPartRecursive(EnemyShip ship, EnemyShipPart part)
 		{
 			if (!part.isVisited) {
@@ -92,6 +96,19 @@ namespace ArcticLion
 					}
 				}
 			}
+		}
+
+		private void ResetBehavior(){
+			EnemyShipPart dominantPart = Parts[0];
+
+			foreach (EnemyShipPart p in Parts) {
+				if (p.Weight > dominantPart.Weight) {
+					dominantPart = p;
+				}
+			}
+
+			MovingBehavior = dominantPart.PreferredMovingBehavior;
+			ShootingBehavior = dominantPart.PreferredShootingBehavior;
 		}
 	}
 }

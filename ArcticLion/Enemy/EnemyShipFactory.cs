@@ -24,22 +24,6 @@ namespace ArcticLion
 			return instance;
 		}
 
-		public EnemyShip CreateEnemyShip(Node target, List<EnemyShipPart> parts){
-			EnemyShipPart dominantPart = parts[0];
-
-			foreach (EnemyShipPart p in parts) {
-				if (p.Weight > dominantPart.Weight) {
-					dominantPart = p;
-				}
-			}
-
-			EnemyShip newEnemyShip = new EnemyShip (target);
-			newEnemyShip.MovingBehavior = dominantPart.PreferredMovingBehavior;
-			newEnemyShip.ShootingBehavior = dominantPart.PreferredShootingBehavior;
-
-			return newEnemyShip;
-		}
-
 		public EnemyShip CreateTestGameEnemyShip1(Node target){
 			EnemyShip newEnemyShip = new EnemyShip(target);
 
@@ -109,7 +93,8 @@ namespace ArcticLion
 			tail.Weight = 3;
 
 			EnemyShipPart.AssignBehavior (new CircularMovingBehavior(), body, core, tail);
-			EnemyShipPart.AssignBehavior (new PendulumMovingBehavior(), tail, leftJoint, rightJoint, leftArm, rightArm);
+			EnemyShipPart.AssignBehavior (new PendulumMovingBehavior(), tail, leftJoint, rightJoint);
+			EnemyShipPart.AssignBehavior (new SuicidalMovingBehavior(target), leftArm, rightArm);
 
 			EnemyShipPart.AssignBehavior (new ContinuousShootingBehavior(), body, core, leftArm, rightArm);
 

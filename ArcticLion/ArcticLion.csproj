@@ -95,6 +95,7 @@
     <Compile Include="Game Structure\Scene.cs" />
     <Compile Include="Game Structure\Node.cs" />
     <Compile Include="Rendering\Camera2D.cs" />
+    <Compile Include="Enemy\SuicidalMovingBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
