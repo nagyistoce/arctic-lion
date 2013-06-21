@@ -70,7 +70,15 @@ namespace ArcticLion
 							newEnemyShipPart.Position = newEnemyShipPart.Position - p.Position; 
 						}
 					}
-					newEnemyShip.Position = this.Position + p.Position;
+
+					float cos = (float)Math.Cos (Rotation);
+					float sin = (float)Math.Sin (Rotation);
+
+					newEnemyShip.Position = new Vector2 (p.Position.X * cos - p.Position.Y * sin,
+					                                     p.Position.X * sin + p.Position.Y * cos);
+
+					newEnemyShip.Position += this.Position;
+
 					p.Position = Vector2.Zero;
 
 					newEnemyShip.Rotation = Rotation;
