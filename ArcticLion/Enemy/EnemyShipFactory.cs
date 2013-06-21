@@ -1,4 +1,5 @@
 using System;
+using System.Xml;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -116,6 +117,86 @@ namespace ArcticLion
 			newEnemyShip.MovingBehavior = new CircularMovingBehavior ();
 			newEnemyShip.ShootingBehavior = new ContinuousShootingBehavior ();
 
+			return newEnemyShip;
+		}
+
+		public EnemyShip CreateFromXML(Node target, String xml){
+			XmlTextReader reader = new XmlTextReader (xml);
+
+			EnemyShip newEnemyShip = new EnemyShip (target);
+
+			while (reader.Read()) {
+				if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals ("EnemyShip")) {
+
+					//Read parts
+					while (reader.Read()) {
+						if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals ("EnemyShipPart")) {
+							string name = reader.GetAttribute ("name");
+							string asset = reader.GetAttribute ("asset");
+							int weight = int.Parse (reader.GetAttribute ("weight"));
+							int health = int.Parse (reader.GetAttribute ("health"));
+							float px = float.Parse (reader.GetAttribute ("px"));
+							float py = float.Parse (reader.GetAttribute ("py"));
+
+							EnemyShipPart newPart = new EnemyShipPart (asset);
+							newPart.Name = name;
+							newPart.Weight = weight;
+							newPart.Health = health;
+							newPart.Position = new Vector2 (px, py);
+
+							//Read behaviors
+							//TODO: ALLOW OPTIONAL BEHAVIORS!!!!!!!!!!!!
+							while (reader.Read()) {
+								if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals ("Behavior")) {
+									reader.ReadToFollowing ("Moving");
+									string movingBehaviorName = reader.ReadString ();
+									reader.ReadToFollowing ("Shooting");
+									string shootingBehaviorName = reader.ReadString ();
+
+									var movingBehavior = Activator.CreateInstance (Type.GetType(movingBehaviorName));
+									var shootingBehavior = Activator.CreateInstance (Type.GetType(shootingBehaviorName));
+
+									newPart.PreferredMovingBehavior = (MovingBehavior)movingBehavior;
+									newPart.PreferredShootingBehavior = (ShootingBehavior)shootingBehavior;
+								} else if (reader.NodeType == XmlNodeType.EndElement && reader.Name.Equals ("Behavior")) {
+									break;
+								}
+							}//End read behaviors
+
+							newEnemyShip.Add (newPart);
+						}//End read part
+					}//End read parts
+
+					//Read links
+				} else if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals ("Links")) {
+					while (reader.Read()) {
+						if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals ("Link")) {
+							string part1Name = reader.GetAttribute ("part1");
+							string part2Name = reader.GetAttribute ("part2");
+
+							EnemyShipPart part1 = newEnemyShip.Parts.Find ((p) => {return p.Name.Equals(part1Name);});
+							EnemyShipPart part2 = newEnemyShip.Parts.Find ((p) => {return p.Name.Equals(part2Name);});
+
+							EnemyShipPart.Connect (part1, part2);
+
+						} else if (reader.NodeType == XmlNodeType.EndElement && reader.Name.Equals ("Links")) {
+							break;
+						}
+					}
+				}else if(reader.NodeType == XmlNodeType.Element && reader.Name.Equals ("Behavior")){
+					reader.ReadToFollowing ("Moving");
+					string movingBehaviorName = reader.ReadString ();
+					reader.ReadToFollowing ("Shooting");
+					string shootingBehaviorName = reader.ReadString ();
+
+					var movingBehavior = Activator.CreateInstance (Type.GetType(movingBehaviorName));
+					var shootingBehavior = Activator.CreateInstance (Type.GetType(shootingBehaviorName));
+
+					newEnemyShip.MovingBehavior = (MovingBehavior)movingBehavior;
+					newEnemyShip.ShootingBehavior = (ShootingBehavior)shootingBehavior;
+				}//End enemy ship read
+			}//End big read loop
+			
 			return newEnemyShip;
 		}
 
