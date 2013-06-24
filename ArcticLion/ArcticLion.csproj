@@ -86,17 +86,14 @@
     <Compile Include="Enemy\MovingBehavior.cs" />
     <Compile Include="Enemy\PendulumMovingBehavior.cs" />
     <Compile Include="Enemy\ShootingBehavior.cs" />
-    <Compile Include="Scenes\TestGameScene.cs" />
-    <Compile Include="Scenes\TestGameMainLayer.cs" />
     <Compile Include="Projectile\Projectile.cs" />
     <Compile Include="Projectile\Bullet.cs" />
-    <Compile Include="Game Structure\Director.cs" />
     <Compile Include="Game Structure\Layer.cs" />
-    <Compile Include="Game Structure\Scene.cs" />
     <Compile Include="Game Structure\Node.cs" />
     <Compile Include="Rendering\Camera2D.cs" />
     <Compile Include="Enemy\SuicidalMovingBehavior.cs" />
     <Compile Include="Game States\GameStateInGame.cs" />
+    <Compile Include="Game States\TestGameMainLayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -134,7 +131,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enemy\" />
-    <Folder Include="Scenes\" />
     <Folder Include="Projectile\" />
     <Folder Include="Game Structure\" />
     <Folder Include="Rendering\" />
