@@ -67,10 +67,10 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="MonoMac">
-      <HintPath>..\MonoGame\MonoGame.Framework\bin\MacOS\Debug\MonoMac.dll</HintPath>
+      <HintPath>bin\Debug\MonoMac.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework">
-      <HintPath>..\MonoGame\MonoGame.Framework\bin\MacOS\Debug\MonoGame.Framework.dll</HintPath>
+      <HintPath>bin\Debug\MonoGame.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +96,7 @@
     <Compile Include="Game Structure\Node.cs" />
     <Compile Include="Rendering\Camera2D.cs" />
     <Compile Include="Enemy\SuicidalMovingBehavior.cs" />
+    <Compile Include="Game States\GameStateInGame.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -137,5 +138,12 @@
     <Folder Include="Projectile\" />
     <Folder Include="Game Structure\" />
     <Folder Include="Rendering\" />
+    <Folder Include="Game States\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NuclearWinter\NuclearWinterMonoGame.csproj">
+      <Project>{72677817-5174-4921-8E10-BD54E73EB965}</Project>
+      <Name>NuclearWinterMonoGame</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

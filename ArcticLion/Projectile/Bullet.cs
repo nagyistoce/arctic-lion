@@ -31,9 +31,9 @@ namespace ArcticLion
 			}
 		}
 
-		public override void Draw (GameTime gameTime, SpriteBatch spriteBatch)
+		public override void Draw (SpriteBatch spriteBatch)
 		{
-			base.Draw (gameTime, spriteBatch);
+			base.Draw (spriteBatch);
 
 			if (IsAlive) {
 				//TODO: Clean this!

@@ -40,10 +40,10 @@ namespace ArcticLion
 			}
 		}
 
-		public virtual void Draw (GameTime gameTime, SpriteBatch spriteBatch)
+		public virtual void Draw (SpriteBatch spriteBatch)
 		{
 			foreach (Node n in children) {
-				n.Draw (gameTime, spriteBatch);
+				n.Draw (spriteBatch);
 			}
 		}
 

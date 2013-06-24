@@ -16,6 +16,8 @@ using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Media;
+using NuclearWinter;
+using NuclearWinter.GameFlow;
 
 #endregion
 namespace ArcticLion
@@ -23,76 +25,61 @@ namespace ArcticLion
 	/// <summary>
 	/// Default Project Template
 	/// </summary>
-	public class Game1 : Game
+	public class Game1 : NuclearGame
 	{
 
 	#region Fields
-		GraphicsDeviceManager graphics;
-		Director director;
+//		public GameStateMgr<Game1> GameStateManager { get; private set; }
+	#endregion
+
+	#region Game States
+		public GameStateInGame InGame { get; private set; }
 	#endregion
 
 	#region Initialization
 
-		public Game1 ()
+		public Game1 () : base(true)
 		{
-			graphics = new GraphicsDeviceManager (this);
-			
 			Content.RootDirectory = "Content";
 
-			graphics.IsFullScreen = false;
+			Graphics.IsFullScreen = false;
 
-			graphics.PreferredBackBufferHeight = 640;
-			graphics.PreferredBackBufferWidth = 960;
+			Graphics.PreferredBackBufferHeight = 640;
+			Graphics.PreferredBackBufferWidth = 960;
 
 			//TODO: draw a cursor
 			this.IsMouseVisible = true;
 
 			EnemyShipFactory.GetInstance ().Initialize (Content);
-			director = new Director (this);
 		}
 
-		/// <summary>
-		/// Overridden from the base Game.Initialize. Once the GraphicsDevice is setup,
-		/// we'll use the viewport to initialize some values.
-		/// </summary>
 		protected override void Initialize ()
 		{
 			base.Initialize ();
+
+//			GameStateManager = new NuclearWinter.GameFlow.GameStateMgr<Game1>(this);
+//			Components.Add (GameStateManager);
+
+			InGame = new GameStateInGame (this);
+
+			GameStateMgr.SwitchState (InGame);
 		}
 
-		/// <summary>
-		/// Load your graphics content.
-		/// </summary>
 		protected override void LoadContent ()
 		{
-			director.CurrentScene.LoadContent(Content);
+			//TODO: LOL
 		}
 	#endregion
 
 	#region Update and Draw
-
-		/// <summary>
-        	/// Allows the game to run logic such as updating the world,
-        	/// checking for collisions, gathering input, and playing audio.
-        	/// </summary>
-        	/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Update (GameTime gameTime)
 		{
-			director.CurrentScene.Update (gameTime);		
-
 			base.Update (gameTime);
 		}
-
-		/// <summary>
-		/// This is called when the game should draw itself. 
-		/// </summary>
-		/// <param name="gameTime">Provides a snapshot of timing values.</param>
+	
 		protected override void Draw (GameTime gameTime)
 		{
-			// Clear the backbuffer
-			graphics.GraphicsDevice.Clear (Color.Gainsboro);
-
-			director.CurrentScene.Draw (gameTime, null);
+			Graphics.GraphicsDevice.Clear (Color.Gainsboro);
 
 			base.Draw (gameTime);
 		}

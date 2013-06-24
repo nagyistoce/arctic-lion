@@ -26,9 +26,9 @@ namespace ArcticLion
 			Camera.MoveSpeed = 20f;
 			game.Components.Add (Camera);
 
-			TestGameMainLayer mainLayer = new TestGameMainLayer(this);
-			mainLayer.Add (Ship);
-			Layers.Add (1, mainLayer);
+//			TestGameMainLayer mainLayer = new TestGameMainLayer(this);
+//			mainLayer.Add (Ship);
+//			Layers.Add (1, mainLayer);
 		}
 
 		public override void LoadContent (ContentManager content)
@@ -44,7 +44,7 @@ namespace ArcticLion
 			base.Update (gameTime);
 		}
 
-		public override void Draw (GameTime gameTime, SpriteBatch spriteBatch)
+		public override void Draw (SpriteBatch spriteBatch)
 		{
 			testGameSceneSpriteBatch.Begin (
 				SpriteSortMode.FrontToBack,
@@ -55,7 +55,7 @@ namespace ArcticLion
 				null,
 				Camera.Transform);
 
-			base.Draw (gameTime, testGameSceneSpriteBatch);
+			base.Draw (testGameSceneSpriteBatch);
 
 			testGameSceneSpriteBatch.Draw (logo, new Vector2 (25, 25), Color.White);
 

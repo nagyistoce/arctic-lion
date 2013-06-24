@@ -38,9 +38,9 @@ namespace ArcticLion
 			base.Update (gameTime);
 		}
 
-		public override void Draw (GameTime gameTime, SpriteBatch spriteBatch)
+		public override void Draw (SpriteBatch spriteBatch)
 		{
-			base.Draw (gameTime, spriteBatch);
+			base.Draw (spriteBatch);
 
 			float cos = (float)Math.Cos (Parent.Rotation);
 			float sin = (float)Math.Sin (Parent.Rotation);

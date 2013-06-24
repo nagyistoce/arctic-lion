@@ -9,16 +9,16 @@ namespace ArcticLion
 {
 	public class TestGameMainLayer : Layer
 	{
-		TestGameScene scene;
+		GameStateInGame gameState;
 
 		List<EnemyShip> enemyShips;
 		Queue<Bullet> bullets; //TODO: change to List?
 		const double FireDelay = 0.1d;
 		double fireDelayAccumulator = 0;
 
-		public TestGameMainLayer (TestGameScene scene) : base(scene)
+		public TestGameMainLayer (GameStateInGame gameState) : base(gameState)
 		{
-			this.scene = scene;
+			this.gameState = gameState;
 
 			enemyShips = new List<EnemyShip> ();
 
@@ -29,7 +29,7 @@ namespace ArcticLion
 				Add (b);
 			}
 
-			EnemyShip testEnemy3 = EnemyShipFactory.GetInstance().CreateTestGameEnemyShip3 (scene.Ship);
+			EnemyShip testEnemy3 = EnemyShipFactory.GetInstance().CreateTestGameEnemyShip3 (gameState.Ship);
 			enemyShips.Add (testEnemy3);
 			Add (testEnemy3);
 		}
@@ -42,14 +42,14 @@ namespace ArcticLion
 
 			Vector2 mousePositionWorld = GetMousePositionWorld ();
 
-			double rotationAngle = Math.Atan2 ((mousePositionWorld.Y - scene.Ship.Position.Y),
-			                                   (mousePositionWorld.X - scene.Ship.Position.X));
+			double rotationAngle = Math.Atan2 ((mousePositionWorld.Y - gameState.Ship.Position.Y),
+			                                   (mousePositionWorld.X - gameState.Ship.Position.X));
 
-			scene.Ship.Rotation = rotationAngle;
+			gameState.Ship.Rotation = rotationAngle;
 
 			foreach (Bullet b in bullets) {
 				//TODO: get the bounds?
-				if (b.IsAlive && !scene.Camera.IsInView (b.Position, new Rectangle (0, 0, 8, 8))) {
+				if (b.IsAlive && !gameState.Camera.IsInView (b.Position, new Rectangle (0, 0, 8, 8))) {
 					b.IsAlive = false;
 				}
 			}
@@ -57,7 +57,7 @@ namespace ArcticLion
 			foreach(EnemyShip es in enemyShips){
 				foreach (Bullet b in es.EnemyBullets) {
 					//TODO: get the bounds?
-					if (b.IsAlive && !scene.Camera.IsInView (b.Position, new Rectangle (0, 0, 8, 8))) {
+					if (b.IsAlive && !gameState.Camera.IsInView (b.Position, new Rectangle (0, 0, 8, 8))) {
 						b.IsAlive = false;
 					}
 				}
@@ -68,12 +68,12 @@ namespace ArcticLion
 			if (ms.LeftButton == ButtonState.Pressed) {
 				if (!bullets.Peek ().IsAlive && fireDelayAccumulator >= FireDelay) {
 					Bullet newBullet = bullets.Dequeue ();
-					Vector2 newBulletVelocity = Vector2.Normalize (mousePositionWorld - scene.Ship.Position);
+					Vector2 newBulletVelocity = Vector2.Normalize (mousePositionWorld - gameState.Ship.Position);
 					newBulletVelocity *= 600f;
-					newBulletVelocity += scene.Ship.Velocity;
-					Vector2 shipYaw = new Vector2 ((float)Math.Cos (scene.Ship.Rotation), 
-					                               (float)Math.Sin (scene.Ship.Rotation));
-					newBullet.Shoot (scene.Ship.Position + 45 * shipYaw, newBulletVelocity);
+					newBulletVelocity += gameState.Ship.Velocity;
+					Vector2 shipYaw = new Vector2 ((float)Math.Cos (gameState.Ship.Rotation), 
+					                               (float)Math.Sin (gameState.Ship.Rotation));
+					newBullet.Shoot (gameState.Ship.Position + 45 * shipYaw, newBulletVelocity);
 					bullets.Enqueue (newBullet);
 					fireDelayAccumulator = 0;
 				}
@@ -95,7 +95,7 @@ namespace ArcticLion
 									List<EnemyShip> newEnemies = es.DestroyPart (p);
 								
 									foreach (EnemyShip newEnemyShip in newEnemies) {
-										newEnemyShip.Target = scene.Ship;
+										newEnemyShip.Target = gameState.Ship;
 										enemyShips.Add (newEnemyShip);
 										Add (newEnemyShip);
 									}			
@@ -118,7 +118,7 @@ namespace ArcticLion
 		{
 			Vector2 mousePosition = new Vector2 (Mouse.GetState().X, Mouse.GetState ().Y);
 
-			return scene.Camera.GetUpperLeftPosition () + mousePosition; 
+			return gameState.Camera.GetUpperLeftPosition () + mousePosition; 
 		}
 	}
 }

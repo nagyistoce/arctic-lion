@@ -1,20 +1,28 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="20/06/2013 11:57:47 PM">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/Enemy/ContinuousShootingBehavior.cs">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="24/06/2013 10:49:57 AM">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug OS X|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="NuclearWinter/NuclearGame.cs">
     <Files>
-      <File FileName="ArcticLion/Enemy/EnemyShip.cs" Line="12" Column="44" />
-      <File FileName="ArcticLion/Enemy/EnemyShipPart.cs" Line="1" Column="1" />
-      <File FileName="ArcticLion/Enemy/SuicidalMovingBehavior.cs" Line="17" Column="30" />
-      <File FileName="ArcticLion/Enemy/ContinuousShootingBehavior.cs" Line="12" Column="110" />
+      <File FileName="ArcticLion/Game1.cs" Line="69" Column="4" />
+      <File FileName="MonoGame/MonoGame.Framework/Game.cs" Line="1" Column="1" />
+      <File FileName="NuclearWinter/ApplicationMutex.cs" Line="1" Column="1" />
+      <File FileName="NuclearWinter/UI/Screen.cs" Line="278" Column="6" />
+      <File FileName="NuclearWinter/NuclearGame.cs" Line="134" Column="18" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="ArcticLion" expanded="True">
-            <Node name="Enemy" expanded="True">
-              <Node name="ContinuousShootingBehavior.cs" selected="True" />
-            </Node>
+          <Node name="ArcticLion" expanded="True" selected="True">
+            <Node name="References" expanded="True" />
+            <Node name="Enemy" expanded="True" />
+            <Node name="Game States" expanded="True" />
+            <Node name="Game Structure" expanded="True" />
             <Node name="Projectile" expanded="True" />
+            <Node name="Scenes" expanded="True" />
+          </Node>
+          <Node name="NuclearWinterMonoGame" expanded="True">
+            <Node name="GameFlow" expanded="True" />
+            <Node name="Input" expanded="True" />
+            <Node name="Properties" expanded="True" />
           </Node>
         </State>
       </Pad>

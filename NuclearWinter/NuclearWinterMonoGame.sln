@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuclearWinterMonoGame", "NuclearWinterMonoGame.csproj", "{72677817-5174-4921-8E10-BD54E73EB965}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug Windows|x86 = Debug Windows|x86
+		Release Windows|x86 = Release Windows|x86
+		Debug Linux|x86 = Debug Linux|x86
+		Release Linux|x86 = Release Linux|x86
+		Debug OS X|x86 = Debug OS X|x86
+		Release OS X|x86 = Release OS X|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72677817-5174-4921-8E10-BD54E73EB965}.Debug Linux|x86.ActiveCfg = Debug Linux|x86
+		{72677817-5174-4921-8E10-BD54E73EB965}.Debug Linux|x86.Build.0 = Debug Linux|x86
+		{72677817-5174-4921-8E10-BD54E73EB965}.Debug OS X|x86.ActiveCfg = Debug OS X|x86
+		{72677817-5174-4921-8E10-BD54E73EB965}.Debug OS X|x86.Build.0 = Debug OS X|x86
+		{72677817-5174-4921-8E10-BD54E73EB965}.Debug Windows|x86.ActiveCfg = Debug Windows|x86
+		{72677817-5174-4921-8E10-BD54E73EB965}.Debug Windows|x86.Build.0 = Debug Windows|x86
+		{72677817-5174-4921-8E10-BD54E73EB965}.Release Linux|x86.ActiveCfg = Release Linux|x86
+		{72677817-5174-4921-8E10-BD54E73EB965}.Release Linux|x86.Build.0 = Release Linux|x86
+		{72677817-5174-4921-8E10-BD54E73EB965}.Release OS X|x86.ActiveCfg = Release OS X|x86
+		{72677817-5174-4921-8E10-BD54E73EB965}.Release OS X|x86.Build.0 = Release OS X|x86
+		{72677817-5174-4921-8E10-BD54E73EB965}.Release Windows|x86.ActiveCfg = Release Windows|x86
+		{72677817-5174-4921-8E10-BD54E73EB965}.Release Windows|x86.Build.0 = Release Windows|x86
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = NuclearWinterMonoGame.csproj
+	EndGlobalSection
+EndGlobal

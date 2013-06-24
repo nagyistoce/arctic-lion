@@ -31,10 +31,10 @@ namespace ArcticLion
 			}
 		}
 
-		public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+		public override void Draw(SpriteBatch spriteBatch)
 		{
 			foreach (KeyValuePair<int, Layer> kvp in Layers) {
-				kvp.Value.Draw (gameTime, spriteBatch);
+				kvp.Value.Draw (spriteBatch);
 			}
 		}
 	}
