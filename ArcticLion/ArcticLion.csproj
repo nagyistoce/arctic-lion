@@ -94,6 +94,7 @@
     <Compile Include="Enemy\SuicidalMovingBehavior.cs" />
     <Compile Include="Game States\GameStateInGame.cs" />
     <Compile Include="Game States\TestGameMainLayer.cs" />
+    <Compile Include="CustomStyle.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -128,6 +129,8 @@
     <BundleResource Include="Content\test_part_tail.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
+    <BundleResource Include="Content\btn.png" />
+    <BundleResource Include="Content\btn_down.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enemy\" />
@@ -135,6 +138,7 @@
     <Folder Include="Game Structure\" />
     <Folder Include="Rendering\" />
     <Folder Include="Game States\" />
+    <Folder Include="UI\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NuclearWinter\NuclearWinterMonoGame.csproj">

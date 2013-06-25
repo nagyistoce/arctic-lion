@@ -120,6 +120,7 @@
     <Compile Include="UI\Widget.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="XnaExtensions.cs" />
+    <Compile Include="UI\TextlessButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="i18n\Common.resx">
