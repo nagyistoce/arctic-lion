@@ -131,6 +131,12 @@
     </BundleResource>
     <BundleResource Include="Content\btn.png" />
     <BundleResource Include="Content\btn_down.png" />
+    <BundleResource Include="Content\part_body.png" />
+    <BundleResource Include="Content\part_core.png" />
+    <BundleResource Include="Content\part_left_joint.png" />
+    <BundleResource Include="Content\part_right_joint.png" />
+    <BundleResource Include="Content\part_tail.png" />
+    <BundleResource Include="Content\part_arm.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enemy\" />
