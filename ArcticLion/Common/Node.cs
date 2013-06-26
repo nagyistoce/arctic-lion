@@ -12,18 +12,22 @@ namespace ArcticLion
 		private static long static_id;
 		public long ID { get; private set;}
 		List<Node> children;
+		List<Node> deadChildren;
 		#endregion
 
 		#region Properties
 		public Node Parent { get; set; }
 		public Vector2 Position { get; set; }
 		public double Rotation { get; set;}
+		public bool IsDead { get; protected set;}
 		#endregion
 
 		public Node ()
 		{
 			ID = ++static_id;
 			children = new List<Node> ();
+			deadChildren = new List<Node> ();
+			IsDead = false;
 		}
 
 		public virtual void LoadContent (ContentManager content)
@@ -35,6 +39,14 @@ namespace ArcticLion
 
 		public virtual void Update (GameTime gameTime)
 		{
+			if (IsDead)
+				return;
+
+			foreach (Node n in deadChildren) {
+				children.Remove (n);
+			}
+			deadChildren.Clear ();
+
 			foreach (Node n in children) {
 				n.Update (gameTime);
 			}
@@ -42,6 +54,9 @@ namespace ArcticLion
 
 		public virtual void Draw (SpriteBatch spriteBatch)
 		{
+			if (IsDead)
+				return;
+
 			foreach (Node n in children) {
 				n.Draw (spriteBatch);
 			}
@@ -53,20 +68,15 @@ namespace ArcticLion
 			children.Add (newNode);
 		}
 
-		public bool Remove(Node node)
+		public virtual bool Remove(Node node)
 		{
-			if (children.Remove (node)) {
-				node.Parent = null;
-				return true;
-			} else {
-				return false;
-			}
+			return children.Remove (node);
 		}
 
 		public void Kill()
 		{
-			Parent.Remove (this);
-			this.Parent = null;
+			IsDead = true;
+			Parent.deadChildren.Add (this);
 		}
 
 		public override bool Equals (object obj)

@@ -16,6 +16,8 @@ namespace ArcticLion
 		const double FireDelay = 0.1d;
 		double fireDelayAccumulator = 0;
 
+		Layer effectLayer;
+
 		public TestGameMainLayer (GameStateInGame gameState) : base(gameState)
 		{
 			this.gameState = gameState;
@@ -29,9 +31,14 @@ namespace ArcticLion
 				Add (b);
 			}
 
+			//TODO: you know what to do
 			EnemyShip testEnemy3 = EnemyShipFactory.GetInstance().CreateTestGameEnemyShip3 (gameState.Ship);
+			testEnemy3.PartDestroyed += new PartDestroyedHandler (HandlePartDestroyed);
 			enemyShips.Add (testEnemy3);
 			Add (testEnemy3);
+
+			effectLayer = new Layer (gameState);
+			Add (effectLayer);
 		}
 
 		public override void Update (GameTime gameTime)
@@ -96,6 +103,7 @@ namespace ArcticLion
 								
 									foreach (EnemyShip newEnemyShip in newEnemies) {
 										newEnemyShip.Target = gameState.Ship;
+										newEnemyShip.PartDestroyed += new PartDestroyedHandler (HandlePartDestroyed);
 										enemyShips.Add (newEnemyShip);
 										Add (newEnemyShip);
 									}			
@@ -112,6 +120,14 @@ namespace ArcticLion
 					}
 				}
 			}
+		}
+
+		private void HandlePartDestroyed(EnemyShipPart destroyedPart, Vector2 position){
+			Animation explosion = new Animation (gameState.Content.Load<Texture2D>(Assets.Explosion1),
+			                                    Assets.Explosion1Frames);
+			explosion.Position = position;
+
+			effectLayer.Add (explosion);
 		}
 
 		private Vector2 GetMousePositionWorld ()

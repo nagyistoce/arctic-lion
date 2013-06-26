@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework;
 
 namespace ArcticLion
 {
+	public delegate void PartDestroyedHandler(EnemyShipPart destroyedPart, Vector2 position);
+
 	public class EnemyShip : Node
 	{
 		public Node Target { get; set;}
@@ -15,6 +17,8 @@ namespace ArcticLion
 
 		public Queue<EnemyBullet> EnemyBullets;
 		private const int MaxNumberOfBullets = 40;
+
+		public event PartDestroyedHandler PartDestroyed;
 
 		public EnemyShip (Node target)
 		{
@@ -53,8 +57,16 @@ namespace ArcticLion
 				p.ConnectedParts.Remove (destroyedPart);
 			}
 
-			Parts.Remove(destroyedPart);
 			destroyedPart.Kill ();
+			Parts.Remove (destroyedPart);
+
+			float cos = (float)Math.Cos (Rotation);
+			float sin = (float)Math.Sin (Rotation);
+
+			Vector2 destroyedPartPosition = new Vector2 (destroyedPart.Position.X * cos - destroyedPart.Position.Y * sin, 
+			                                             destroyedPart.Position.X * sin + destroyedPart.Position.Y * cos);
+			destroyedPartPosition += this.Position;
+			OnPartDestroyed (destroyedPart, destroyedPartPosition);
 
 			foreach (EnemyShipPart p in Parts) {
 				if (!p.isVisited) {
@@ -70,9 +82,6 @@ namespace ArcticLion
 							newEnemyShipPart.Position = newEnemyShipPart.Position - p.Position; 
 						}
 					}
-
-					float cos = (float)Math.Cos (Rotation);
-					float sin = (float)Math.Sin (Rotation);
 
 					newEnemyShip.Position = new Vector2 (p.Position.X * cos - p.Position.Y * sin,
 					                                     p.Position.X * sin + p.Position.Y * cos);
@@ -90,6 +99,12 @@ namespace ArcticLion
 			}
 
 			return newEnemies;
+		}
+
+		protected virtual void OnPartDestroyed(EnemyShipPart destroyedPart, Vector2 position) 
+		{
+			if (PartDestroyed != null)
+				PartDestroyed(destroyedPart, position);
 		}
 
 		//TODO: clean this shit

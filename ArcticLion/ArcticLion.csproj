@@ -96,6 +96,7 @@
     <Compile Include="Common\Node.cs" />
     <Compile Include="UI\CustomStyle.cs" />
     <Compile Include="Common\Assets.cs" />
+    <Compile Include="Rendering\Animation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -124,6 +125,7 @@
     <BundleResource Include="Content\part_tail.png" />
     <BundleResource Include="Content\part_arm.png" />
     <BundleResource Include="Content\text_quitgame.png" />
+    <BundleResource Include="Content\explosion_1.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enemy\" />
