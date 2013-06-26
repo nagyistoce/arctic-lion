@@ -1,18 +1,20 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="25/06/2013 7:23:32 AM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="26/06/2013 5:31:22 AM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug OS X|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/Enemy/EnemyShipPart.cs">
     <Files>
       <File FileName="ArcticLion/CustomStyle.cs" Line="1" Column="1" />
-      <File FileName="ArcticLion/Game States/GameStateInGame.cs" Line="60" Column="14" />
-      <File FileName="ArcticLion/Enemy/EnemyShipFactory.cs" Line="71" Column="57" />
-      <File FileName="ArcticLion/Enemy/EnemyShipPart.cs" Line="26" Column="31" />
+      <File FileName="ArcticLion/Game States/GameStateInGame.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Enemy/EnemyShipFactory.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Enemy/EnemyShipPart.cs" Line="21" Column="3" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="ArcticLion" expanded="True">
-            <Node name="Content" expanded="True" selected="True" />
-            <Node name="Enemy" expanded="True" />
+            <Node name="Content" expanded="True" />
+            <Node name="Enemy" expanded="True">
+              <Node name="EnemyShipPart.cs" selected="True" />
+            </Node>
             <Node name="Game States" expanded="True" />
           </Node>
           <Node name="NuclearWinterMonoGame" expanded="True">

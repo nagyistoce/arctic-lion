@@ -62,13 +62,13 @@ namespace ArcticLion
 		public EnemyShip CreateTestGameEnemyShip3(Node target){
 			EnemyShip newEnemyShip = new EnemyShip(target);
 
-			EnemyShipPart body = new EnemyShipPart ("part_body");
-			EnemyShipPart core = new EnemyShipPart ("part_core");
-			EnemyShipPart leftJoint = new EnemyShipPart ("part_left_joint");
-			EnemyShipPart rightJoint = new EnemyShipPart ("part_right_joint");
-			EnemyShipPart leftArm = new EnemyShipPart ("part_arm");
-			EnemyShipPart rightArm = new EnemyShipPart ("part_arm");
-			EnemyShipPart tail = new EnemyShipPart ("part_tail");
+			EnemyShipPart body = new EnemyShipPart (Assets.PartBody);
+			EnemyShipPart core = new EnemyShipPart (Assets.PartCore);
+			EnemyShipPart leftJoint = new EnemyShipPart (Assets.PartLeftJoint);
+			EnemyShipPart rightJoint = new EnemyShipPart (Assets.PartRightJoint);
+			EnemyShipPart leftArm = new EnemyShipPart (Assets.PartArm);
+			EnemyShipPart rightArm = new EnemyShipPart (Assets.PartArm);
+			EnemyShipPart tail = new EnemyShipPart (Assets.PartTail);
 
 			body.Health = 20;
 			core.Health = 15;

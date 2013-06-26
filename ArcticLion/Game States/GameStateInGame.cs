@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,22 +10,21 @@ namespace ArcticLion
 {
 	public class GameStateInGame : GameState<Game1>
 	{
-		Game1 game;
 		ContentManager content;
-		SpriteBatch spritebatch;
 
 		Screen screen;
 		public Camera2D Camera { get; private set;}
 
 		public Ship Ship { get; private set;}
 
+		bool isPaused = false;
+		Panel pauseMenuPanel;
+
 		TestGameMainLayer testLayer;
 
 		public GameStateInGame (Game1 game) : base(game)
 		{
-			this.game = game;
 			this.content = new ContentManager (game.Services, "Content");
-			this.spritebatch = new SpriteBatch (game.GraphicsDevice);
 		}
 
 		public override void Start ()
@@ -34,15 +34,16 @@ namespace ArcticLion
 			Ship = new Ship ();
 			Ship.Position = new Vector2 (0, 0);
 
-			Camera = new Camera2D (game);
+			Camera = new Camera2D (Game);
 			Camera.Focus = Ship;
 			Camera.MoveSpeed = 20f;
-			game.Components.Add (Camera);
+			Game.Components.Add (Camera);
 
 			testLayer = new TestGameMainLayer(this);
 			testLayer.Add (Ship);
 
 			testLayer.LoadContent (content);
+
 			base.Start ();
 		}
 
@@ -57,13 +58,26 @@ namespace ArcticLion
 			screen.HandleInput();
 			screen.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
-			testLayer.Update (gameTime);
+			if(Game.InputMgr.WasKeyJustPressed(Keys.Escape)){
+				if (!isPaused) {
+					PauseGame ();
+				} else {
+					UnpauseGame ();
+				}
+			}
+
+			if (!isPaused) {
+				testLayer.Update (gameTime);
+			}
 		}
 
 		public override void Draw ()
 		{
-			spritebatch.Begin (
-				SpriteSortMode.FrontToBack,
+			if (!Game.IsActive)
+				return;
+
+			Game.SpriteBatch.Begin (
+				SpriteSortMode.Deferred,
 				BlendState.AlphaBlend,
 				SamplerState.LinearWrap,
 				DepthStencilState.Default,
@@ -71,24 +85,44 @@ namespace ArcticLion
 				null,
 				Camera.Transform);
 
-			testLayer.Draw (spritebatch);
+			testLayer.Draw (Game.SpriteBatch);
+
+			Game.SpriteBatch.End ();
 
 			screen.Draw ();
-
-			spritebatch.End ();
 		}
 
 		public void BuildUI(){
-			this.screen = new Screen (game, new CustomStyle (content), 
-			                          game.GraphicsDevice.Viewport.Width, 
-			                          game.GraphicsDevice.Viewport.Height); 
+			this.screen = new Screen (Game, new CustomStyle (content), 
+			                          Game.GraphicsDevice.Viewport.Width, 
+			                          Game.GraphicsDevice.Viewport.Height); 
 
-			TextlessButton testButton = new TextlessButton(screen);
-			testButton.AnchoredRect = AnchoredRect.CreateTopLeftAnchored (30,30,
-			                                                              testButton.ContentWidth, 
-			                                                              testButton.ContentHeight);
+			//Menu
+			pauseMenuPanel = new Panel (screen, content.Load<Texture2D> (Assets.Button), 4);
+			pauseMenuPanel.AnchoredRect = AnchoredRect.CreateTopRightAnchored (30, 30, 200, 100);
 
-			screen.Root.AddChild(testButton);
+			TextlessButton quitGameButton = new TextlessButton (screen);
+			quitGameButton.Icon = Game.Content.Load<Texture2D> (Assets.TextQuitGame);
+			quitGameButton.AnchoredRect = AnchoredRect.CreateTopAnchored (10, 20, 10, 30);
+			quitGameButton.ClickHandler += new Action<TextlessButton> ((TextlessButton sender)=> {
+				QuitGame();
+			});
+
+			pauseMenuPanel.AddChild (quitGameButton);
+		}
+
+		private void PauseGame(){
+			isPaused = true;
+			screen.Root.AddChild (pauseMenuPanel);
+		}
+
+		private void UnpauseGame(){
+			isPaused = false;
+			screen.Root.RemoveChild (pauseMenuPanel);
+		}
+
+		private void QuitGame(){
+			Game.Exit ();
 		}
 	}
 }

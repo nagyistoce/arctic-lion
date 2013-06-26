@@ -88,13 +88,14 @@
     <Compile Include="Enemy\ShootingBehavior.cs" />
     <Compile Include="Projectile\Projectile.cs" />
     <Compile Include="Projectile\Bullet.cs" />
-    <Compile Include="Game Structure\Layer.cs" />
-    <Compile Include="Game Structure\Node.cs" />
     <Compile Include="Rendering\Camera2D.cs" />
     <Compile Include="Enemy\SuicidalMovingBehavior.cs" />
     <Compile Include="Game States\GameStateInGame.cs" />
     <Compile Include="Game States\TestGameMainLayer.cs" />
-    <Compile Include="CustomStyle.cs" />
+    <Compile Include="Common\Layer.cs" />
+    <Compile Include="Common\Node.cs" />
+    <Compile Include="UI\CustomStyle.cs" />
+    <Compile Include="Common\Assets.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -111,22 +112,7 @@
     <BundleResource Include="Content\bullet.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
-    <BundleResource Include="Content\part.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </BundleResource>
     <BundleResource Include="Content\bullet_e.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </BundleResource>
-    <BundleResource Include="Content\test_part_arm.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </BundleResource>
-    <BundleResource Include="Content\test_part_body.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </BundleResource>
-    <BundleResource Include="Content\test_part_core.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </BundleResource>
-    <BundleResource Include="Content\test_part_tail.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
     <BundleResource Include="Content\btn.png" />
@@ -137,14 +123,15 @@
     <BundleResource Include="Content\part_right_joint.png" />
     <BundleResource Include="Content\part_tail.png" />
     <BundleResource Include="Content\part_arm.png" />
+    <BundleResource Include="Content\text_quitgame.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enemy\" />
     <Folder Include="Projectile\" />
-    <Folder Include="Game Structure\" />
     <Folder Include="Rendering\" />
     <Folder Include="Game States\" />
     <Folder Include="UI\" />
+    <Folder Include="Common\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NuclearWinter\NuclearWinterMonoGame.csproj">
