@@ -28,6 +28,8 @@ namespace ArcticLion
 			children = new List<Node> ();
 			deadChildren = new List<Node> ();
 			IsDead = false;
+			Position = Vector2.Zero;
+			Rotation = 0;
 		}
 
 		public virtual void LoadContent (ContentManager content)

@@ -33,6 +33,7 @@ namespace ArcticLion
 	#endregion
 
 	#region Game States
+		public GameStateStartMenu StartMenu { get; private set; }
 		public GameStateInGame InGame { get; private set; }
 	#endregion
 
@@ -57,12 +58,10 @@ namespace ArcticLion
 		{
 			base.Initialize ();
 
-//			GameStateManager = new NuclearWinter.GameFlow.GameStateMgr<Game1>(this);
-//			Components.Add (GameStateManager);
-
+			StartMenu = new GameStateStartMenu (this);
 			InGame = new GameStateInGame (this);
 
-			GameStateMgr.SwitchState (InGame);
+			GameStateMgr.SwitchState (StartMenu);
 		}
 
 		protected override void LoadContent ()

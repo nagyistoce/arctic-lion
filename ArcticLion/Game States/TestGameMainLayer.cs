@@ -33,6 +33,7 @@ namespace ArcticLion
 
 			//TODO: you know what to do
 			EnemyShip testEnemy3 = EnemyShipFactory.GetInstance().CreateTestGameEnemyShip3 (gameState.Ship);
+			testEnemy3.Position = new Vector2 (300, 300);
 			testEnemy3.PartDestroyed += new PartDestroyedHandler (HandlePartDestroyed);
 			enemyShips.Add (testEnemy3);
 			Add (testEnemy3);

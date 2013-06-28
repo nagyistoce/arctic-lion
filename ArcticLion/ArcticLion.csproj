@@ -97,6 +97,7 @@
     <Compile Include="UI\CustomStyle.cs" />
     <Compile Include="Common\Assets.cs" />
     <Compile Include="Rendering\Animation.cs" />
+    <Compile Include="Game States\GameStateStartMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

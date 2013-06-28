@@ -10,8 +10,6 @@ namespace ArcticLion
 {
 	public class GameStateInGame : GameState<Game1>
 	{
-		ContentManager content;
-
 		Screen screen;
 		public Camera2D Camera { get; private set;}
 
@@ -24,7 +22,6 @@ namespace ArcticLion
 
 		public GameStateInGame (Game1 game) : base(game)
 		{
-			this.content = new ContentManager (game.Services, "Content");
 		}
 
 		public override void Start ()
@@ -42,7 +39,7 @@ namespace ArcticLion
 			testLayer = new TestGameMainLayer(this);
 			testLayer.Add (Ship);
 
-			testLayer.LoadContent (content);
+			testLayer.LoadContent (Game.Content);
 
 			base.Start ();
 		}
@@ -93,12 +90,12 @@ namespace ArcticLion
 		}
 
 		public void BuildUI(){
-			this.screen = new Screen (Game, new CustomStyle (content), 
+			screen = new Screen (Game, new CustomStyle (Game.Content), 
 			                          Game.GraphicsDevice.Viewport.Width, 
 			                          Game.GraphicsDevice.Viewport.Height); 
 
 			//Menu
-			pauseMenuPanel = new Panel (screen, content.Load<Texture2D> (Assets.Button), 4);
+			pauseMenuPanel = new Panel (screen, Game.Content.Load<Texture2D> (Assets.Button), 4);
 			pauseMenuPanel.AnchoredRect = AnchoredRect.CreateTopRightAnchored (30, 30, 200, 100);
 
 			TextlessButton quitGameButton = new TextlessButton (screen);

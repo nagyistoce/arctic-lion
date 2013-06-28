@@ -40,6 +40,11 @@ namespace ArcticLion
 			if(MovingBehavior != null) MovingBehavior.Apply (this, gameTime);
 		}
 
+		public override void Draw (Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
+		{
+			base.Draw (spriteBatch);
+		}
+
 		public override void Add (Node newNode)
 		{
 			base.Add (newNode);
