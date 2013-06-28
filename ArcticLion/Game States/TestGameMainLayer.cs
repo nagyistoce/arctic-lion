@@ -38,12 +38,12 @@ namespace ArcticLion
 			Add (testEnemy3);
 
 			effectLayer = new Layer (gameState);
-			Add (effectLayer);
 		}
 
 		public override void Update (GameTime gameTime)
 		{
 			base.Update (gameTime);
+			effectLayer.Update (gameTime);
 
 			DetectCollisions (gameTime);
 
@@ -85,6 +85,13 @@ namespace ArcticLion
 					fireDelayAccumulator = 0;
 				}
 			}
+		}
+
+		public override void Draw (SpriteBatch spriteBatch)
+		{
+			base.Draw (spriteBatch);
+
+			effectLayer.Draw (spriteBatch);
 		}
 
 		private void DetectCollisions (GameTime gameTime)
