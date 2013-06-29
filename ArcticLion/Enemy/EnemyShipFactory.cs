@@ -25,35 +25,41 @@ namespace ArcticLion
 			return instance;
 		}
 
-		public EnemyShip CreateTestGameEnemyShip1(Node target){
-			EnemyShip newEnemyShip = new EnemyShip(target);
+		public EnemyShip CreateEnemyShipAplha1(Node target){
+			EnemyShip newEnemyShip = new EnemyShip (target);
 
-			EnemyShipPart part1 = new EnemyShipPart ("part");
-			EnemyShipPart part2 = new EnemyShipPart ("part");
-			EnemyShipPart part3 = new EnemyShipPart ("part");
+			EnemyShipPart arm = new EnemyShipPart (Assets.PartArm);
+			arm.Health = 10;
+			arm.Position = Vector2.Zero;
 
-			part1.Health = 50;
-			part2.Health = 10;
-			part3.Health = 50;
+			newEnemyShip.Add (arm);
 
-			part2.Rotation = Math.PI / 2;
-			part1.Position = new Vector2 (-32,0);
-			part3.Position = new Vector2 (32,0);
-
-			EnemyShipPart.Connect (part1, part2);
-			EnemyShipPart.Connect (part2, part3);
-
-			newEnemyShip.Add (part1);
-			newEnemyShip.Add (part2);
-			newEnemyShip.Add (part3);
+			newEnemyShip.MovingBehavior = new SuicidalMovingBehavior ();
+			newEnemyShip.ShootingBehavior = new ContinuousShootingBehavior ();
 
 			return newEnemyShip;
 		}
 
-		public EnemyShip CreateTestGameEnemyShip2(Node target){
-			EnemyShip newEnemyShip = new EnemyShip(target);
+		public EnemyShip CreateEnemyShipAlpha2(Node target){
+			EnemyShip newEnemyShip = new EnemyShip (target);
 
-			newEnemyShip.MovingBehavior = new PendulumMovingBehavior ();
+			EnemyShipPart body = new EnemyShipPart (Assets.PartBody);
+			EnemyShipPart arm = new EnemyShipPart (Assets.PartArm);
+
+			body.Health = 20;
+			arm.Health = 10;
+
+			body.Position = Vector2.Zero;
+			arm.Position = new Vector2 (64, 0);
+
+			body.PreferredMovingBehavior = new PendulumMovingBehavior ();
+			arm.PreferredMovingBehavior = new SuicidalMovingBehavior ();
+			EnemyShipPart.AssignBehavior (new ContinuousShootingBehavior (), body, arm);
+
+			newEnemyShip.Add (body);
+			newEnemyShip.Add (arm);
+
+			newEnemyShip.MovingBehavior = new CircularMovingBehavior ();
 			newEnemyShip.ShootingBehavior = new ContinuousShootingBehavior ();
 
 			return newEnemyShip;
@@ -95,7 +101,7 @@ namespace ArcticLion
 
 			EnemyShipPart.AssignBehavior (new CircularMovingBehavior(), body, core, tail);
 			EnemyShipPart.AssignBehavior (new PendulumMovingBehavior(), tail, leftJoint, rightJoint);
-			EnemyShipPart.AssignBehavior (new SuicidalMovingBehavior(target), leftArm, rightArm);
+			EnemyShipPart.AssignBehavior (new SuicidalMovingBehavior(), leftArm, rightArm);
 
 			EnemyShipPart.AssignBehavior (new ContinuousShootingBehavior(), body, core, leftArm, rightArm);
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -13,19 +14,29 @@ namespace ArcticLion
 		Screen screen;
 		public Camera2D Camera { get; private set;}
 
-		public Ship Ship { get; private set;}
-
 		bool isPaused = false;
 		Panel pauseMenuPanel;
 
-		TestGameMainLayer testLayer;
+		Level1 level1;
+
+		Layer mainLayer;
+		Layer effectLayer;
+
+		public Ship Ship { get; private set;}
+		Queue<Bullet> bullets; //TODO: change to List?
+		const double FireDelay = 0.1d;
+		double fireDelayAccumulator = 0;
+
+		private List<EnemyShip> enemyShips;
 
 		public GameStateInGame (Game1 game) : base(game)
 		{
+			enemyShips = new List<EnemyShip> ();
+			bullets = new Queue<Bullet> ();
 		}
 
 		public override void Start ()
-		{
+		{			
 			BuildUI ();
 
 			Ship = new Ship ();
@@ -36,10 +47,20 @@ namespace ArcticLion
 			Camera.MoveSpeed = 20f;
 			Game.Components.Add (Camera);
 
-			testLayer = new TestGameMainLayer(this);
-			testLayer.Add (Ship);
+			level1 = new Level1 (Ship);
+			level1.Build (Game.Content);
 
-			testLayer.LoadContent (Game.Content);
+			mainLayer = new Layer();
+			effectLayer = new Layer ();
+
+			mainLayer.Add (Ship);
+			for (int i=0; i<40; i++) {
+				Bullet b = new Bullet ();
+				bullets.Enqueue (b);
+				mainLayer.Add (b);
+			}
+
+			mainLayer.LoadContent (Game.Content);
 
 			base.Start ();
 		}
@@ -64,7 +85,22 @@ namespace ArcticLion
 			}
 
 			if (!isPaused) {
-				testLayer.Update (gameTime);
+				CleanProjectiles ();
+
+				DetectCollisions (gameTime);
+
+				if (enemyShips.Count == 0 && level1.HasNextGroup()) {
+					enemyShips.AddRange (level1.MoveToNextGroup ());
+					foreach (EnemyShip e in enemyShips) {
+						e.PartDestroyed += new PartDestroyedHandler (HandlePartDestroyed);
+						e.Position += Ship.Position;
+						mainLayer.Add (e);
+					}
+				}
+
+				UpdateShip (gameTime);
+				mainLayer.Update (gameTime);
+				effectLayer.Update (gameTime);
 			}
 		}
 
@@ -82,7 +118,8 @@ namespace ArcticLion
 				null,
 				Camera.Transform);
 
-			testLayer.Draw (Game.SpriteBatch);
+			mainLayer.Draw (Game.SpriteBatch);
+			effectLayer.Draw (Game.SpriteBatch);
 
 			Game.SpriteBatch.End ();
 
@@ -120,6 +157,99 @@ namespace ArcticLion
 
 		private void QuitGame(){
 			Game.Exit ();
+		}
+
+		private void CleanProjectiles(){
+			foreach (Bullet b in bullets) {
+				//TODO: get the bounds?
+				if (b.IsAlive && !Camera.IsInView (b.Position, new Rectangle (0, 0, 8, 8))) {
+					b.IsAlive = false;
+				}
+			}
+
+			foreach(EnemyShip es in enemyShips){
+				foreach (Bullet b in es.EnemyBullets) {
+					//TODO: get the bounds?
+					if (b.IsAlive && !Camera.IsInView (b.Position, new Rectangle (0, 0, 8, 8))) {
+						b.IsAlive = false;
+					}
+				}
+			}
+		}
+
+		private void DetectCollisions (GameTime gameTime)
+		{
+			foreach (Bullet b in bullets) {
+				List<EnemyShip> enemyShipsCopy = new List<EnemyShip> ();
+				enemyShipsCopy.AddRange (enemyShips);
+				foreach (EnemyShip es in enemyShipsCopy) {
+					if (b.IsAlive) {
+						foreach(EnemyShipPart p in es.Parts){
+							if(p.IsCollidingWith(b)){
+								b.IsAlive = false;
+								p.Health -= 1; //TODO: remove damage 
+								if(p.Health <= 0){
+									List<EnemyShip> newEnemies = es.DestroyPart (p);
+
+									foreach (EnemyShip newEnemyShip in newEnemies) {
+										newEnemyShip.Target = Ship;
+										newEnemyShip.PartDestroyed += new PartDestroyedHandler (HandlePartDestroyed);
+										enemyShips.Add (newEnemyShip);
+										mainLayer.Add (newEnemyShip);
+									}			
+
+									enemyShips.Remove (es);
+									es.Kill ();
+								}
+								break;
+							}
+						}
+
+						if (!b.IsAlive)
+							break;
+					}
+				}
+			}
+		}
+
+		private void HandlePartDestroyed(EnemyShipPart destroyedPart, Vector2 position){
+			Animation explosion = new Animation (Game.Content.Load<Texture2D>(Assets.Explosion1),
+			                                     Assets.Explosion1Frames);
+			explosion.Position = position;
+
+			effectLayer.Add (explosion);
+		}
+
+		private void UpdateShip(GameTime gameTime){
+			Vector2 mousePositionWorld = GetMousePositionWorld ();
+
+			double rotationAngle = Math.Atan2 ((mousePositionWorld.Y - Ship.Position.Y),
+			                                   (mousePositionWorld.X - Ship.Position.X));
+
+			Ship.Rotation = rotationAngle;
+
+			fireDelayAccumulator += gameTime.ElapsedGameTime.TotalSeconds;
+			MouseState ms = Mouse.GetState ();
+			if (ms.LeftButton == ButtonState.Pressed) {
+				if (!bullets.Peek ().IsAlive && fireDelayAccumulator >= FireDelay) {
+					Bullet newBullet = bullets.Dequeue ();
+					Vector2 newBulletVelocity = Vector2.Normalize (mousePositionWorld - Ship.Position);
+					newBulletVelocity *= 600f;
+					newBulletVelocity += Ship.Velocity;
+					Vector2 shipYaw = new Vector2 ((float)Math.Cos (Ship.Rotation), 
+					                               (float)Math.Sin (Ship.Rotation));
+					newBullet.Shoot (Ship.Position + 45 * shipYaw, newBulletVelocity);
+					bullets.Enqueue (newBullet);
+					fireDelayAccumulator = 0;
+				}
+			}
+		}
+
+		private Vector2 GetMousePositionWorld ()
+		{
+			Vector2 mousePosition = new Vector2 (Mouse.GetState().X, Mouse.GetState ().Y);
+
+			return Camera.GetUpperLeftPosition () + mousePosition; 
 		}
 	}
 }

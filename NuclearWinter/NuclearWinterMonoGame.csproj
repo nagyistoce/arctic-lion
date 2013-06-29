@@ -65,7 +65,6 @@
     <Compile Include="GameFlow\GameState.cs" />
     <Compile Include="GameFlow\GameStateFadeTransition.cs" />
     <Compile Include="GameFlow\GameStateMgr.cs" />
-    <Compile Include="GameFlow\IGameState.cs" />
     <Compile Include="i18n\Common.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -121,6 +120,7 @@
     <Compile Include="Utils.cs" />
     <Compile Include="XnaExtensions.cs" />
     <Compile Include="UI\TextlessButton.cs" />
+    <Compile Include="GameFlow\InGameState.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="i18n\Common.resx">

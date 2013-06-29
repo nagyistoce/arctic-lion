@@ -6,7 +6,7 @@ namespace ArcticLion
 {
 	public class Layer : Node
 	{
-		public Layer (GameState<Game1> gameState)
+		public Layer ()
 		{
 		}
 	}

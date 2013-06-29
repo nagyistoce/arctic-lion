@@ -91,13 +91,14 @@
     <Compile Include="Rendering\Camera2D.cs" />
     <Compile Include="Enemy\SuicidalMovingBehavior.cs" />
     <Compile Include="Game States\GameStateInGame.cs" />
-    <Compile Include="Game States\TestGameMainLayer.cs" />
     <Compile Include="Common\Layer.cs" />
     <Compile Include="Common\Node.cs" />
     <Compile Include="UI\CustomStyle.cs" />
     <Compile Include="Common\Assets.cs" />
     <Compile Include="Rendering\Animation.cs" />
     <Compile Include="Game States\GameStateStartMenu.cs" />
+    <Compile Include="Game States\Levels\Level.cs" />
+    <Compile Include="Game States\Levels\Level1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -135,6 +136,7 @@
     <Folder Include="Game States\" />
     <Folder Include="UI\" />
     <Folder Include="Common\" />
+    <Folder Include="Game States\Levels\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NuclearWinter\NuclearWinterMonoGame.csproj">
