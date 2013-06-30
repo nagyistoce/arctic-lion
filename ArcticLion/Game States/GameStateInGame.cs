@@ -219,8 +219,8 @@ namespace ArcticLion
 			fireDelayAccumulator += gameTime.ElapsedGameTime.TotalSeconds;
 			MouseState ms = Mouse.GetState ();
 			if (ms.LeftButton == ButtonState.Pressed && fireDelayAccumulator >= FireDelay) {
-				Vector2 newBulletVelocity = Vector2.Normalize (mousePositionWorld - Ship.Position);
-				newBulletVelocity *= 600f;
+				Vector2 newBulletVelocity = 600f * Vector2.Normalize (mousePositionWorld - Ship.Position);
+				newBulletVelocity += new Vector2 (random.Next(-20,20), random.Next(-20,20));
 				newBulletVelocity += Ship.Velocity;
 				Vector2 shipYaw = new Vector2 ((float)Math.Cos (Ship.Rotation), 
 				                               (float)Math.Sin (Ship.Rotation));
