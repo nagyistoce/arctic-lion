@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 namespace ArcticLion
 {
 	public delegate void PartDestroyedHandler(EnemyShipPart destroyedPart, Vector2 position);
+	public delegate void WeaponFiredHandler(EnemyShip enemyShip);
 
 	public class EnemyShip : Node
 	{
@@ -15,28 +16,19 @@ namespace ArcticLion
 		public MovingBehavior MovingBehavior { get; set;}
 		public ShootingBehavior ShootingBehavior { get; set;}
 
-		public Queue<EnemyBullet> EnemyBullets;
-		private const int MaxNumberOfBullets = 40;
-
 		public event PartDestroyedHandler PartDestroyed;
+		public event WeaponFiredHandler WeaponFire;
 
 		public EnemyShip (Node target)
 		{
 			this.Target = target;
 			Parts = new List<EnemyShipPart>();
-
-			EnemyBullets = new Queue<EnemyBullet> ();
-			for (int i=0; i<MaxNumberOfBullets; i++) {
-				EnemyBullet b = new EnemyBullet ();
-				EnemyBullets.Enqueue (b);
-				Add (b);
-			}
 		}
 
 		public override void Update (GameTime gameTime)
 		{
 			base.Update (gameTime);
-			if(ShootingBehavior != null) ShootingBehavior.Apply (this, EnemyBullets, gameTime);
+			if(ShootingBehavior != null) ShootingBehavior.Apply (this, gameTime);
 			if(MovingBehavior != null) MovingBehavior.Apply (this, gameTime);
 		}
 
@@ -51,6 +43,10 @@ namespace ArcticLion
 			if (newNode is EnemyShipPart) {
 				Parts.Add((EnemyShipPart) newNode);
 			}
+		}
+
+		public void Shoot(){
+			OnWeaponFired (this);
 		}
 
 		public List<EnemyShip> DestroyPart(EnemyShipPart destroyedPart)
@@ -110,6 +106,11 @@ namespace ArcticLion
 		{
 			if (PartDestroyed != null)
 				PartDestroyed(destroyedPart, position);
+		}
+
+		protected virtual void OnWeaponFired(EnemyShip enemyShip){
+			if (WeaponFire != null)
+				WeaponFire (enemyShip);
 		}
 
 		//TODO: clean this shit

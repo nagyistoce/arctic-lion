@@ -7,11 +7,7 @@ namespace ArcticLion
 	{
 		public Vector2 Acceleration {get; set;}
 		public Vector2 Velocity { get; set;}
-		public bool IsAlive { get; set; }
-
-		public Projectile ()
-		{
-			IsAlive = false;
-		}
+		public float Radius { get; set;}
+		public bool IsFlying { get; set;}
 	}
 }

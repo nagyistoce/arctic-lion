@@ -61,9 +61,8 @@ namespace ArcticLion
 		}
 
 		//TODO: Move to a collision detector?
-		//TODO: Optimize by comparing with all the bullets instead of just one
 		//TODO: Replace rotation matrices by simple Sin and Cos
-		public bool IsCollidingWith(Bullet bullet){
+		public List<Projectile> FindCollidingProjectiles(IEnumerable<Projectile> projectiles){
 			List<Vector2> vertices = new List<Vector2> (4);
 			float halfWidth = enemyShipPartTexture.Bounds.Width / 2;
 			float halfHeight = enemyShipPartTexture.Bounds.Height / 2;
@@ -85,18 +84,33 @@ namespace ArcticLion
 				rotatedVertices[k] += this.Parent.Position;
 			}
 
-			for (int k=0; k<rotatedVertices.Count-1; k++) {
-				bool isInProjection = IsBulletProjectionInsideEdgeProjection (bullet,
-				                                                              rotatedVertices [k],
-				                                                              rotatedVertices [k+1]);
-				if (!isInProjection)
-					return false;
+			List<Projectile> collidingProjectiles = new List<Projectile>();
+
+			foreach (Projectile p in projectiles) {
+				if (!p.IsFlying)
+					continue;
+
+				bool isColliding = true;
+
+				for (int k=0; k<rotatedVertices.Count-1; k++) {
+					bool isInProjection = IsBulletProjectionInsideEdgeProjection (p,
+					                                                              rotatedVertices [k],
+					                                                              rotatedVertices [k+1]);
+					if (!isInProjection) {
+						isColliding = false;
+						break;
+					}
+				}
+
+				//Testing last pair of vertices
+				if(isColliding && IsBulletProjectionInsideEdgeProjection (p,
+				                                               rotatedVertices [rotatedVertices.Count-1],
+				                                               rotatedVertices [0])){
+					collidingProjectiles.Add (p);
+				}
 			}
 
-			//Testing last pair of vertices
-			return IsBulletProjectionInsideEdgeProjection (bullet,
-			                                               rotatedVertices [rotatedVertices.Count-1],
-			                                               rotatedVertices [0]);
+			return collidingProjectiles;
 		}
 
 		public static void Connect(EnemyShipPart part1, EnemyShipPart part2){
@@ -116,13 +130,13 @@ namespace ArcticLion
 			}
 		}
 
-		private bool IsBulletProjectionInsideEdgeProjection(Bullet bullet, Vector2 v1, Vector2 v2){
+		private bool IsBulletProjectionInsideEdgeProjection(Projectile projectile, Vector2 v1, Vector2 v2){
 			Vector2 axis = Vector2.Normalize(v1 - v2);
 
 			float vp1 = Vector2.Dot (v1, axis);
 			float vp2 = Vector2.Dot (v2, axis);
-			float bp = Vector2.Dot (bullet.Position, axis);
-			float radius = bullet.Radius;
+			float pp = Vector2.Dot (projectile.Position, axis);
+			float radius = projectile.Radius;
 
 			float max =0, min =0;
 			if (vp1 > vp2) {
@@ -133,7 +147,7 @@ namespace ArcticLion
 				max = vp1;
 			}
 		
-			return bp + radius > min && bp - radius < max;
+			return pp + radius > min && pp - radius < max;
 		}
 	}
 }

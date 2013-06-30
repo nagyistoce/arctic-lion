@@ -8,7 +8,6 @@ namespace ArcticLion
 	public class Bullet : Projectile
 	{
 		protected Texture2D bulletTexture;
-		public float Radius { get; set;}
 
 		public Bullet ()
 		{
@@ -26,7 +25,7 @@ namespace ArcticLion
 		{
 			base.Update (gameTime);
 
-			if (IsAlive) {
+			if (IsFlying) {
 				Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 			}
 		}
@@ -35,19 +34,12 @@ namespace ArcticLion
 		{
 			base.Draw (spriteBatch);
 
-			if (IsAlive) {
+			if (IsFlying) {
 				//TODO: Clean this!
 				spriteBatch.Draw (bulletTexture, 
 				                  new Vector2(Position.X - bulletTexture.Width/2, Position.Y - bulletTexture.Height/2), 
 				                  Color.White);
 			}
-		}
-
-		public void Shoot(Vector2 initPos, Vector2 initVel)
-		{
-			Position = initPos;
-			Velocity = initVel;
-			IsAlive = true;
 		}
 	}
 

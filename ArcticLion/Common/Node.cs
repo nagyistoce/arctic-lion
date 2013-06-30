@@ -11,7 +11,7 @@ namespace ArcticLion
 		#region Fields
 		private static long static_id;
 		public long ID { get; private set;}
-		List<Node> children;
+		protected List<Node> children;
 		List<Node> deadChildren;
 		#endregion
 
@@ -19,7 +19,7 @@ namespace ArcticLion
 		public Node Parent { get; set; }
 		public Vector2 Position { get; set; }
 		public double Rotation { get; set;}
-		public bool IsDead { get; protected set;}
+		public bool IsDead { get; set;}
 		#endregion
 
 		public Node ()

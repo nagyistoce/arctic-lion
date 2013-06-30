@@ -46,10 +46,11 @@ namespace ArcticLion
 			enemyShip = EnemyShipFactory.GetInstance ().CreateTestGameEnemyShip3 (ship); 
 			enemyShip.Position = new Vector2 (0, -300);
 			enemyShip.LoadContent (content);
-			group1.Add(enemyShip);
+			group3.Add(enemyShip);
 
 			enemyShipGroups.Add (group1);
 			enemyShipGroups.Add (group2);
+			enemyShipGroups.Add (group3);
 		}
 	}
 }

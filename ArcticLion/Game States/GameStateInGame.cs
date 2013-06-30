@@ -23,7 +23,8 @@ namespace ArcticLion
 		Layer effectLayer;
 
 		public Ship Ship { get; private set;}
-		Queue<Bullet> bullets; //TODO: change to List?
+
+		ProjectileManager projectileManager;
 		const double FireDelay = 0.1d;
 		double fireDelayAccumulator = 0;
 
@@ -32,7 +33,6 @@ namespace ArcticLion
 		public GameStateInGame (Game1 game) : base(game)
 		{
 			enemyShips = new List<EnemyShip> ();
-			bullets = new Queue<Bullet> ();
 		}
 
 		public override void Start ()
@@ -54,13 +54,11 @@ namespace ArcticLion
 			effectLayer = new Layer ();
 
 			mainLayer.Add (Ship);
-			for (int i=0; i<40; i++) {
-				Bullet b = new Bullet ();
-				bullets.Enqueue (b);
-				mainLayer.Add (b);
-			}
 
 			mainLayer.LoadContent (Game.Content);
+
+			projectileManager = new ProjectileManager ();
+			projectileManager.LoadContent (Game.Content);
 
 			base.Start ();
 		}
@@ -85,7 +83,8 @@ namespace ArcticLion
 			}
 
 			if (!isPaused) {
-				CleanProjectiles ();
+				projectileManager.Update (gameTime);
+				projectileManager.CleanProjectiles (Camera);
 
 				DetectCollisions (gameTime);
 
@@ -93,6 +92,7 @@ namespace ArcticLion
 					enemyShips.AddRange (level1.MoveToNextGroup ());
 					foreach (EnemyShip e in enemyShips) {
 						e.PartDestroyed += new PartDestroyedHandler (HandlePartDestroyed);
+						e.WeaponFire += new WeaponFiredHandler (HandleEnemyShipWeaponFire);
 						e.Position += Ship.Position;
 						mainLayer.Add (e);
 					}
@@ -119,6 +119,7 @@ namespace ArcticLion
 				Camera.Transform);
 
 			mainLayer.Draw (Game.SpriteBatch);
+			projectileManager.Draw (Game.SpriteBatch);
 			effectLayer.Draw (Game.SpriteBatch);
 
 			Game.SpriteBatch.End ();
@@ -159,57 +160,36 @@ namespace ArcticLion
 			Game.Exit ();
 		}
 
-		private void CleanProjectiles(){
-			foreach (Bullet b in bullets) {
-				//TODO: get the bounds?
-				if (b.IsAlive && !Camera.IsInView (b.Position, new Rectangle (0, 0, 8, 8))) {
-					b.IsAlive = false;
-				}
-			}
-
-			foreach(EnemyShip es in enemyShips){
-				foreach (Bullet b in es.EnemyBullets) {
-					//TODO: get the bounds?
-					if (b.IsAlive && !Camera.IsInView (b.Position, new Rectangle (0, 0, 8, 8))) {
-						b.IsAlive = false;
-					}
-				}
-			}
-		}
-
 		private void DetectCollisions (GameTime gameTime)
 		{
-			foreach (Bullet b in bullets) {
-				List<EnemyShip> enemyShipsCopy = new List<EnemyShip> ();
-				enemyShipsCopy.AddRange (enemyShips);
-				foreach (EnemyShip es in enemyShipsCopy) {
-					if (b.IsAlive) {
-						foreach(EnemyShipPart p in es.Parts){
-							if(p.IsCollidingWith(b)){
-								b.IsAlive = false;
-								p.Health -= 1; //TODO: remove damage 
-								if(p.Health <= 0){
-									List<EnemyShip> newEnemies = es.DestroyPart (p);
+			List<EnemyShip> enemyShipsCopy = new List<EnemyShip> (enemyShips);
 
-									foreach (EnemyShip newEnemyShip in newEnemies) {
-										newEnemyShip.Target = Ship;
-										newEnemyShip.PartDestroyed += new PartDestroyedHandler (HandlePartDestroyed);
-										enemyShips.Add (newEnemyShip);
-										mainLayer.Add (newEnemyShip);
-									}			
+			foreach (EnemyShip es in enemyShipsCopy) {
 
-									enemyShips.Remove (es);
-									es.Kill ();
-								}
-								break;
-							}
+				List<EnemyShipPart> enemyShipPartsCopy = new List<EnemyShipPart> (es.Parts);
+
+				foreach (EnemyShipPart part in enemyShipPartsCopy) {
+					List<Projectile> collidingProjectiles = part.FindCollidingProjectiles (projectileManager.ShipBullets);
+					foreach(Projectile p in collidingProjectiles){
+						p.IsFlying = false;
+						part.Health -= 1; //TODO: remove damage 
+						if (part.Health <= 0) {
+							List<EnemyShip> newEnemies = es.DestroyPart (part);
+
+							foreach (EnemyShip newEnemyShip in newEnemies) {
+								newEnemyShip.Target = Ship;
+								newEnemyShip.PartDestroyed += new PartDestroyedHandler (HandlePartDestroyed);
+								newEnemyShip.WeaponFire += new WeaponFiredHandler (HandleEnemyShipWeaponFire);
+								enemyShips.Add (newEnemyShip);
+								mainLayer.Add (newEnemyShip);
+							}			
+
+							enemyShips.Remove (es);
+							es.Kill ();
 						}
-
-						if (!b.IsAlive)
-							break;
 					}
 				}
-			}
+			}	
 		}
 
 		private void HandlePartDestroyed(EnemyShipPart destroyedPart, Vector2 position){
@@ -218,6 +198,11 @@ namespace ArcticLion
 			explosion.Position = position;
 
 			effectLayer.Add (explosion);
+		}
+
+		private void HandleEnemyShipWeaponFire(EnemyShip enemyShip){
+			Vector2 newBulletVelocity = 300f * Vector2.Normalize (enemyShip.Target.Position - enemyShip.Position);
+			projectileManager.ShootEnemyBullet(enemyShip, enemyShip.Position, newBulletVelocity);
 		}
 
 		private void UpdateShip(GameTime gameTime){
@@ -230,18 +215,16 @@ namespace ArcticLion
 
 			fireDelayAccumulator += gameTime.ElapsedGameTime.TotalSeconds;
 			MouseState ms = Mouse.GetState ();
-			if (ms.LeftButton == ButtonState.Pressed) {
-				if (!bullets.Peek ().IsAlive && fireDelayAccumulator >= FireDelay) {
-					Bullet newBullet = bullets.Dequeue ();
-					Vector2 newBulletVelocity = Vector2.Normalize (mousePositionWorld - Ship.Position);
-					newBulletVelocity *= 600f;
-					newBulletVelocity += Ship.Velocity;
-					Vector2 shipYaw = new Vector2 ((float)Math.Cos (Ship.Rotation), 
-					                               (float)Math.Sin (Ship.Rotation));
-					newBullet.Shoot (Ship.Position + 45 * shipYaw, newBulletVelocity);
-					bullets.Enqueue (newBullet);
-					fireDelayAccumulator = 0;
-				}
+			if (ms.LeftButton == ButtonState.Pressed && fireDelayAccumulator >= FireDelay) {
+				Vector2 newBulletVelocity = Vector2.Normalize (mousePositionWorld - Ship.Position);
+				newBulletVelocity *= 600f;
+				newBulletVelocity += Ship.Velocity;
+				Vector2 shipYaw = new Vector2 ((float)Math.Cos (Ship.Rotation), 
+				                               (float)Math.Sin (Ship.Rotation));
+
+				projectileManager.ShootShipBullet (Ship, Ship.Position + 45 * shipYaw, newBulletVelocity);
+
+				fireDelayAccumulator = 0;
 			}
 		}
 

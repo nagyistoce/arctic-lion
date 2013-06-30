@@ -11,19 +11,12 @@ namespace ArcticLion
 
 		//TODO: Solve problem -> Bullet disapearing when enemy dies, should bullets be handled outside of the ship?
 
-		void ShootingBehavior.Apply(EnemyShip enemyShip, Queue<EnemyBullet> enemyBullets, GameTime gameTime){
+		void ShootingBehavior.Apply(EnemyShip enemyShip, GameTime gameTime){
 			timeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
 			if (timeElapsed >= delay) {
-				if (!enemyBullets.Peek ().IsAlive) {
-					EnemyBullet newEnemyBullet = enemyBullets.Dequeue ();
-					Vector2 newBulletVelocity = Vector2.Normalize (enemyShip.Target.Position - enemyShip.Position);
-					newBulletVelocity *= 300f;
-					newEnemyBullet.Shoot (enemyShip.Position, newBulletVelocity);
-					enemyBullets.Enqueue (newEnemyBullet);
-					timeElapsed = 0d;
-				}
+				enemyShip.Shoot ();
+				timeElapsed = 0d;
 			}
 		}
 	}
 }
-

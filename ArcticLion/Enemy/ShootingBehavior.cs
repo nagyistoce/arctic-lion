@@ -6,7 +6,7 @@ namespace ArcticLion
 {
 	public interface ShootingBehavior
 	{
-		void Apply(EnemyShip enemyShip, Queue<EnemyBullet> enemyBullets, GameTime gameTime);
+		void Apply(EnemyShip enemyShip, GameTime gameTime);
 	}
 }
 
