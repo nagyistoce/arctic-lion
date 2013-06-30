@@ -25,7 +25,7 @@ namespace ArcticLion
 		public const string Ship = "ship";
 
 		//Effects
-		public const string Explosion1 = "explosion_1";
+		public const string Explosion = "explosion_1";
 		public const int Explosion1Frames = 43;
 	}
 }

@@ -13,6 +13,7 @@ namespace ArcticLion
 	{
 		Screen screen;
 		public Camera2D Camera { get; private set;}
+		Random random;
 
 		bool isPaused = false;
 		Panel pauseMenuPanel;
@@ -25,7 +26,7 @@ namespace ArcticLion
 		public Ship Ship { get; private set;}
 
 		ProjectileManager projectileManager;
-		const double FireDelay = 0.1d;
+		const double FireDelay = 0.05d;
 		double fireDelayAccumulator = 0;
 
 		private List<EnemyShip> enemyShips;
@@ -38,6 +39,8 @@ namespace ArcticLion
 		public override void Start ()
 		{			
 			BuildUI ();
+
+			random = new Random ();
 
 			Ship = new Ship ();
 			Ship.Position = new Vector2 (0, 0);
@@ -193,7 +196,7 @@ namespace ArcticLion
 		}
 
 		private void HandlePartDestroyed(EnemyShipPart destroyedPart, Vector2 position){
-			Animation explosion = new Animation (Game.Content.Load<Texture2D>(Assets.Explosion1),
+			Animation explosion = new Animation (Game.Content.Load<Texture2D>(Assets.Explosion),
 			                                     Assets.Explosion1Frames);
 			explosion.Position = position;
 
@@ -222,7 +225,7 @@ namespace ArcticLion
 				Vector2 shipYaw = new Vector2 ((float)Math.Cos (Ship.Rotation), 
 				                               (float)Math.Sin (Ship.Rotation));
 
-				projectileManager.ShootShipBullet (Ship, Ship.Position + 45 * shipYaw, newBulletVelocity);
+				projectileManager.ShootShipBullet (Ship, Ship.Position + 20 * shipYaw, newBulletVelocity);
 
 				fireDelayAccumulator = 0;
 			}
