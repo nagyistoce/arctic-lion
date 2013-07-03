@@ -19,6 +19,8 @@ namespace ArcticLion
 		Panel pauseMenuPanel;
 
 		Level1 level1;
+		const float EnemyGroupChangeDelay = 3f;
+		float enemyGroupChangeTimeAccumulator;
 
 		Layer mainLayer;
 		Layer effectLayer;
@@ -91,13 +93,17 @@ namespace ArcticLion
 
 				DetectCollisions (gameTime);
 
-				if (enemyShips.Count == 0 && level1.HasNextGroup()) {
-					enemyShips.AddRange (level1.MoveToNextGroup ());
-					foreach (EnemyShip e in enemyShips) {
-						e.PartDestroyed += new PartDestroyedHandler (HandlePartDestroyed);
-						e.WeaponFire += new WeaponFiredHandler (HandleEnemyShipWeaponFire);
-						e.Position += Ship.Position;
-						mainLayer.Add (e);
+				enemyGroupChangeTimeAccumulator += (float)gameTime.ElapsedGameTime.TotalSeconds;
+				if(enemyGroupChangeTimeAccumulator >= EnemyGroupChangeDelay){
+					enemyGroupChangeTimeAccumulator = 0;
+					if (enemyShips.Count == 0 && level1.HasNextGroup()) {
+						enemyShips.AddRange (level1.MoveToNextGroup ());
+						foreach (EnemyShip e in enemyShips) {
+							e.PartDestroyed += new PartDestroyedHandler (HandlePartDestroyed);
+							e.WeaponFire += new WeaponFiredHandler (HandleEnemyShipWeaponFire);
+							e.Position += Ship.Position;
+							mainLayer.Add (e);
+						}
 					}
 				}
 

@@ -1,41 +1,45 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="30/06/2013 1:34:34 AM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="03/07/2013 3:49:29 PM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug OS X|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/Common/Node.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/Game States/GameStateInGame.cs">
     <Files>
-      <File FileName="ArcticLion/Game States/GameStateInGame.cs" Line="39" Column="37" />
-      <File FileName="ArcticLion/Game1.cs" Line="37" Column="54" />
-      <File FileName="NuclearWinter/GameFlow/GameStateMgr.cs" Line="44" Column="32" />
-      <File FileName="ArcticLion/Game States/GameStateStartMenu.cs" Line="49" Column="48" />
-      <File FileName="ArcticLion/Enemy/EnemyShip.cs" Line="40" Column="51" />
-      <File FileName="ArcticLion/Projectile/Bullet.cs" Line="32" Column="1" />
-      <File FileName="ArcticLion/Enemy/EnemyShipFactory.cs" Line="109" Column="1" />
-      <File FileName="ArcticLion/Common/Node.cs" Line="26" Column="4" />
-      <File FileName="ArcticLion/Enemy/ContinuousShootingBehavior.cs" Line="1" Column="1" />
-      <File FileName="ArcticLion/Enemy/CircularMovingBehavior.cs" Line="23" Column="1" />
+      <File FileName="ArcticLion/Enemy/EnemyShip.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Enemy/EnemyShipFactory.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Common/Node.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Projectile/ProjectileManager.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Game States/GameStateInGame.cs" Line="207" Column="8" />
+      <File FileName="ArcticLion/Common/Assets.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Ship.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="ArcticLion" expanded="True">
-            <Node name="Common" expanded="True">
-              <Node name="Node.cs" selected="True" />
-            </Node>
+            <Node name="Common" expanded="True" />
             <Node name="Content" expanded="True" />
-            <Node name="Enemy" expanded="True" />
-            <Node name="Game States" expanded="True" />
+            <Node name="Game States" expanded="True">
+              <Node name="Levels" expanded="True" />
+              <Node name="GameStateInGame.cs" selected="True" />
+            </Node>
             <Node name="Projectile" expanded="True" />
             <Node name="Rendering" expanded="True" />
           </Node>
           <Node name="NuclearWinterMonoGame" expanded="True">
             <Node name="GameFlow" expanded="True" />
-            <Node name="UI" expanded="True" />
           </Node>
         </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="ArcticLion/Game States/GameStateInGame.cs" line="172" offsetX="124" offsetY="2475" expression="projectileManager.ShipBullets" liveUpdate="True" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
 </Properties>
