@@ -79,17 +79,11 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="Enemy\EnemyShip.cs" />
-    <Compile Include="Enemy\CircularMovingBehavior.cs" />
     <Compile Include="Enemy\EnemyShipFactory.cs" />
     <Compile Include="Enemy\EnemyShipPart.cs" />
-    <Compile Include="Enemy\ContinuousShootingBehavior.cs" />
-    <Compile Include="Enemy\MovingBehavior.cs" />
-    <Compile Include="Enemy\PendulumMovingBehavior.cs" />
-    <Compile Include="Enemy\ShootingBehavior.cs" />
     <Compile Include="Projectile\Projectile.cs" />
     <Compile Include="Projectile\Bullet.cs" />
     <Compile Include="Rendering\Camera2D.cs" />
-    <Compile Include="Enemy\SuicidalMovingBehavior.cs" />
     <Compile Include="Game States\GameStateInGame.cs" />
     <Compile Include="Common\Layer.cs" />
     <Compile Include="Common\Node.cs" />
@@ -101,6 +95,13 @@
     <Compile Include="Game States\Levels\Level1.cs" />
     <Compile Include="Projectile\ProjectileManager.cs" />
     <Compile Include="Enemy\Weapon.cs" />
+    <Compile Include="Enemy\MovingBehaviors\CircularMovingBehavior.cs" />
+    <Compile Include="Enemy\ShootingBehaviors\ShootingBehavior.cs" />
+    <Compile Include="Enemy\MovingBehaviors\SuicidalMovingBehavior.cs" />
+    <Compile Include="Enemy\MovingBehaviors\PendulumMovingBehavior.cs" />
+    <Compile Include="Enemy\MovingBehaviors\MovingBehavior.cs" />
+    <Compile Include="Enemy\ShootingBehaviors\ContinuousShootingBehavior.cs" />
+    <Compile Include="Enemy\ShootingBehaviors\PulseShootingBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -139,6 +140,8 @@
     <Folder Include="UI\" />
     <Folder Include="Common\" />
     <Folder Include="Game States\Levels\" />
+    <Folder Include="Enemy\ShootingBehaviors\" />
+    <Folder Include="Enemy\MovingBehaviors\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NuclearWinter\NuclearWinterMonoGame.csproj">

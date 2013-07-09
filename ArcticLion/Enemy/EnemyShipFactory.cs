@@ -37,7 +37,7 @@ namespace ArcticLion
 			newEnemyShip.Add (arm);
 
 			newEnemyShip.MovingBehavior = new SuicidalMovingBehavior ();
-			newEnemyShip.ShootingBehavior = new ContinuousShootingBehavior ();
+			newEnemyShip.ShootingBehavior = new PulseShootingBehavior ();
 
 			return newEnemyShip;
 		}

@@ -20,7 +20,7 @@ namespace ArcticLion
 
 		Level1 level1;
 		const float EnemyGroupChangeDelay = 3f;
-		float enemyGroupChangeTimeAccumulator;
+		float enemyGroupChangeTimeAccumulator = 3f; //TODO: put back to zero
 
 		Layer mainLayer;
 		Layer effectLayer;
@@ -210,7 +210,7 @@ namespace ArcticLion
 		}
 
 		private void HandleEnemyShipWeaponFire(EnemyShip enemyShip, EnemyShipPart part){
-			Vector2 newBulletVelocity = 300f * Vector2.Normalize (enemyShip.Target.Position - part.Weapon.GetAbsolutePosition());
+			Vector2 newBulletVelocity = 200f * Vector2.Normalize (enemyShip.Target.Position - part.Weapon.GetAbsolutePosition());
 			newBulletVelocity += enemyShip.Velocity;
 			projectileManager.ShootEnemyBullet(enemyShip, part.Weapon.GetAbsolutePosition(), newBulletVelocity);
 		}
