@@ -31,6 +31,8 @@ namespace ArcticLion
 			EnemyShipPart arm = new EnemyShipPart (Assets.PartArm);
 			arm.Health = 10;
 			arm.Position = Vector2.Zero;
+			arm.Weapon = new Weapon ();
+			arm.Weapon.Position = new Vector2 (29, 0);
 
 			newEnemyShip.Add (arm);
 
@@ -51,6 +53,9 @@ namespace ArcticLion
 
 			body.Position = Vector2.Zero;
 			arm.Position = new Vector2 (64, 0);
+
+			arm.Weapon = new Weapon ();
+			arm.Weapon.Position = new Vector2 (29, 0);
 
 			body.PreferredMovingBehavior = new PendulumMovingBehavior ();
 			arm.PreferredMovingBehavior = new SuicidalMovingBehavior ();
@@ -98,6 +103,11 @@ namespace ArcticLion
 			leftArm.Weight = 5;
 			rightArm.Weight = 5;
 			tail.Weight = 3;
+
+			leftArm.Weapon = new Weapon ();
+			leftArm.Weapon.Position = new Vector2 (29,0);
+			rightArm.Weapon = new Weapon ();
+			rightArm.Weapon.Position = new Vector2 (29,0);
 
 			EnemyShipPart.AssignBehavior (new CircularMovingBehavior(), body, core, tail);
 			EnemyShipPart.AssignBehavior (new PendulumMovingBehavior(), tail, leftJoint, rightJoint);

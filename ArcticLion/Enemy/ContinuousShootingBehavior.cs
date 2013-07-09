@@ -14,7 +14,11 @@ namespace ArcticLion
 		void ShootingBehavior.Apply(EnemyShip enemyShip, GameTime gameTime){
 			timeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
 			if (timeElapsed >= delay) {
-				enemyShip.Shoot ();
+				foreach (EnemyShipPart p in enemyShip.Parts) {
+					if (p.Weapon != null) {
+						enemyShip.Shoot (p);
+					}
+				}
 				timeElapsed = 0d;
 			}
 		}

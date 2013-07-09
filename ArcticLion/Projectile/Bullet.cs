@@ -41,6 +41,15 @@ namespace ArcticLion
 				                  Color.White);
 			}
 		}
+
+		public override Projectile Clone ()
+		{
+			Bullet clone = new Bullet ();
+			clone.bulletTexture = this.bulletTexture;
+			clone.Position = this.Position;
+			clone.Radius = this.Radius;
+			return clone;
+		}
 	}
 
 	public class EnemyBullet : Bullet{

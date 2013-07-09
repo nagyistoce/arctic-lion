@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 namespace ArcticLion
 {
 	public delegate void PartDestroyedHandler(EnemyShipPart destroyedPart, Vector2 position);
-	public delegate void WeaponFiredHandler(EnemyShip enemyShip);
+	public delegate void WeaponFiredHandler(EnemyShip enemyShip, EnemyShipPart part);
 
 	public class EnemyShip : Node
 	{
@@ -45,8 +45,8 @@ namespace ArcticLion
 			}
 		}
 
-		public void Shoot(){
-			OnWeaponFired (this);
+		public void Shoot(EnemyShipPart part){
+			OnWeaponFired (this, part);
 		}
 
 		public List<EnemyShip> DestroyPart(EnemyShipPart destroyedPart)
@@ -108,9 +108,9 @@ namespace ArcticLion
 				PartDestroyed(destroyedPart, position);
 		}
 
-		protected virtual void OnWeaponFired(EnemyShip enemyShip){
+		protected virtual void OnWeaponFired(EnemyShip enemyShip, EnemyShipPart part){
 			if (WeaponFire != null)
-				WeaponFire (enemyShip);
+				WeaponFire (enemyShip, part);
 		}
 
 		//TODO: clean this shit

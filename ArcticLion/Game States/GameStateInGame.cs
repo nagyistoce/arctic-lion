@@ -209,9 +209,10 @@ namespace ArcticLion
 			effectLayer.Add (explosion);
 		}
 
-		private void HandleEnemyShipWeaponFire(EnemyShip enemyShip){
-			Vector2 newBulletVelocity = 300f * Vector2.Normalize (enemyShip.Target.Position - enemyShip.Position);
-			projectileManager.ShootEnemyBullet(enemyShip, enemyShip.Position, newBulletVelocity);
+		private void HandleEnemyShipWeaponFire(EnemyShip enemyShip, EnemyShipPart part){
+			Vector2 newBulletVelocity = 300f * Vector2.Normalize (enemyShip.Target.Position - part.Weapon.GetAbsolutePosition());
+			newBulletVelocity += enemyShip.Velocity;
+			projectileManager.ShootEnemyBullet(enemyShip, part.Weapon.GetAbsolutePosition(), newBulletVelocity);
 		}
 
 		private void UpdateShip(GameTime gameTime){

@@ -75,6 +75,29 @@ namespace ArcticLion
 			return children.Remove (node);
 		}
 
+		public Vector2 GetAbsolutePosition(){
+			if (Parent != null) {
+				Vector2 parentAbsPos = Parent.GetAbsolutePosition ();
+				double parentAbsRot = Parent.GetAbsoluteRotation ();
+				float cos = (float)Math.Cos (parentAbsRot);
+				float sin = (float)Math.Sin (parentAbsRot);
+				Vector2 rotatedPos = new Vector2 (Position.X * cos - Position.Y * sin, 
+				                                  Position.X * sin + Position.Y * cos);
+
+				return parentAbsPos + rotatedPos;
+			} else {
+				return Position;
+			}
+		}
+
+		public double GetAbsoluteRotation(){
+			if (Parent != null) {
+				return this.Rotation + Parent.GetAbsoluteRotation ();
+			} else {
+				return this.Rotation;
+			}
+		}
+
 		public void Kill()
 		{
 			IsDead = true;

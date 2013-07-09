@@ -46,8 +46,6 @@ namespace ArcticLion
 		public void ShootEnemyBullet(EnemyShip enemyShip, Vector2 initPos, Vector2 initVel){
 			if (!EnemyBullets.Peek ().IsFlying) {
 				EnemyBullet newEnemyBullet = EnemyBullets.Dequeue ();
-				Vector2 newBulletVelocity = Vector2.Normalize (enemyShip.Target.Position - enemyShip.Position);
-				newBulletVelocity *= 300f;
 
 				newEnemyBullet.Position = initPos;
 				newEnemyBullet.Velocity = initVel;
@@ -71,4 +69,3 @@ namespace ArcticLion
 		}
 	}
 }
-

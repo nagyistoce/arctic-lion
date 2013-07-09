@@ -17,6 +17,16 @@ namespace ArcticLion
 		public MovingBehavior PreferredMovingBehavior { get; set;}
 		public ShootingBehavior PreferredShootingBehavior { get; set;}
 
+		private Weapon _weapon;
+		public Weapon Weapon{
+			get{ return _weapon; }
+			set{ 
+				Remove (_weapon);
+				_weapon = value;
+				Add (_weapon);
+			}
+		}
+
 		public bool isVisited;
 
 		public Vector2 Velocity{ get; set;}
@@ -42,16 +52,10 @@ namespace ArcticLion
 		{
 			base.Draw (spriteBatch);
 
-			float cos = (float)Math.Cos (Parent.Rotation);
-			float sin = (float)Math.Sin (Parent.Rotation);
-
-			Vector2 worldPosition = new Vector2 (Position.X * cos - Position.Y * sin,
-			                                     Position.X * sin + Position.Y * cos);
-
-			worldPosition += Parent.Position;
+			Vector2 absPosition = GetAbsolutePosition ();
 
 			spriteBatch.Draw(enemyShipPartTexture, 
-			                 worldPosition, 
+			                 absPosition, 
 			                 null, 
 			                 Color.White,
 			                 (float)Parent.Rotation,
