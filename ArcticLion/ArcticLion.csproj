@@ -102,6 +102,7 @@
     <Compile Include="Enemy\MovingBehaviors\MovingBehavior.cs" />
     <Compile Include="Enemy\ShootingBehaviors\ContinuousShootingBehavior.cs" />
     <Compile Include="Enemy\ShootingBehaviors\PulseShootingBehavior.cs" />
+    <Compile Include="Enemy\ShootingBehaviors\SprayShootingBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
