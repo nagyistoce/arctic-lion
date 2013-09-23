@@ -9,4 +9,3 @@ namespace ArcticLion
 		void Apply(EnemyShip enemyShip, GameTime gameTime);
 	}
 }
-

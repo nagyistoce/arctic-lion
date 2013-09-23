@@ -12,7 +12,8 @@ namespace ArcticLion
 	public enum InGameStates
 	{
 		Running,
-		Paused
+		Paused,
+		Restarting
 	}
 
 	public class GameStateInGame : GameState<Game1>
@@ -22,11 +23,13 @@ namespace ArcticLion
 		Random random;
 
 		InGameStates inGameState;
+		float gameRestartTimeAccumulator = 0f;
+		const float gameRestartDelay = 2f;
 		Panel pauseMenuPanel;
 
 		Level1 level1;
-		const float EnemyGroupChangeDelay = 3f;
-		float enemyGroupChangeTimeAccumulator = 3f; //TODO: put back to zero
+		const float EnemyGroupChangeDelay = 2f;
+		float enemyGroupChangeTimeAccumulator = 2f; //TODO: put back to zero
 
 		Layer mainLayer;
 		Layer effectLayer;
@@ -41,11 +44,12 @@ namespace ArcticLion
 
 		public GameStateInGame (Game1 game) : base(game)
 		{
-			enemyShips = new List<EnemyShip> ();
 		}
 
 		public override void Start ()
 		{			
+			enemyShips = new List<EnemyShip> ();
+
 			BuildUI ();
 
 			random = new Random ();
@@ -97,28 +101,17 @@ namespace ArcticLion
 
 			switch (inGameState){
 			case InGameStates.Running:
-				projectileManager.Update (gameTime);
-				projectileManager.CleanProjectiles (Camera);
+				UpdateGame (gameTime);
+				break;
 
-				DetectCollisions (gameTime);
-
-				enemyGroupChangeTimeAccumulator += (float)gameTime.ElapsedGameTime.TotalSeconds;
-				if (enemyGroupChangeTimeAccumulator >= EnemyGroupChangeDelay) {
-					enemyGroupChangeTimeAccumulator = 0;
-					if (enemyShips.Count == 0 && level1.HasNextGroup ()) {
-						enemyShips.AddRange (level1.MoveToNextGroup ());
-						foreach (EnemyShip e in enemyShips) {
-							e.PartDestroyed += new PartDestroyedHandler (HandlePartDestroyed);
-							e.WeaponFire += new WeaponFiredHandler (HandleEnemyShipWeaponFire);
-							e.Position += Ship.Position;
-							mainLayer.Add (e);
-						}
-					}
+			case InGameStates.Restarting:
+				UpdateGame (gameTime);
+				gameRestartTimeAccumulator += (float)gameTime.ElapsedGameTime.TotalSeconds;
+				if(gameRestartTimeAccumulator >= gameRestartDelay){
+					gameRestartTimeAccumulator = 0;
+					inGameState = InGameStates.Running;
+					Start ();
 				}
-
-				UpdateShip (gameTime);
-				mainLayer.Update (gameTime);
-				effectLayer.Update (gameTime);
 				break;
 
 			case InGameStates.Paused:
@@ -215,13 +208,21 @@ namespace ArcticLion
 					}
 
 					// Ship colliding with enemy projectiles
-					IEnumerable<EnemyBullet> enemyProjectiles = projectileManager.EnemyBullets;
-					foreach (Projectile p in enemyProjectiles) {
-						if (p.IsFlying) {
-							Rectangle shipHitBox = Ship.GetHitBox ();
-							if(shipHitBox.Contains(new Point((int)p.Position.X, (int)p.Position.Y))){
-								p.IsFlying = false;
-								Ship.State = ShipStates.Dead;
+					if (Ship.State == ShipStates.Alive) {
+						IEnumerable<EnemyBullet> enemyProjectiles = projectileManager.EnemyBullets;
+						foreach (Projectile p in enemyProjectiles) {
+							if (p.IsFlying) {
+								Rectangle shipHitBox = Ship.GetHitBox ();
+								if (shipHitBox.Contains (new Point ((int)p.Position.X, (int)p.Position.Y))) {
+									Animation explosion = new Animation (Game.Content.Load<Texture2D> (Assets.Explosion),
+									                                    Assets.Explosion1Frames);
+									explosion.Position = Ship.Position;
+									effectLayer.Add (explosion);
+
+									p.IsFlying = false;
+									Ship.State = ShipStates.Dead;
+									inGameState = InGameStates.Restarting;
+								}
 							}
 						}
 					}
@@ -241,6 +242,31 @@ namespace ArcticLion
 			Vector2 newBulletVelocity = 200f * Vector2.Normalize (enemyShip.Target.Position - part.Weapon.GetAbsolutePosition());
 			newBulletVelocity += enemyShip.Velocity;
 			projectileManager.ShootEnemyBullet(enemyShip, part.Weapon.GetAbsolutePosition(), newBulletVelocity);
+		}
+
+		private void UpdateGame(GameTime gameTime){
+			projectileManager.Update (gameTime);
+			projectileManager.CleanProjectiles (Camera);
+
+			DetectCollisions (gameTime);
+
+			enemyGroupChangeTimeAccumulator += (float)gameTime.ElapsedGameTime.TotalSeconds;
+			if (enemyGroupChangeTimeAccumulator >= EnemyGroupChangeDelay) {
+				enemyGroupChangeTimeAccumulator = 0;
+				if (enemyShips.Count == 0 && level1.HasNextGroup ()) {
+					enemyShips.AddRange (level1.MoveToNextGroup ());
+					foreach (EnemyShip e in enemyShips) {
+						e.PartDestroyed += new PartDestroyedHandler (HandlePartDestroyed);
+						e.WeaponFire += new WeaponFiredHandler (HandleEnemyShipWeaponFire);
+						e.Position += Ship.Position;
+						mainLayer.Add (e);
+					}
+				}
+			}
+
+			UpdateShip (gameTime);
+			mainLayer.Update (gameTime);
+			effectLayer.Update (gameTime);
 		}
 
 		private void UpdateShip(GameTime gameTime){

@@ -60,6 +60,9 @@ namespace ArcticLion
 		{
 			base.Draw (spriteBatch);
 
+			if (State == ShipStates.Dead)
+				return;
+
 			spriteBatch.Draw(shipTexture, Position, null, Color.Black, 
 			                 (float)Rotation,
 			                 new Vector2(shipTexture.Bounds.Center.X, shipTexture.Bounds.Center.Y), 
