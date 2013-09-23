@@ -9,13 +9,19 @@ using NuclearWinter.UI;
 
 namespace ArcticLion
 {
+	public enum InGameStates
+	{
+		Running,
+		Paused
+	}
+
 	public class GameStateInGame : GameState<Game1>
 	{
 		Screen screen;
 		public Camera2D Camera { get; private set;}
 		Random random;
 
-		bool isPaused = false;
+		InGameStates inGameState;
 		Panel pauseMenuPanel;
 
 		Level1 level1;
@@ -65,6 +71,8 @@ namespace ArcticLion
 			projectileManager = new ProjectileManager ();
 			projectileManager.LoadContent (Game.Content);
 
+			inGameState = InGameStates.Running;
+
 			base.Start ();
 		}
 
@@ -80,23 +88,24 @@ namespace ArcticLion
 			screen.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
 			if(Game.InputMgr.WasKeyJustPressed(Keys.Escape)){
-				if (!isPaused) {
+				if (inGameState == InGameStates.Running) {
 					PauseGame ();
 				} else {
 					UnpauseGame ();
 				}
 			}
 
-			if (!isPaused) {
+			switch (inGameState){
+			case InGameStates.Running:
 				projectileManager.Update (gameTime);
 				projectileManager.CleanProjectiles (Camera);
 
 				DetectCollisions (gameTime);
 
 				enemyGroupChangeTimeAccumulator += (float)gameTime.ElapsedGameTime.TotalSeconds;
-				if(enemyGroupChangeTimeAccumulator >= EnemyGroupChangeDelay){
+				if (enemyGroupChangeTimeAccumulator >= EnemyGroupChangeDelay) {
 					enemyGroupChangeTimeAccumulator = 0;
-					if (enemyShips.Count == 0 && level1.HasNextGroup()) {
+					if (enemyShips.Count == 0 && level1.HasNextGroup ()) {
 						enemyShips.AddRange (level1.MoveToNextGroup ());
 						foreach (EnemyShip e in enemyShips) {
 							e.PartDestroyed += new PartDestroyedHandler (HandlePartDestroyed);
@@ -110,6 +119,10 @@ namespace ArcticLion
 				UpdateShip (gameTime);
 				mainLayer.Update (gameTime);
 				effectLayer.Update (gameTime);
+				break;
+
+			case InGameStates.Paused:
+				break;
 			}
 		}
 
@@ -156,13 +169,15 @@ namespace ArcticLion
 		}
 
 		private void PauseGame(){
-			isPaused = true;
+			inGameState = InGameStates.Paused;
 			screen.Root.AddChild (pauseMenuPanel);
 		}
 
 		private void UnpauseGame(){
-			isPaused = false;
-			screen.Root.RemoveChild (pauseMenuPanel);
+			if(inGameState == InGameStates.Paused){
+				inGameState = InGameStates.Running;
+				screen.Root.RemoveChild (pauseMenuPanel);
+			}
 		}
 
 		private void QuitGame(){
@@ -178,6 +193,7 @@ namespace ArcticLion
 				List<EnemyShipPart> enemyShipPartsCopy = new List<EnemyShipPart> (es.Parts);
 
 				foreach (EnemyShipPart part in enemyShipPartsCopy) {
+					// Enemy ship parts colliding with projectiles
 					List<Projectile> collidingProjectiles = part.FindCollidingProjectiles (projectileManager.ShipBullets);
 					foreach(Projectile p in collidingProjectiles){
 						p.IsFlying = false;
@@ -195,6 +211,18 @@ namespace ArcticLion
 
 							enemyShips.Remove (es);
 							es.Kill ();
+						}
+					}
+
+					// Ship colliding with enemy projectiles
+					IEnumerable<EnemyBullet> enemyProjectiles = projectileManager.EnemyBullets;
+					foreach (Projectile p in enemyProjectiles) {
+						if (p.IsFlying) {
+							Rectangle shipHitBox = Ship.GetHitBox ();
+							if(shipHitBox.Contains(new Point((int)p.Position.X, (int)p.Position.Y))){
+								p.IsFlying = false;
+								Ship.State = ShipStates.Dead;
+							}
 						}
 					}
 				}
@@ -216,25 +244,31 @@ namespace ArcticLion
 		}
 
 		private void UpdateShip(GameTime gameTime){
-			Vector2 mousePositionWorld = GetMousePositionWorld ();
 
-			double rotationAngle = Math.Atan2 ((mousePositionWorld.Y - Ship.Position.Y),
-			                                   (mousePositionWorld.X - Ship.Position.X));
+			switch (Ship.State) {
+				case ShipStates.Alive:
+					Vector2 mousePositionWorld = GetMousePositionWorld ();
+					double rotationAngle = Math.Atan2 ((mousePositionWorld.Y - Ship.Position.Y),
+				                                   (mousePositionWorld.X - Ship.Position.X));
 
-			Ship.Rotation = rotationAngle;
+					Ship.Rotation = rotationAngle;
 
-			fireDelayAccumulator += gameTime.ElapsedGameTime.TotalSeconds;
-			MouseState ms = Mouse.GetState ();
-			if (ms.LeftButton == ButtonState.Pressed && fireDelayAccumulator >= FireDelay) {
-				Vector2 newBulletVelocity = 600f * Vector2.Normalize (mousePositionWorld - Ship.Position);
-				newBulletVelocity += new Vector2 (random.Next(-20,20), random.Next(-20,20));
-				newBulletVelocity += Ship.Velocity;
-				Vector2 shipYaw = new Vector2 ((float)Math.Cos (Ship.Rotation), 
-				                               (float)Math.Sin (Ship.Rotation));
+					fireDelayAccumulator += gameTime.ElapsedGameTime.TotalSeconds;
+					MouseState ms = Mouse.GetState ();
+					if (ms.LeftButton == ButtonState.Pressed && fireDelayAccumulator >= FireDelay) {
+						Vector2 newBulletVelocity = 600f * Vector2.Normalize (mousePositionWorld - Ship.Position);
+						newBulletVelocity += new Vector2 (random.Next(-20,20), random.Next(-20,20));
+						newBulletVelocity += Ship.Velocity;
+						Vector2 shipYaw = new Vector2 ((float)Math.Cos (Ship.Rotation), 
+						                               (float)Math.Sin (Ship.Rotation));
 
-				projectileManager.ShootShipBullet (Ship, Ship.Position + 20 * shipYaw, newBulletVelocity);
+						projectileManager.ShootShipBullet (Ship, Ship.Position + 20 * shipYaw, newBulletVelocity);
+						fireDelayAccumulator = 0;
+					}
+					break;
 
-				fireDelayAccumulator = 0;
+				case ShipStates.Dead:
+					break;
 			}
 		}
 

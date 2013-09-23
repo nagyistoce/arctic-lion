@@ -1,11 +1,24 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="09/07/2013 5:55:25 AM">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug OS X" />
-  <MonoDevelop.Ide.Workbench>
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="23/09/2013 4:16:16 PM">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug OS X|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/Projectile/Bullet.cs">
+    <Files>
+      <File FileName="ArcticLion/Game States/Levels/Level1.cs" Line="15" Column="3" />
+      <File FileName="ArcticLion/Projectile/Bullet.cs" Line="1" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="ArcticLion" expanded="True" />
-          <Node name="NuclearWinterMonoGame" expanded="True" selected="True" />
+          <Node name="ArcticLion" expanded="True">
+            <Node name="Enemy" expanded="True" />
+            <Node name="Game States" expanded="True">
+              <Node name="Levels" expanded="True" />
+            </Node>
+            <Node name="Projectile" expanded="True">
+              <Node name="Bullet.cs" selected="True" />
+            </Node>
+            <Node name="UI" expanded="True" />
+          </Node>
+          <Node name="NuclearWinterMonoGame" expanded="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">
