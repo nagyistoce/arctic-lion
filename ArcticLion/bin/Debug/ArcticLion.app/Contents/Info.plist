@@ -17,7 +17,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1</string>
 	<key>BuildMachineOSBuild</key>
-	<string>11G63</string>
+	<string>12F37</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -34,16 +34,18 @@
 	<string>????</string>
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
+	<key>DTPlatformBuild</key>
+	<string>5A1412</string>
 	<key>DTPlatformVersion</key>
 	<string>GM</string>
 	<key>DTSDKBuild</key>
-	<string>11G63</string>
+	<string>12F37</string>
 	<key>DTSDKName</key>
 	<string>macosx10.8</string>
 	<key>DTXcode</key>
-	<string>0462</string>
+	<string>0500</string>
 	<key>DTXcodeBuild</key>
-	<string>4H1003</string>
+	<string>5A1412</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © gabriellumbi</string>
 </dict>

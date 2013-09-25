@@ -132,6 +132,9 @@
     <BundleResource Include="Content\part_arm.png" />
     <BundleResource Include="Content\text_quitgame.png" />
     <BundleResource Include="Content\explosion_1.png" />
+    <BundleResource Include="Content\enemy_locator.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enemy\" />

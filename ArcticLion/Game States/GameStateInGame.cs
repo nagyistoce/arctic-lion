@@ -42,6 +42,11 @@ namespace ArcticLion
 
 		private List<EnemyShip> enemyShips;
 
+		Texture2D enemyLocator;
+		Vector2 enemyLocatorPosition = Vector2.Zero;
+		double enemyLocatorAngle = 0;
+		bool enemyLocatorVisible = false;
+
 		public GameStateInGame (Game1 game) : base(game)
 		{
 		}
@@ -74,6 +79,8 @@ namespace ArcticLion
 
 			projectileManager = new ProjectileManager ();
 			projectileManager.LoadContent (Game.Content);
+
+			enemyLocator = Content.Load<Texture2D> (Assets.EnemyLocator);
 
 			inGameState = InGameStates.Running;
 
@@ -136,6 +143,8 @@ namespace ArcticLion
 			mainLayer.Draw (Game.SpriteBatch);
 			projectileManager.Draw (Game.SpriteBatch);
 			effectLayer.Draw (Game.SpriteBatch);
+
+			DrawEnemyLocator (Game.SpriteBatch);
 
 			Game.SpriteBatch.End ();
 
@@ -265,6 +274,7 @@ namespace ArcticLion
 			}
 
 			UpdateShip (gameTime);
+			UpdateEnemyLocator (gameTime);
 			mainLayer.Update (gameTime);
 			effectLayer.Update (gameTime);
 		}
@@ -296,6 +306,61 @@ namespace ArcticLion
 				case ShipStates.Dead:
 					break;
 			}
+		}
+
+		private void UpdateEnemyLocator(GameTime gameTime){
+			EnemyShip closestShip = null;
+			float minDistance = 0;
+			float distance = 0;
+
+			foreach (EnemyShip es in enemyShips) {
+				distance = Vector2.Distance (Ship.Position, es.Position);
+				if (closestShip == null) {
+					closestShip = es;
+					minDistance = distance;
+				} else {
+					if (distance < minDistance) {
+						closestShip = es;
+						minDistance = distance;
+					}
+				}
+			}
+
+			if (closestShip != null && 
+			    !Camera.IsInView(
+							closestShip.Position, 
+			                new Rectangle(
+								(int)closestShip.Position.X,
+								(int)closestShip.Position.Y,
+								50,50) //TODO: Get Bounds of enemyShip!!
+							)
+			    ){
+
+				float w = screen.Bounds.Width / 2f - 40;
+				float h = screen.Bounds.Height / 2f - 40;
+				float angle = (float) Math.Atan2 ((double)(closestShip.Position.Y - Ship.Position.Y),
+				                           		  (double)(closestShip.Position.X - Ship.Position.X));
+				enemyLocatorPosition = Ship.Position + new Vector2 (w*(float)Math.Cos(angle), h*(float)Math.Sin(angle));
+				enemyLocatorAngle = angle;
+				enemyLocatorVisible = true;
+			} else {
+				enemyLocatorVisible = false;
+			}
+		}
+
+		private void DrawEnemyLocator(SpriteBatch spriteBatch){
+			if (!enemyLocatorVisible)
+				return;
+
+			spriteBatch.Draw (enemyLocator, 
+			                  enemyLocatorPosition,
+			                 null, 
+			                 Color.White, 
+			                 (float)enemyLocatorAngle,
+			                  new Vector2(enemyLocator.Bounds.Center.X,enemyLocator.Bounds.Center.Y),
+			                 1f,
+			                 SpriteEffects.None, 
+			                 1);
 		}
 
 		private Vector2 GetMousePositionWorld ()

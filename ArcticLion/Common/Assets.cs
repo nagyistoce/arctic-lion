@@ -27,6 +27,9 @@ namespace ArcticLion
 		//Effects
 		public const string Explosion = "explosion_1";
 		public const int Explosion1Frames = 43;
+
+		//Other
+		public const string EnemyLocator = "enemy_locator";
 	}
 }
 
