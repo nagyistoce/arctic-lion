@@ -3,6 +3,7 @@ using System.Xml;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Newtonsoft.Json;
 
 namespace ArcticLion
 {
@@ -136,88 +137,89 @@ namespace ArcticLion
 			return newEnemyShip;
 		}
 
-		public EnemyShip CreateFromXML(Node target, String xml){
-			XmlTextReader reader = new XmlTextReader (xml);
+		public EnemyShip TestDeserialize(Node target){
 
-			EnemyShip newEnemyShip = new EnemyShip (target);
+			SerializableEnemyShip ses = new SerializableEnemyShip();
+			ses.Id = "test";
+			ses.Parts = new List<SerializableEnemyShipPart> ();
+			ses.Connections = new List<SerializableEnemyShipPartConnection> ();
+			ses.MovingBehavior = "CircularMovingBehavior";
+			ses.ShootingBehavior = "ContinuousShootingBehavior";
 
-			while (reader.Read()) {
-				if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals ("EnemyShip")) {
+			SerializableEnemyShipPart sesp = new SerializableEnemyShipPart ();
+			sesp.Id = "core";
+			sesp.Asset = Assets.PartCore;
+			sesp.Health = 20;
+			sesp.Weight = 1;
+			sesp.Rotation = Math.PI/4f;
+			sesp.PositionX = 0;
+			sesp.PositionY = 0;
+			sesp.PreferredMovingBehavior = "CircularMovingBehavior";
+			sesp.PreferredShootingBehavior = "ContinuousShootingBehavior";
 
-					//Read parts
-					while (reader.Read()) {
-						if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals ("EnemyShipPart")) {
-							string name = reader.GetAttribute ("name");
-							string asset = reader.GetAttribute ("asset");
-							int weight = int.Parse (reader.GetAttribute ("weight"));
-							int health = int.Parse (reader.GetAttribute ("health"));
-							float px = float.Parse (reader.GetAttribute ("px"));
-							float py = float.Parse (reader.GetAttribute ("py"));
+			ses.Parts.Add (sesp);
 
-							EnemyShipPart newPart = new EnemyShipPart (asset);
-							newPart.Name = name;
-							newPart.Weight = weight;
-							newPart.Health = health;
-							newPart.Position = new Vector2 (px, py);
+			string json = JsonConvert.SerializeObject (ses);
 
-							//Read behaviors
-							//TODO: ALLOW OPTIONAL BEHAVIORS!!!!!!!!!!!!
-							while (reader.Read()) {
-								if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals ("Behavior")) {
-									reader.ReadToFollowing ("Moving");
-									string movingBehaviorName = reader.ReadString ();
-									reader.ReadToFollowing ("Shooting");
-									string shootingBehaviorName = reader.ReadString ();
-
-									var movingBehavior = Activator.CreateInstance (Type.GetType(movingBehaviorName));
-									var shootingBehavior = Activator.CreateInstance (Type.GetType(shootingBehaviorName));
-
-									newPart.PreferredMovingBehavior = (MovingBehavior)movingBehavior;
-									newPart.PreferredShootingBehavior = (ShootingBehavior)shootingBehavior;
-								} else if (reader.NodeType == XmlNodeType.EndElement && reader.Name.Equals ("Behavior")) {
-									break;
-								}
-							}//End read behaviors
-
-							newEnemyShip.Add (newPart);
-						}//End read part
-					}//End read parts
-
-					//Read links
-				} else if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals ("Links")) {
-					while (reader.Read()) {
-						if (reader.NodeType == XmlNodeType.Element && reader.Name.Equals ("Link")) {
-							string part1Name = reader.GetAttribute ("part1");
-							string part2Name = reader.GetAttribute ("part2");
-
-							EnemyShipPart part1 = newEnemyShip.Parts.Find ((p) => {return p.Name.Equals(part1Name);});
-							EnemyShipPart part2 = newEnemyShip.Parts.Find ((p) => {return p.Name.Equals(part2Name);});
-
-							EnemyShipPart.Connect (part1, part2);
-
-						} else if (reader.NodeType == XmlNodeType.EndElement && reader.Name.Equals ("Links")) {
-							break;
-						}
-					}
-				}else if(reader.NodeType == XmlNodeType.Element && reader.Name.Equals ("Behavior")){
-					reader.ReadToFollowing ("Moving");
-					string movingBehaviorName = reader.ReadString ();
-					reader.ReadToFollowing ("Shooting");
-					string shootingBehaviorName = reader.ReadString ();
-
-					var movingBehavior = Activator.CreateInstance (Type.GetType(movingBehaviorName));
-					var shootingBehavior = Activator.CreateInstance (Type.GetType(shootingBehaviorName));
-
-					newEnemyShip.MovingBehavior = (MovingBehavior)movingBehavior;
-					newEnemyShip.ShootingBehavior = (ShootingBehavior)shootingBehavior;
-				}//End enemy ship read
-			}//End big read loop
-			
-			return newEnemyShip;
+			return Deserialize (json, target);
 		}
 
 		public void LoadContentFor(EnemyShip enemyShip){
 			enemyShip.LoadContent (content);
+		}
+
+		public EnemyShip Deserialize(string json, Node target){
+			var deserialized = JsonConvert.DeserializeObject<SerializableEnemyShip> (json);
+
+			if(deserialized is SerializableEnemyShip){
+				SerializableEnemyShip serializableEnemyShip = (SerializableEnemyShip)deserialized;
+				Dictionary<string, EnemyShipPart> parts = new Dictionary<string, EnemyShipPart>();
+
+				EnemyShip enemyShip = new EnemyShip (target);
+				enemyShip.MovingBehavior = CreateMovingBehavior(serializableEnemyShip.MovingBehavior);
+				enemyShip.ShootingBehavior = CreateShootingBehavior(serializableEnemyShip.ShootingBehavior);
+
+				foreach (SerializableEnemyShipPart p in serializableEnemyShip.Parts) 
+				{
+					EnemyShipPart enemyShipPart = new EnemyShipPart (p.Asset);
+					enemyShipPart.Health = p.Health;
+					enemyShipPart.Weight = p.Weight;
+					enemyShipPart.Weapon = new Weapon (); //TODO: deserialize weapon
+					enemyShipPart.Position = new Vector2 (p.PositionX, p.PositionY);
+					enemyShipPart.Rotation = p.Rotation;
+					enemyShipPart.PreferredMovingBehavior = CreateMovingBehavior(p.PreferredMovingBehavior);
+					enemyShipPart.PreferredShootingBehavior = CreateShootingBehavior(p.PreferredShootingBehavior);
+
+					parts.Add (p.Id, enemyShipPart);
+					enemyShip.Add (enemyShipPart);
+				}
+
+				foreach (SerializableEnemyShipPartConnection con in serializableEnemyShip.Connections) 
+				{
+					EnemyShipPart.Connect (parts [con.LeftId], parts [con.RightId]);
+				}
+				return enemyShip;
+			}
+			return null;
+		}
+
+		//TODO: Find a way to instantiate behaviors with the class name or something (BehaviorFactory?, Dictionary?)
+		private MovingBehavior CreateMovingBehavior(string name){
+			switch (name) {
+			case "CircularMovingBehavior":
+				return new CircularMovingBehavior ();
+			}
+
+			return null;
+		}
+
+		private ShootingBehavior CreateShootingBehavior(string name){
+			switch (name) {
+			case "ContinuousShootingBehavior":
+				return new ContinuousShootingBehavior ();
+			}
+
+			return null;
 		}
 	}
 }

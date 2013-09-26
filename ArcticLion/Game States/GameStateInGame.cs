@@ -56,7 +56,6 @@ namespace ArcticLion
 			enemyShips = new List<EnemyShip> ();
 
 			BuildUI ();
-
 			random = new Random ();
 
 			Ship = new Ship ();

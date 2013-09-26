@@ -72,6 +72,9 @@
     <Reference Include="MonoGame.Framework">
       <HintPath>bin\Debug\MonoGame.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -103,6 +106,7 @@
     <Compile Include="Enemy\ShootingBehaviors\ContinuousShootingBehavior.cs" />
     <Compile Include="Enemy\ShootingBehaviors\PulseShootingBehavior.cs" />
     <Compile Include="Enemy\ShootingBehaviors\SprayShootingBehavior.cs" />
+    <Compile Include="Enemy\SerializableEnemyShip.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

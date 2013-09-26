@@ -11,7 +11,6 @@ namespace ArcticLion
 		String assetName;
 		Texture2D enemyShipPartTexture;
 		public List<EnemyShipPart> ConnectedParts{ get; private set;}
-		public string Name {get;set;}
 		public int Health { get; set;}
 		public int Weight { get; set;}
 		public MovingBehavior PreferredMovingBehavior { get; set;}

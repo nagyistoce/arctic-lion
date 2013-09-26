@@ -24,6 +24,11 @@ namespace ArcticLion
 			enemyShip.LoadContent (content);
 			group1.Add(enemyShip);
 
+			enemyShip = EnemyShipFactory.GetInstance ().TestDeserialize (ship);
+			enemyShip.Position = new Vector2 (300, 0);
+			enemyShip.LoadContent (content);
+			group1.Add (enemyShip);
+
 			//Group 2
 			List<EnemyShip> group2 = new List<EnemyShip> ();
 			enemyShip = EnemyShipFactory.GetInstance ().CreateEnemyShipAplha1 (ship);
@@ -48,6 +53,7 @@ namespace ArcticLion
 			enemyShip.LoadContent (content);
 			group3.Add(enemyShip);
 
+			//Add all groups
 			enemyShipGroups.Add (group1);
 			enemyShipGroups.Add (group2);
 			enemyShipGroups.Add (group3);

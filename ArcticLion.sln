@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcticLion", "ArcticLion\Ar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuclearWinterMonoGame", "NuclearWinter\NuclearWinterMonoGame.csproj", "{72677817-5174-4921-8E10-BD54E73EB965}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{83CA24ED-B711-43D5-96CA-EEBD503C302D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -54,6 +56,24 @@ Global
 		{73993ED7-49DF-4909-89E4-C9FC2E2087C3}.Release Windows|x86.Build.0 = Debug|x86
 		{73993ED7-49DF-4909-89E4-C9FC2E2087C3}.Release|x86.ActiveCfg = Release|x86
 		{73993ED7-49DF-4909-89E4-C9FC2E2087C3}.Release|x86.Build.0 = Release|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.AppStore|x86.ActiveCfg = AppStore|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.AppStore|x86.Build.0 = AppStore|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Debug Linux|x86.ActiveCfg = Debug|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Debug Linux|x86.Build.0 = Debug|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Debug OS X|x86.ActiveCfg = Debug|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Debug OS X|x86.Build.0 = Debug|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Debug Windows|x86.ActiveCfg = Debug|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Debug Windows|x86.Build.0 = Debug|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Debug|x86.ActiveCfg = Debug|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Debug|x86.Build.0 = Debug|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Release Linux|x86.ActiveCfg = Debug|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Release Linux|x86.Build.0 = Debug|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Release OS X|x86.ActiveCfg = Debug|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Release OS X|x86.Build.0 = Debug|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Release Windows|x86.ActiveCfg = Debug|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Release Windows|x86.Build.0 = Debug|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Release|x86.ActiveCfg = Release|x86
+		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = ArcticLion\ArcticLion.csproj
