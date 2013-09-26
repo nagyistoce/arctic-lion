@@ -1,18 +1,28 @@
 ﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="25/09/2013 11:39:57 PM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug OS X|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/Enemy/EnemyShipFactory.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ArcticLion/Enemy/MovingBehaviors/CircularMovingBehavior.cs">
     <Files>
-      <File FileName="ArcticLion/Enemy/EnemyShipFactory.cs" Line="154" Column="35" />
-      <File FileName="ArcticLion/Enemy/SerializableEnemyShip.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Enemy/EnemyShipFactory.cs" Line="206" Column="111" />
+      <File FileName="ArcticLion/Enemy/SerializableEnemyShip.cs" Line="12" Column="41" />
+      <File FileName="ArcticLion/Game States/Levels/Level.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Game States/Levels/Level1.cs" Line="27" Column="1" />
+      <File FileName="ArcticLion/Enemy/MovingBehaviors/MovingBehavior.cs" Line="1" Column="1" />
+      <File FileName="ArcticLion/Enemy/MovingBehaviors/CircularMovingBehavior.cs" Line="9" Column="49" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="ArcticLion" expanded="True">
+            <Node name="Common" expanded="True" />
             <Node name="Enemy" expanded="True">
-              <Node name="EnemyShipFactory.cs" selected="True" />
+              <Node name="MovingBehaviors" expanded="True">
+                <Node name="CircularMovingBehavior.cs" selected="True" />
+              </Node>
+              <Node name="ShootingBehaviors" expanded="True" />
             </Node>
-            <Node name="Game States" expanded="True" />
+            <Node name="Game States" expanded="True">
+              <Node name="Levels" expanded="True" />
+            </Node>
           </Node>
           <Node name="NuclearWinterMonoGame" expanded="True" />
           <Node name="Tools" expanded="True">
