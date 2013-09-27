@@ -19,6 +19,9 @@ namespace ArcticLion
 		public event PartDestroyedHandler PartDestroyed;
 		public event WeaponFiredHandler WeaponFire;
 
+		public EnemyShip() : this(null){
+		}
+
 		public EnemyShip (Node target)
 		{
 			this.Target = target;

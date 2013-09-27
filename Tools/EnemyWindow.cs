@@ -6,17 +6,17 @@ using MonoMac.AppKit;
 
 namespace Tools
 {
-	public partial class MainWindow : MonoMac.AppKit.NSWindow
+	public partial class EnemyWindow : MonoMac.AppKit.NSWindow
 	{
 		#region Constructors
 		// Called when created from unmanaged code
-		public MainWindow (IntPtr handle) : base (handle)
+		public EnemyWindow (IntPtr handle) : base (handle)
 		{
 			Initialize ();
 		}
 		// Called when created directly from a XIB file
 		[Export ("initWithCoder:")]
-		public MainWindow (NSCoder coder) : base (coder)
+		public EnemyWindow (NSCoder coder) : base (coder)
 		{
 			Initialize ();
 		}

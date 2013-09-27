@@ -6,22 +6,22 @@ using MonoMac.AppKit;
 
 namespace Tools
 {
-	public partial class MainWindowController : MonoMac.AppKit.NSWindowController
+	public partial class EnemyWindowController : MonoMac.AppKit.NSWindowController
 	{
 		#region Constructors
 		// Called when created from unmanaged code
-		public MainWindowController (IntPtr handle) : base (handle)
+		public EnemyWindowController (IntPtr handle) : base (handle)
 		{
 			Initialize ();
 		}
 		// Called when created directly from a XIB file
 		[Export ("initWithCoder:")]
-		public MainWindowController (NSCoder coder) : base (coder)
+		public EnemyWindowController (NSCoder coder) : base (coder)
 		{
 			Initialize ();
 		}
 		// Call to load from the XIB/NIB file
-		public MainWindowController () : base ("MainWindow")
+		public EnemyWindowController () : base ("EnemyWindow")
 		{
 			Initialize ();
 		}
@@ -31,9 +31,9 @@ namespace Tools
 		}
 		#endregion
 		//strongly typed window accessor
-		public new MainWindow Window {
+		public new EnemyWindow Window {
 			get {
-				return (MainWindow)base.Window;
+				return (EnemyWindow)base.Window;
 			}
 		}
 	}

@@ -8,7 +8,7 @@ namespace Tools
 {
 	public partial class AppDelegate : NSApplicationDelegate
 	{
-		MainWindowController mainWindowController;
+		NSDocumentController sharedDocumentController;
 
 		public AppDelegate ()
 		{
@@ -16,9 +16,36 @@ namespace Tools
 
 		public override void FinishedLaunching (NSObject notification)
 		{
-			mainWindowController = new MainWindowController ();
-			mainWindowController.Window.MakeKeyAndOrderFront (this);
+			sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
+			newDocument (this);
+		}
+
+		partial void newDocument (NSObject sender)
+		{
+			EnemyDocument enemyDocument = new EnemyDocument();
+			EnemyWindowController enemyWindowController = new EnemyWindowController();
+			enemyDocument.AddWindowController(enemyWindowController);
+			sharedDocumentController.AddDocument (enemyDocument);
+			enemyWindowController.Window.MakeKeyAndOrderFront(enemyWindowController);
+		}
+
+		partial void openDocument (NSObject sender)
+		{
+			throw new System.NotImplementedException ();
+		}
+
+		partial void saveDocument (NSObject sender)
+		{
+			if(sharedDocumentController.CurrentDocument.FileUrl != null){
+				sharedDocumentController.CurrentDocument.SaveDocument(sender);
+			}else{
+				saveDocumentAs(sender);
+			}
+		}
+
+		partial void saveDocumentAs (NSObject sender)
+		{
+			sharedDocumentController.CurrentDocument.SaveDocumentAs(sender);
 		}
 	}
 }
-
