@@ -16,48 +16,33 @@ namespace Tools
 		public EnemyDocument ()
 		{
 			EnemyShip = new EnemyShip ();
-			this.FileType = "enemy";
+			//TODO; FOR TESTING ONLY!!!!!!!!!!!!!!!!
+			EnemyShip = EnemyShipFactory.GetInstance ().CreateTestGameEnemyShip3 (null);
 		}
 
-		public override bool WriteToUrl (MonoMac.Foundation.NSUrl url, string typeName, out NSError outError)
+		public override bool ReadFromData (NSData data, string typeName, out NSError outError)
+		{
+			bool readSuccess = false;
+			NSDictionary options = new NSDictionary ();
+			NSAttributedString fileContents = new NSAttributedString(data, null, out options ,out outError);
+
+			if (fileContents == null && outError !=null) {
+				outError = new NSError();
+			}
+
+			if (fileContents != null) {
+				readSuccess = true;
+				SerializableEnemyShip serializableEnemyShip = JsonConvert.DeserializeObject<SerializableEnemyShip> (fileContents.ToString());
+				this.EnemyShip = serializableEnemyShip.ToEnemyShip ();
+			}
+			return readSuccess;
+		}
+
+		public override NSData GetAsData (string typeName, out NSError outError)
 		{
 			outError = null;
-
-			NSError error = null;
-			base.WriteToUrl (url, typeName, out error);
-
-			SerializableEnemyShip ses = new SerializableEnemyShip();
-			ses.Id = FileUrl.RelativePath;
-			ses.Parts = new List<SerializableEnemyShipPart> ();
-			ses.Connections = new List<SerializableEnemyShipPartConnection> ();
-			ses.MovingBehavior = EnemyShip.MovingBehavior.GetType().Name;
-			ses.ShootingBehavior = EnemyShip.ShootingBehavior.GetType().Name;
-
-			foreach (EnemyShipPart p in EnemyShip.Parts) {
-				SerializableEnemyShipPart sesp = new SerializableEnemyShipPart ();
-				sesp.Id = p.ID.ToString();
-				sesp.Asset = Assets.PartCore;
-				sesp.Health = p.Health;
-				sesp.Weight = p.Weight;
-				sesp.Rotation = p.Rotation;
-				sesp.PositionX = (int)p.Position.X;
-				sesp.PositionY = (int)p.Position.Y;
-				sesp.PreferredMovingBehavior = p.PreferredMovingBehavior.GetType().Name;
-				sesp.PreferredShootingBehavior = p.PreferredShootingBehavior.GetType().Name;
-
-				ses.Parts.Add (sesp);
-			}
-
-			string json = JsonConvert.SerializeObject (ses, Formatting.Indented);
-
-			File.WriteAllText (url.Path + typeName, json);
-
-			if (!File.Exists (url.Path + typeName)) {
-				outError = new NSError ();
-				return false;
-			} else {
-				return true;
-			}
+			string json = JsonConvert.SerializeObject (new SerializableEnemyShip (EnemyShip), Formatting.Indented);
+			return NSData.FromString (json);
 		}
 	}
 }

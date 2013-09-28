@@ -31,7 +31,7 @@ namespace Tools
 
 		partial void openDocument (NSObject sender)
 		{
-			throw new System.NotImplementedException ();
+			sharedDocumentController.OpenDocument(sender);
 		}
 
 		partial void saveDocument (NSObject sender)

@@ -8,8 +8,8 @@ namespace ArcticLion
 {
 	public class EnemyShipPart : Node
 	{
-		String assetName;
-		Texture2D enemyShipPartTexture;
+		public String Asset { get; private set;}
+		Texture2D enemyShipPartTexture; //TODO: Move to content manager
 		public List<EnemyShipPart> ConnectedParts{ get; private set;}
 		public int Health { get; set;}
 		public int Weight { get; set;}
@@ -32,14 +32,14 @@ namespace ArcticLion
 
 		public EnemyShipPart (String assetName)
 		{
-			this.assetName = assetName;
+			this.Asset = assetName;
 			this.Health = 1;
 			ConnectedParts = new List<EnemyShipPart> (1);
 		}
 
 		public override void LoadContent (ContentManager content)
 		{	
-			enemyShipPartTexture = content.Load<Texture2D> (assetName);
+			enemyShipPartTexture = content.Load<Texture2D> (Asset);
 		}
 
 		public override void Update (GameTime gameTime)

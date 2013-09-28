@@ -1,13 +1,12 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="27/09/2013 5:03:41 AM">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="27/09/2013 10:40:07 PM">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug OS X|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Tools/EnemyDocument.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Tools/EnemyWindow.cs">
     <Files>
-      <File FileName="Tools/EnemyWindow.cs" Line="1" Column="1" />
-      <File FileName="Tools/AppDelegate.cs" Line="50" Column="3" />
+      <File FileName="Tools/EnemyWindow.cs" Line="7" Column="16" />
+      <File FileName="Tools/AppDelegate.cs" Line="1" Column="1" />
       <File FileName="Tools/EnemyWindowController.cs" Line="1" Column="1" />
       <File FileName="Tools/EnemyWindow.xib" Line="1" Column="1" />
       <File FileName="Tools/EnemyWindow.designer.cs" Line="1" Column="1" />
-      <File FileName="Tools/EnemyDocument.cs" Line="52" Column="4" />
       <File FileName="Tools/AppDelegate.designer.cs" Line="1" Column="1" />
     </Files>
     <Pads>
@@ -25,9 +24,7 @@
           <Node name="NuclearWinterMonoGame" expanded="True" />
           <Node name="Tools" expanded="True">
             <Node name="References" expanded="True" />
-            <Node name="AppDelegate.cs" expanded="True" />
-            <Node name="EnemyDocument.cs" selected="True" />
-            <Node name="EnemyWindow.cs" expanded="True" />
+            <Node name="EnemyWindow.cs" selected="True" />
           </Node>
         </State>
       </Pad>

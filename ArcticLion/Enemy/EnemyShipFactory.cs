@@ -160,66 +160,21 @@ namespace ArcticLion
 			ses.Parts.Add (sesp);
 
 			string json = JsonConvert.SerializeObject (ses);
-
-			return Deserialize (json, target);
-		}
-
-		public void LoadContentFor(EnemyShip enemyShip){
-			enemyShip.LoadContent (content);
-		}
-
-		public EnemyShip Deserialize(string json, Node target){
+	
 			var deserialized = JsonConvert.DeserializeObject<SerializableEnemyShip> (json);
 
 			if(deserialized is SerializableEnemyShip){
 				SerializableEnemyShip serializableEnemyShip = (SerializableEnemyShip)deserialized;
-				Dictionary<string, EnemyShipPart> parts = new Dictionary<string, EnemyShipPart>();
-
-				EnemyShip enemyShip = new EnemyShip (target);
-				enemyShip.MovingBehavior = CreateMovingBehavior(serializableEnemyShip.MovingBehavior);
-				enemyShip.ShootingBehavior = CreateShootingBehavior(serializableEnemyShip.ShootingBehavior);
-
-				foreach (SerializableEnemyShipPart p in serializableEnemyShip.Parts) 
-				{
-					EnemyShipPart enemyShipPart = new EnemyShipPart (p.Asset);
-					enemyShipPart.Health = p.Health;
-					enemyShipPart.Weight = p.Weight;
-					enemyShipPart.Weapon = new Weapon (); //TODO: deserialize weapon
-					enemyShipPart.Position = new Vector2 (p.PositionX, p.PositionY);
-					enemyShipPart.Rotation = p.Rotation;
-					enemyShipPart.PreferredMovingBehavior = CreateMovingBehavior(p.PreferredMovingBehavior);
-					enemyShipPart.PreferredShootingBehavior = CreateShootingBehavior(p.PreferredShootingBehavior);
-
-					parts.Add (p.Id, enemyShipPart);
-					enemyShip.Add (enemyShipPart);
-				}
-
-				foreach (SerializableEnemyShipPartConnection con in serializableEnemyShip.Connections) 
-				{
-					EnemyShipPart.Connect (parts [con.LeftId], parts [con.RightId]);
-				}
+				EnemyShip enemyShip =  serializableEnemyShip.ToEnemyShip ();
+				enemyShip.Target = target;
 				return enemyShip;
 			}
-			return null;
-		}
-
-		//TODO: Find a way to instantiate behaviors with the class name or something (BehaviorFactory?, Dictionary?)
-		private MovingBehavior CreateMovingBehavior(string name){
-			switch (name) {
-			case "CircularMovingBehavior":
-				return new CircularMovingBehavior ();
-			}
 
 			return null;
 		}
 
-		private ShootingBehavior CreateShootingBehavior(string name){
-			switch (name) {
-			case "ContinuousShootingBehavior":
-				return new ContinuousShootingBehavior ();
-			}
-
-			return null;
+		public void LoadContentFor(EnemyShip enemyShip){
+			enemyShip.LoadContent (content);
 		}
 	}
 }
