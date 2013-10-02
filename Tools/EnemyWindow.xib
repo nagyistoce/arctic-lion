@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="EnemyWindowController">
             <connections>
+                <outlet property="mainView" destination="3" id="9oK-lu-fYr"/>
                 <outlet property="window" destination="2" id="6"/>
             </connections>
         </customObject>
@@ -15,12 +16,16 @@
         <window title="New Enemy*" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" animationBehavior="default" id="2" customClass="EnemyWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="131" y="74" width="606" height="354"/>
+            <rect key="contentRect" x="131" y="74" width="481" height="402"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
-            <view key="contentView" id="3">
-                <rect key="frame" x="0.0" y="0.0" width="606" height="354"/>
+            <view key="contentView" canDrawConcurrently="YES" id="3">
+                <rect key="frame" x="0.0" y="0.0" width="481" height="402"/>
                 <autoresizingMask key="autoresizingMask"/>
             </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="TE7-dN-JRr"/>
+                <outlet property="initialFirstResponder" destination="3" id="dpc-jd-S8K"/>
+            </connections>
         </window>
     </objects>
 </document>

@@ -12,9 +12,15 @@ namespace Tools
 	[Register ("EnemyWindowController")]
 	partial class EnemyWindowController
 	{
+		[Outlet]
+		MonoMac.AppKit.NSView mainView { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (mainView != null) {
+				mainView.Dispose ();
+				mainView = null;
+			}
 		}
 	}
 

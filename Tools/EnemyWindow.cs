@@ -23,6 +23,7 @@ namespace Tools
 		// Shared initialization code
 		void Initialize ()
 		{
+			Title = "New Enemy";
 		}
 		#endregion
 	}

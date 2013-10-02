@@ -28,6 +28,8 @@
     <CodeSigningKey>Mac Developer</CodeSigningKey>
     <EnableCodeSigning>false</EnableCodeSigning>
     <CreatePackage>false</CreatePackage>
+    <PackageSigningKey>Developer ID Installer</PackageSigningKey>
+    <I18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>full</DebugType>
@@ -78,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Assets\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -91,6 +94,7 @@
     <Compile Include="EnemyWindow.designer.cs">
       <DependentUpon>EnemyWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="EnemyView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainMenu.xib" />
@@ -108,5 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\.DS_Store" />
+    <BundleResource Include="Resources\part_core.png" />
   </ItemGroup>
 </Project>
