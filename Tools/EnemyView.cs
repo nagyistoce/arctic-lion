@@ -11,44 +11,47 @@ namespace Tools
 	public class EnemyView : NSView
 	{
 		EnemyShip enemy;
-		Dictionary<String, NSImage> images;
+		Dictionary<String, EnemyPartView> partViews;
 
 		public EnemyView() : this(new EnemyShip()){
 		}
 
-		public EnemyView (EnemyShip enemy) :base(new RectangleF(0,0,100,100))
+		public EnemyView (EnemyShip enemy) :base(new RectangleF(0,0,500,500))
 		{
 			this.enemy = enemy;
-			images = new Dictionary<string, NSImage> ();
+			partViews = new Dictionary<string, EnemyPartView> ();
 			this.Hidden = false;
-			this.NeedsDisplay = true;
+		}
+
+		public override void ViewDidMoveToSuperview ()
+		{
+			Frame = Superview.Bounds;
+
+			base.ViewDidMoveToSuperview ();
+		}
+
+		public override void ViewDidEndLiveResize ()
+		{
+			Frame = Superview.Bounds;
+		
+			foreach (EnemyPartView partView in partViews.Values) {
+				partView.ViewDidEndLiveResize ();
+			}
+		
+			base.ViewDidEndLiveResize ();
 		}
 
 		public override void ViewWillDraw ()
 		{
 			foreach (EnemyShipPart p in enemy.Parts) {
-				if (!images.ContainsKey(p.Asset)) {
-					NSImage i = new NSImage (NSBundle.MainBundle.BundlePath + "/Contents/Resources/" + p.Asset + ".png");
-					images.Add (p.Asset, i);
+				if (!partViews.ContainsKey(p.Asset)) {
+					EnemyPartView partView = new EnemyPartView (p);
+					partViews.Add (p.Asset, partView);
+					this.AddSubview (partView);
 				}
 			}
 
 			base.ViewWillDraw ();
-		}
-
-		public override void DrawRect (System.Drawing.RectangleF dirtyRect)
-		{
-			base.DrawRect (dirtyRect);
-
-			foreach (EnemyShipPart p in enemy.Parts) {
-
-				NSImage i = images [p.Asset];
-
-				RectangleF src = new RectangleF (0, 0, i.Size.Width, i.Size.Height);
-				RectangleF dest = new RectangleF (p.Position.X, p.Position.Y, i.Size.Width, i.Size.Height);
-
-				i.DrawInRect (dest, src, NSCompositingOperation.SourceOver, 1f);
-			}
 		}
 	}
 }

@@ -95,6 +95,7 @@
       <DependentUpon>EnemyWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="EnemyView.cs" />
+    <Compile Include="EnemyPartView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainMenu.xib" />
