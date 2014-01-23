@@ -9,16 +9,20 @@ namespace Tools
 {
 	public partial class AppDelegate : NSApplicationDelegate
 	{
-		NSDocumentController sharedDocumentController;
+		NSDocumentController documentController;
 	
 		public AppDelegate ()
 		{
 		}
+	
+		public override bool ApplicationShouldOpenUntitledFile (NSApplication sender)
+		{
+			return false;
+		}
 
 		public override void FinishedLaunching (NSObject notification)
 		{
-			sharedDocumentController = (NSDocumentController)NSDocumentController.SharedDocumentController;
-			newDocument (this);
+			documentController = (NSDocumentController) NSDocumentController.SharedDocumentController;
 		}
 
 		partial void newDocument (NSObject sender)
@@ -34,7 +38,7 @@ namespace Tools
 			enemy.Add(part);
 			enemyWindowController.SetEnemy(enemy);
 
-			sharedDocumentController.AddDocument (enemyDocument);
+			documentController.AddDocument (enemyDocument);
 
 			enemyWindowController.ShowWindow(sender);
 			enemyWindowController.Window.MakeKeyAndOrderFront(enemyWindowController);
@@ -42,13 +46,13 @@ namespace Tools
 
 		partial void openDocument (NSObject sender)
 		{
-			sharedDocumentController.OpenDocument(sender);
+			documentController.OpenDocument(sender);
 		}
 
 		partial void saveDocument (NSObject sender)
 		{
-			if(sharedDocumentController.CurrentDocument.FileUrl != null){
-				sharedDocumentController.CurrentDocument.SaveDocument(sender);
+			if(documentController.CurrentDocument.FileUrl != null){
+				documentController.CurrentDocument.SaveDocument(sender);
 			}else{
 				saveDocumentAs(sender);
 			}
@@ -56,7 +60,7 @@ namespace Tools
 
 		partial void saveDocumentAs (NSObject sender)
 		{
-			sharedDocumentController.CurrentDocument.SaveDocumentAs(sender);
+			documentController.CurrentDocument.SaveDocumentAs(sender);
 		}
 	}
 }

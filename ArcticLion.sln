@@ -76,6 +76,6 @@ Global
 		{83CA24ED-B711-43D5-96CA-EEBD503C302D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Tools\Tools.csproj
+		StartupItem = ArcticLion\ArcticLion.csproj
 	EndGlobalSection
 EndGlobal

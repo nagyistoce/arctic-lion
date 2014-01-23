@@ -20,12 +20,12 @@
 				<string>enemy</string>
 			</array>
 			<key>CFBundleTypeName</key>
-			<string>Game Enemy Document</string>
+			<string>Enemy Data Format</string>
 			<key>NSDocumentClass</key>
-			<string>NSDocument</string>
+			<string>EnemyDocument</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.lumbi.enemy</string>
+				<string>com.lumbi.tools.enemy</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
@@ -35,9 +35,14 @@
 	<array>
 		<dict>
 			<key>UTTypeDescription</key>
-			<string>Enemy</string>
+			<string>Enemy Document</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.lumbi.enemy</string>
+			<string>com.lumbi.tools.enemy</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.content</string>
+				<string>public.data</string>
+			</array>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -45,15 +50,15 @@
 					<string>enemy</string>
 				</array>
 			</dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
 		</dict>
 	</array>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.lumbi.tools</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict/>
+	</array>
 </dict>
 </plist>
